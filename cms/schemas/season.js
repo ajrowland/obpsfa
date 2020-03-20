@@ -7,20 +7,18 @@ export default {
       name: 'date',
       title: 'Date',
       type: 'date'
-    },
-    {
-      name: 'slug',
-      title: 'Slug',
-      type: 'slug',
-      options: {
-        source: 'date',
-        maxLength: 96
-      }
     }
   ],
   preview: {
     select: {
-      title: 'date'
+      date: 'date'
+    },
+    prepare(selection) {
+      const {date} = selection
+      const year = parseInt(date.split('-')[0])
+      return {
+        title: `${year} - ${year + 1}`
+      }
     }
   }
 }

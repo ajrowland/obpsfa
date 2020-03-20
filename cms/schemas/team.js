@@ -18,8 +18,13 @@ export default {
       }
     },
     {
-      name: 'image',
-      title: 'Image',
+      name: 'venue',
+      title: 'Venue',
+      type: 'string'
+    },
+    {
+      name: 'badge',
+      title: 'Badge',
       type: 'image',
       options: {
         hotspot: true
@@ -42,7 +47,7 @@ export default {
   preview: {
     select: {
       title: 'name',
-      media: 'image'
+      media: 'badge'
     }
   }
 }

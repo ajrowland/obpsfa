@@ -9,19 +9,16 @@ export default {
       type: 'date'
     },
     {
-      name: 'venue',
-      title: 'Venue',
-      type: 'string'
-    },
-    {
       name: 'teamHome',
       title: 'Home team',
-      type: 'string'
+      type: 'reference',
+      to: {type: 'team'}
     },
     {
       name: 'teamAway',
       title: 'Away team',
-      type: 'string'
+      type: 'reference',
+      to: {type: 'team'}
     },
     {
       name: 'scoreHome',
@@ -36,15 +33,17 @@ export default {
   ],
   preview: {
     select: {
-      teamHome: 'teamHome',
-      teamAway: 'teamAway',
-      date: 'date'
+      teamHome: 'teamHome.name',
+      teamAway: 'teamAway.name',
+      date: 'date',
+      badge: 'teamHome.badge'
     },
     prepare(selection) {
-      const {teamHome, teamAway, date} = selection
+      const {teamHome, teamAway, date, badge} = selection
       return {
         title: `${teamHome} v ${teamAway}`,
-        subtitle: date
+        subtitle: date,
+        media: badge
       }
     }
   }
