@@ -7,6 +7,7 @@
         <template v-for="edge in $static.pages.edges">
           <g-link class="nav__link" :to="edge.node.slug.current" :key="edge.node.id" :title="edge.node.title">{{edge.node.title}}</g-link>
         </template>
+        <g-link class="nav__link" to="/fixtures" title="Fixtures">Fixtures</g-link>
       </nav>
     </header>
     <slot/>
@@ -48,11 +49,14 @@ body {
 }
 
 .header {
+  margin: 20px 0;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  height: 140px;
+
+  @include mq($from: tablet) {
+    height: 140px;
+    align-items: center;
+  }
 
   &__logo {
     background: url(~@/favicon.png);
@@ -65,8 +69,21 @@ body {
   }
 }
 
+.nav {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  @include mq($from: tablet) {
+    margin-left: 20px;
+    flex-direction: row;
+  }
+}
+
 .nav__link {
-  margin-left: 20px;
+  @include mq($from: tablet) {
+    margin-left: 20px;
+  }
 }
 
 img {

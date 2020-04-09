@@ -3,6 +3,8 @@
 
 // Changes here require a server restart.
 // To restart press CTRL + C in terminal and run `gridsome develop`
+const path = require('path')
+
 require('dotenv').config({
   path: `.env.${process.env.NODE_ENV || 'development'}`
 })
@@ -10,6 +12,17 @@ require('dotenv').config({
 const clientConfig = require('./client-config')
 
 const isProd = process.env.NODE_ENV === 'production'
+
+function addStyleResource (rule) {
+  rule.use('style-resource')
+    .loader('style-resources-loader')
+    .options({
+      patterns: [
+        path.resolve(__dirname, './src/assets/style/index.scss'),
+      ],
+    })
+}
+
 
 module.exports = {
   siteName: 'ODPSFA',
@@ -33,5 +46,13 @@ module.exports = {
         //graphqlTag: 'default',
       }
     }
-  ]
+  ],
+  chainWebpack (config) {
+    // Load variables for all vue-files
+    const types = ['vue-modules', 'vue', 'normal-modules', 'normal']
+
+    types.forEach(type => {
+      addStyleResource(config.module.rule('scss').oneOf(type))
+    })
+  }
 }
