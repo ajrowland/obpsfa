@@ -55,7 +55,7 @@ body {
   height: 140px;
 
   &__logo {
-    background: url(~@/assets/images/logo.jpg);
+    background: url(~@/favicon.png);
     background-repeat: no-repeat;
     width: 100px;
     height: 100px;
