@@ -7,7 +7,9 @@
     "explore": "gridsome explore"
   },
   "dependencies": {
-    "gridsome": "^0.7.0"
+    "@sanity/image-url": "^0.140.18",
+    "gridsome": "^0.7.0",
+    "sanity-blocks-vue-component": "^0.1.0"
   },
   "devDependencies": {
     "gridsome-source-sanity": "^1.0.5"

@@ -3,24 +3,34 @@
 
 // Changes here require a server restart.
 // To restart press CTRL + C in terminal and run `gridsome develop`
+require('dotenv').config({
+  path: `.env.${process.env.NODE_ENV || 'development'}`
+})
+
+const clientConfig = require('./client-config')
+
+const isProd = process.env.NODE_ENV === 'production'
 
 module.exports = {
-  siteName: 'Gridsome',
+  siteName: 'ODPSFA',
+
+  templates: {
+    SanityPage: '/:slug__current'
+  },
+
   plugins: [
     {
       use: 'gridsome-source-sanity',
       options: {
-        projectId: '7caqi88y',
-        dataset: 'production',
-        // Token is only required if dataset is private
-        // or `overlayDrafts` is set to true
-        //token: '<tokenWithReadRights>',
-        overlayDrafts: false,
-        watchMode: false,
+        ...clientConfig.sanity,
+        typeName: 'Sanity',
+        token: process.env.SANITY_TOKEN,
+        overlayDrafts: !isProd,
+        watchMode: !isProd
 
         // If the Sanity GraphQL API was deployed using `--tag <name>`,
         // use `graphqlTag` to specify the tag name. Defaults to `default`.
-        graphqlTag: 'default'
+        //graphqlTag: 'default',
       }
     }
   ]

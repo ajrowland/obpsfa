@@ -2,11 +2,12 @@
   <div class="layout">
     <header class="header">
       <strong>
-        <g-link to="/">{{ $static.metadata.siteName }}</g-link>
+        <g-link to="/">Home</g-link>
       </strong>
       <nav class="nav">
-        <g-link class="nav__link" to="/">Home</g-link>
-        <g-link class="nav__link" to="/about/">About</g-link>
+        <template v-for="edge in $static.pages.edges">
+          <g-link class="nav__link" :to="edge.node.slug.current" :key="edge.node.id">{{edge.node.title}}</g-link>
+        </template>
       </nav>
     </header>
     <slot/>
@@ -15,6 +16,17 @@
 
 <static-query>
 query {
+  pages: allSanityPage {
+    edges {
+      node {
+        id
+        title
+        slug {
+          current
+        }
+      }
+    }
+  }
   metadata {
     siteName
   }
