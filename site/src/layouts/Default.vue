@@ -7,7 +7,6 @@
         <template v-for="edge in $static.pages.edges">
           <g-link class="nav__link" :to="edge.node.slug.current" :key="edge.node.id" :title="edge.node.title">{{edge.node.title}}</g-link>
         </template>
-        <g-link class="nav__link" to="/fixtures" title="Fixtures">Fixtures</g-link>
       </nav>
     </header>
     <slot/>
@@ -16,10 +15,11 @@
 
 <static-query>
 query {
-  pages: allSanityPage {
+  pages: allSanityPage(sortBy: "sortOrder", order: ASC) {
     edges {
       node {
         id
+        sortOrder,
         title
         slug {
           current
@@ -81,12 +81,19 @@ body {
 }
 
 .nav__link {
+  padding: 10px 0;
+
   @include mq($from: tablet) {
+    padding: 0;
     margin-left: 20px;
   }
 }
 
 img {
   width: 100%;
+}
+
+figure {
+  margin: 0;
 }
 </style>

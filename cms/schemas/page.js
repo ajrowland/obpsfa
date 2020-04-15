@@ -9,6 +9,11 @@ export default {
       type: 'string'
     },
     {
+      name: 'sortOrder',
+      title: 'Sort order',
+      type: 'number',
+    },
+    {
       name: 'slug',
       title: 'Slug',
       type: 'slug',
@@ -45,14 +50,23 @@ export default {
     {
       name: 'body',
       title: 'Body',
-      type: 'blockContent'
-    }
-    ,
+      type: 'blockContent',
+    },
     {
       name: 'parent',
       title: 'Parent',
       type: 'reference',
       to: [{type: 'home'}, {type: 'page'}]
+    }
+  ],
+
+  orderings: [
+    {
+      title: 'Navigation order',
+      name: 'sortOrder',
+      by: [
+        {field: 'sortOrder', direction: 'asc'}
+      ]
     }
   ],
 

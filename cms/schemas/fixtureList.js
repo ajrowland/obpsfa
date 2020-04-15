@@ -1,7 +1,7 @@
 export default {
   name: 'fixtureList',
   title: 'Fixture list',
-  type: 'document',
+  type: 'object',
   fields: [
     {
       name: 'team',

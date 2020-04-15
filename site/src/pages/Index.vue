@@ -9,7 +9,7 @@
       :src="$urlForImage($page.home.edges[0].node.mainImage, $page.metadata.sanityOptions).height(440).width(800).auto('format').url()"
     />
 
-    <block-content
+    <portable-text
       :blocks="$page.home.edges[0].node._rawBody"
     />
 
@@ -22,7 +22,7 @@ query {
     edges {
       node {
         title
-        _rawBody
+        _rawBody(resolveReferences: {maxDepth: 5})
         mainImage {
           asset {
             _id
