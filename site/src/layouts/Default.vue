@@ -10,6 +10,10 @@
       </nav>
     </header>
     <slot/>
+
+    <footer class="footer">
+      ©{{ new Date().getFullYear() }} OBPSFA
+    </footer>
   </div>
 </template>
 
@@ -95,5 +99,11 @@ img {
 
 figure {
   margin: 0;
+}
+
+.footer {
+  background: #333;
+  color: #fff;
+  padding: 20px;
 }
 </style>
