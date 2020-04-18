@@ -3,6 +3,7 @@
 
 import DefaultLayout from '~/layouts/Default.vue'
 import PortableText from 'sanity-blocks-vue-component'
+import ExtendedImage from '~/components/extendedImage.vue'
 import urlBuilder from '@sanity/image-url'
 
 const urlForImage = (source, data) => {
@@ -17,6 +18,7 @@ export default function (Vue, { router, head, isClient }) {
   // Set default layout as a global component
   Vue.component('Layout', DefaultLayout)
   Vue.component('PortableText', PortableText)
+  Vue.component('ExtendedImage', ExtendedImage)
 
   // Inject global image URL builder
   Vue.prototype.$urlForImage = urlForImage

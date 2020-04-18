@@ -3,10 +3,10 @@
 
     <h1>{{$page.page.title}}</h1>
 
-    <g-image
-      alt="Cover image"
-      v-if="$page.page.mainImage"
-      :src="$urlForImage($page.page.mainImage, $page.metadata.sanityOptions).height(440).width(800).auto('format').url()"
+    <extended-image
+      :image="$page.page.mainImage"
+      width="800"
+      height="400"
     />
 
     <portable-text
@@ -25,9 +25,18 @@ query Page ($id: ID!) {
     title
     _rawBody(resolveReferences: {maxDepth: 5})
     mainImage {
+      alt
+      caption
+      attribution
       asset {
         _id
         url
+      }
+    }
+    seo {
+      description
+      author {
+        name
       }
     }
   }
@@ -49,14 +58,31 @@ import fixtureList from '~/components/fixtureList'
 export default {
   metaInfo() {
     return {
-      title: this.$page.page.title
+      title: this.$page.page.title,
+      meta: [
+        {
+          name: 'author',
+          content: this.$page.page.seo.author.name
+        },
+        {
+          name: 'description',
+          content: this.$page.page.seo.description
+        }
+      ]
     }
   },
   data() {
     return {
       serializers: {
         types: {
-          fixtureList: fixtureList
+          fixtureList: fixtureList,
+        },
+        marks: {
+          link: ({mark, children}) => {
+            const {reference = {}, blank, href} = mark
+            const url = reference.slug ? `/${reference.slug.current}` : href
+            return blank ? <a href={url} target="blank" rel="noopener noreferer">{children}</a> : <a href={url}>{children}</a>
+          }
         }
       }
     };

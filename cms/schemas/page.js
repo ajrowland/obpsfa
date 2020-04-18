@@ -6,7 +6,8 @@ export default {
     {
       name: 'title',
       title: 'Title',
-      type: 'string'
+      type: 'string',
+      validation: Rule => Rule.required()
     },
     {
       name: 'sortOrder',
@@ -23,29 +24,9 @@ export default {
       }
     },
     {
-      name: 'author',
-      title: 'Author',
-      type: 'reference',
-      to: {type: 'author'}
-    },
-    {
       name: 'mainImage',
       title: 'Main image',
-      type: 'image',
-      options: {
-        hotspot: true
-      }
-    },
-    {
-      name: 'categories',
-      title: 'Categories',
-      type: 'array',
-      of: [{type: 'reference', to: {type: 'category'}}]
-    },
-    {
-      name: 'publishedAt',
-      title: 'Published at',
-      type: 'datetime'
+      type: 'extendedImage'
     },
     {
       name: 'body',
@@ -57,6 +38,11 @@ export default {
       title: 'Parent',
       type: 'reference',
       to: [{type: 'home'}, {type: 'page'}]
+    },
+    {
+      name: 'seo',
+      title: 'SEO information',
+      type: 'seo'
     }
   ],
 
@@ -73,7 +59,7 @@ export default {
   preview: {
     select: {
       title: 'title',
-      author: 'author.name',
+      author: 'seo.author.name',
       media: 'mainImage'
     },
     prepare(selection) {

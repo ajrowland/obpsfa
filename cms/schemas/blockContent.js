@@ -36,14 +36,32 @@ export default {
         // Annotations can be any object structure – e.g. a link or a footnote.
         annotations: [
           {
-            title: 'URL',
+            title: 'Link',
             name: 'link',
             type: 'object',
             fields: [
               {
-                title: 'URL',
+                title: 'Internal link',
+                name: 'reference',
+                type: 'reference',
+                to: [
+                  { type: 'home' },
+                  { type: 'page' }
+                ]
+              },
+              {
+                title: 'OR external link',
+                description: 'The internal link field will be prioritised. Remove if adding an external link.',
                 name: 'href',
-                type: 'url'
+                type: 'url',
+                validation: Rule => Rule.uri({
+                  scheme: [ 'http', 'https', 'mailto', 'tel' ]
+                })
+              },
+              {
+                title: 'Open in new tab',
+                name: 'blank',
+                type: 'boolean'
               }
             ]
           }

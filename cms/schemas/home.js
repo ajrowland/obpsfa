@@ -6,44 +6,30 @@ export default {
     {
       name: 'title',
       title: 'Title',
-      type: 'string'
-    },
-    {
-      name: 'author',
-      title: 'Author',
-      type: 'reference',
-      to: {type: 'author'}
+      type: 'string',
+      validation: Rule => Rule.required()
     },
     {
       name: 'mainImage',
       title: 'Main image',
-      type: 'image',
-      options: {
-        hotspot: true
-      }
-    },
-    {
-      name: 'categories',
-      title: 'Categories',
-      type: 'array',
-      of: [{type: 'reference', to: {type: 'category'}}]
-    },
-    {
-      name: 'publishedAt',
-      title: 'Published at',
-      type: 'datetime'
+      type: 'extendedImage'
     },
     {
       name: 'body',
       title: 'Body',
-      type: 'blockContent'
+      type: 'blockContent',
+    },
+    {
+      name: 'seo',
+      title: 'SEO information',
+      type: 'seo'
     }
   ],
 
   preview: {
     select: {
       title: 'title',
-      author: 'author.name',
+      author: 'seo.author.name',
       media: 'mainImage'
     },
     prepare(selection) {

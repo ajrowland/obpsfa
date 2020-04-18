@@ -1,6 +1,7 @@
 <template>
 
     <div class="fixture-list">
+      <h2>{{team.name}}</h2>
 
       <ul class="fixture-list__fixtures" v-for="fixture in fixtures" :key="fixture._key">
         <li class="fixture-list__fixture">
@@ -38,7 +39,7 @@
 
 <script>
 export default {
-  props: ['_ref', 'team', 'fixtures']
+  props: ['team', 'fixtures']
 }
 </script>
 
