@@ -8,11 +8,12 @@
           <div class="fixture-list__team">
             <time class="fixture-list__date">{{fixture.date}}</time>
             <div class="fixture-list__badge">
-              <g-image
-                v-if="fixture.teamHome.badge"
+              <extended-image
+                :image="fixture.teamHome.badge"
                 :alt="fixture.teamHome.name"
-                :src="$urlForImage(fixture.teamHome.badge, $page.metadata.sanityOptions).height(20).width(20).auto('format').url()"
-                class="fixture-list__image"
+                width="20"
+                height="20"
+                cssClass="fixture-list__image"
               />
             </div>
             <i class="fixture-list__score">{{fixture.scoreAway}}</i>
@@ -20,11 +21,12 @@
           </div>
           <div class="fixture-list__team">
             <div class="fixture-list__badge">
-              <g-image
-                v-if="fixture.teamAway.badge"
-                :alt="fixture.teamHome.name"
-                :src="$urlForImage(fixture.teamAway.badge, $page.metadata.sanityOptions).height(20).width(20).auto('format').url()"
-                class="fixture-list__image"
+              <extended-image
+                :image="fixture.teamAway.badge"
+                :alt="fixture.teamHome.away"
+                width="20"
+                height="20"
+                cssClass="fixture-list__image"
               />
             </div>
             <i class="fixture-list__score">{{fixture.scoreAway}}</i>

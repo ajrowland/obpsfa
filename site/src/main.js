@@ -2,8 +2,8 @@
 // The Client API can be used here. Learn more: gridsome.org/docs/client-api
 
 import DefaultLayout from '~/layouts/Default.vue'
-import PortableText from 'sanity-blocks-vue-component'
-import ExtendedImage from '~/components/extendedImage.vue'
+import ExtendedImage from '~/components/ExtendedImage.vue'
+import ExtendedBlock from '~/components/ExtendedBlock.vue'
 import urlBuilder from '@sanity/image-url'
 
 const urlForImage = (source, data) => {
@@ -17,8 +17,8 @@ const urlForImage = (source, data) => {
 export default function (Vue, { router, head, isClient }) {
   // Set default layout as a global component
   Vue.component('Layout', DefaultLayout)
-  Vue.component('PortableText', PortableText)
   Vue.component('ExtendedImage', ExtendedImage)
+  Vue.component('ExtendedBlock', ExtendedBlock)
 
   // Inject global image URL builder
   Vue.prototype.$urlForImage = urlForImage

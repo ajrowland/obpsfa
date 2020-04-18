@@ -10,9 +10,8 @@
         height="400"
       />
 
-      <portable-text
+      <extended-block
         :blocks="$page.home.edges[0].node._rawBody"
-        :serializers="serializers"
       />
     </template>
     <template v-else>
@@ -51,17 +50,11 @@ query {
     siteName
     siteDescription
     siteUrl
-    sanityOptions {
-      projectId
-      dataset
-    }
   }
 }
 </page-query>
 
 <script>
-import fixtureList from '~/components/fixtureList'
-
 export default {
   metaInfo() {
     return {
@@ -76,22 +69,6 @@ export default {
           content: this.$page.home.edges[0].node.seo.description
         }
       ]
-    }
-  },
-  data() {
-    return {
-      serializers: {
-        types: {
-          fixtureList: fixtureList
-        },
-        marks: {
-          link: ({mark, children}) => {
-            const {reference = {}, blank, href} = mark
-            const url = reference.slug ? `/${reference.slug.current}` : href
-            return blank ? <a href={url} target="blank" rel="noopener noreferer">{children}</a> : <a href={url}>{children}</a>
-          }
-        }
-      }
     }
   }
 }

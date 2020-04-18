@@ -9,11 +9,8 @@
       height="400"
     />
 
-    <portable-text
+    <extended-block
       :blocks="$page.page._rawBody"
-      :serializers="serializers"
-      :projectId="$page.metadata.sanityOptions.projectId"
-      :dataset="$page.metadata.sanityOptions.dataset"
     />
 
   </Layout>
@@ -44,17 +41,11 @@ query Page ($id: ID!) {
     siteName
     siteDescription
     siteUrl
-    sanityOptions {
-      projectId
-      dataset
-    }
   }
 }
 </page-query>
 
 <script>
-import fixtureList from '~/components/fixtureList'
-
 export default {
   metaInfo() {
     return {
@@ -70,22 +61,6 @@ export default {
         }
       ]
     }
-  },
-  data() {
-    return {
-      serializers: {
-        types: {
-          fixtureList: fixtureList,
-        },
-        marks: {
-          link: ({mark, children}) => {
-            const {reference = {}, blank, href} = mark
-            const url = reference.slug ? `/${reference.slug.current}` : href
-            return blank ? <a href={url} target="blank" rel="noopener noreferer">{children}</a> : <a href={url}>{children}</a>
-          }
-        }
-      }
-    };
   }
 }
 </script>
