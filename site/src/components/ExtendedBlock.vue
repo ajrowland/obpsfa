@@ -22,6 +22,7 @@ query {
 
 <script>
 import PortableText from 'sanity-blocks-vue-component'
+import ExtendedImage from '~/components/ExtendedImage'
 import FixtureList from '~/components/FixtureList'
 
 export default {
@@ -31,6 +32,9 @@ export default {
       serializers: {
         types: {
           fixtureList: FixtureList,
+          extendedImage: ({node}) => {
+            return <extended-image image={node} width="800" height="400" />
+          }
         },
         marks: {
           link: ({mark, children}) => {
