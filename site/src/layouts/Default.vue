@@ -10,7 +10,11 @@
         <nav class="header__nav">
           <g-link to="/" class="header__logo" title="Home">Home</g-link>
 
-          <button class="header__menu-toggle" @click="toggleMenu">Menu</button>
+          <button class="header__menu-toggle" @click="toggleMenu">
+            Menu
+            <span class="open">&#9776;</span>
+            <span class="close">&times;</span>
+          </button>
 
           <div class="header__nav-links">
             <g-link class="header__nav-link" to="/">Home</g-link>
@@ -162,12 +166,27 @@ body {
 
   &__menu-toggle {
     position: absolute;
-    right: $gutter;
+    right: 0;
     text-transform: uppercase;
     background: none;
     border: none;
     font-weight: bold;
     padding: 20px;
+    outline: 0;
+
+    .close {
+      display: none;
+    }
+
+    .menu-active & {
+      .open {
+        display: none;
+      }
+
+      .close {
+        display: inline-block;
+      }
+    }
 
     @include mq($from: tablet) {
       display: none;
