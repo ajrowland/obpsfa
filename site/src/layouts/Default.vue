@@ -1,18 +1,33 @@
 <template>
   <div class="layout">
     <header class="header">
-      <g-link to="/" class="header__logo" title="Home">Home</g-link>
+      <div class="header__top-bar">
+        <div class="container">
+          social links
+        </div>
+      </div>
+      <div class="container">
+        <nav class="header__nav">
+          <g-link to="/" class="header__logo" title="Home">Home</g-link>
 
-      <nav class="nav">
-        <template v-for="edge in $static.pages.edges">
-          <g-link class="nav__link" :to="edge.node.slug.current" :key="edge.node.id" :title="edge.node.title">{{edge.node.title}}</g-link>
-        </template>
-      </nav>
+          <div class="header__nav-links">
+            <g-link class="header__nav-link" to="/">Home</g-link>
+            <template v-for="edge in $static.pages.edges">
+              <g-link class="header__nav-link" :to="edge.node.slug.current" :key="edge.node.id" :title="edge.node.title">{{edge.node.title}}</g-link>
+            </template>
+          </div>
+        </nav>
+      </div>
     </header>
-    <slot/>
+
+    <div class="container">
+      <slot />
+    </div>
 
     <footer class="footer">
-      ©{{ new Date().getFullYear() }} OBPSFA
+      <div class="container">
+        ©{{ new Date().getFullYear() }} OBPSFA
+      </div>
     </footer>
   </div>
 </template>
@@ -45,21 +60,41 @@ body {
   line-height: 1.5;
 }
 
-.layout {
+.container {
   max-width: 760px;
   margin: 0 auto;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: $gutter;
+  padding-right: $gutter;
 }
 
 .header {
-  margin: 20px 0;
-  display: flex;
-  justify-content: space-between;
+  margin-bottom: 20px;
 
-  @include mq($from: tablet) {
-    height: 140px;
-    align-items: center;
+  &__top-bar {
+    background-color: $colour-red;
+    color: #fff;
+    padding: 10px 0;
+    margin-bottom: $vertical-spacing;
+  }
+
+  &__nav {
+    display: flex;
+    justify-content: space-between;
+
+    @include mq($from: tablet) {
+      align-items: center;
+    }
+  }
+
+  &__nav-links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    @include mq($from: tablet) {
+      margin-left: 20px;
+      flex-direction: row;
+    }
   }
 
   &__logo {
@@ -67,29 +102,18 @@ body {
     background-repeat: no-repeat;
     width: 100px;
     height: 100px;
-    display: inline-block;
     background-size: cover;
     text-indent: -9999px;
   }
-}
 
-.nav {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  &__nav-link {
+    padding: 10px 0;
+    text-align: right;
 
-  @include mq($from: tablet) {
-    margin-left: 20px;
-    flex-direction: row;
-  }
-}
-
-.nav__link {
-  padding: 10px 0;
-
-  @include mq($from: tablet) {
-    padding: 0;
-    margin-left: 20px;
+    @include mq($from: tablet) {
+      padding: 0;
+      margin-left: 20px;
+    }
   }
 }
 
@@ -104,6 +128,7 @@ figure {
 .footer {
   background: #333;
   color: #fff;
-  padding: 20px;
+  padding: $vertical-spacing 0;
+  margin-top: $vertical-spacing;
 }
 </style>

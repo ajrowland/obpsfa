@@ -39,8 +39,10 @@ export default {
         marks: {
           link: ({mark, children}) => {
             const {reference = {}, blank, href} = mark
-            const url = reference.slug ? `/${reference.slug.current}` : href
-            return blank ? <a href={url} target="blank" rel="noopener noreferer">{children}</a> : <a href={url}>{children}</a>
+
+            return reference.slug ?
+              <g-link to={`/${reference.slug.current}`}>{children}</g-link> :
+              <a href={href} target="${blank ? 'blank' : false}" rel="${blank ? 'noopener noreferer' : false}">{children}</a>
           }
         }
       }

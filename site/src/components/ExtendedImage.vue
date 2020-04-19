@@ -42,10 +42,18 @@ export default {
   &__caption {
     position: absolute;
     top: 0;
+    left: 0;
     right: 0;
     background: rgba(0, 0, 0, 0.6);
     color: #fff;
-    padding: 10px 20px;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+
+    @include mq($from: tablet) {
+      left: auto;
+      font-size: 1rem;
+      padding: 10px 20px;
+    }
   }
 
   &__attribution {
