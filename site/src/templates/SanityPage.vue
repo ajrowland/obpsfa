@@ -7,6 +7,7 @@
       :image="$page.page.mainImage"
       width="800"
       height="400"
+      cssClass="main-image"
     />
 
     <extended-block

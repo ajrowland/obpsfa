@@ -1,17 +1,17 @@
 <template>
 
-  <div class="extended-image" v-if="image">
+  <div :class="cssClass" v-if="image">
     <g-image
       :src="$urlForImage(image, $static.metadata.sanityOptions).height(height).width(width).auto('format').url()"
       :alt="image.alt || alt"
-      :class="cssClass"
+      :class="cssClass && `${cssClass}__img`"
     />
-    <div class="extended-image__caption" v-if="image.caption">
-      <div class="extended-image__caption-text">
+    <div :class="cssClass && `${cssClass}__caption`" v-if="image.caption">
+      <div :class="cssClass && `${cssClass}__caption-text`">
        {{image.caption}}
       </div>
     </div>
-    <div class="extended-image__attribution" v-if="image.attribution">
+    <div :class="cssClass && `${cssClass}__attribution`" v-if="image.attribution">
       ©{{image.attribution}}
     </div>
   </div>
@@ -36,61 +36,60 @@ export default {
 </script>
 
 <style lang="scss">
-.extended-image {
+.main-image {
   position: relative;
   overflow: hidden;
-  margin: $vertical-spacing 0;
+  margin: $vertical-spacing $gutter * -1;
+  font-size: .8rem;
+
+  @include mq($from: tablet) {
+    margin: $vertical-spacing 0;
+    font-size: 1rem;
+  }
 
   img {
     display: block;
   }
 
   &__caption {
-    display: inline-block;
-    right: 0;
     background: $colour-red;
+    padding: 5px $gutter;
+    display: inline-block;
+    max-width: 70%;
 
     @include mq($from: tablet) {
       position: absolute;
       top: 60%;
       right: -50px;
       padding-right: 50px;
-      transform: skew(-30deg);
       padding-left: $gutter * 2;
       max-width: 35%;
+      transform: skew(-30deg);
     }
 
     &-text {
-      padding: 5px 10px;
+      padding: 5px 0;
       color: #fff;
-      line-height: 1;
+      line-height: 1.5;
 
       @include mq($from: tablet) {
         padding: 10px 20px 10px 0;
         display: inline-block;
-        transform: skew(30deg);
         text-transform: uppercase;
         line-height: 2rem;
         font-weight: bold;
+        transform: skew(30deg);
       }
     }
   }
 
   &__attribution {
-    font-size: 0.8rem;
-    position: absolute;
-    display: inline-block;
-    padding: 4px;
-    top: 0;
-    right: 0;
-    background: rgba(255, 255, 255, 0.9);
+    padding: 5px $gutter;
+    text-align: left;
 
     @include mq($from: tablet) {
-      position: static;
-      display: block;
-      background: none;
-      padding: 4px 0;
-      text-align: right;
+      padding: 5px 0;
+      font-size: .8rem;
     }
   }
 }

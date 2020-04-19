@@ -13,7 +13,7 @@
                 :alt="fixture.teamHome.name"
                 width="20"
                 height="20"
-                cssClass="fixture-list__image"
+                cssClass="badge-image"
               />
             </div>
             <i class="fixture-list__score">{{fixture.scoreAway}}</i>
@@ -82,9 +82,9 @@ export default {
     margin: 10px;
     padding: 5px;
   }
+}
 
-  &__image {
-    border-radius: 20px;
-  }
+.badge-image__img  {
+  border-radius: 20px;
 }
 </style>
