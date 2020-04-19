@@ -9,7 +9,45 @@ $mq-breakpoints: (
 
 $colour-red: #b60e17;
 $colour-blue: #79c2ed;
+$colour-grey: #333;
 
 $gutter: 20px;
 
 $vertical-spacing: 2rem;
+
+h1 {
+
+  @include mq($from: tablet) {
+    position: relative;
+    display: inline-block;
+    background: $colour-grey;
+    color: #fff;
+    padding: $gutter/2 $gutter;
+
+    &:before,
+    &:after {
+      background: $colour-grey;
+      transform: skew(-30deg);
+      width: 100px;
+      position: absolute;
+      top: 0;
+      left: $gutter * -1.5;
+      height: 100%;
+      z-index: -1;
+    }
+
+    &:after {
+      content: " ";
+      left: auto;
+      right: -$gutter;
+    }
+  }
+
+  @include mq($from: wide) {
+    padding: $gutter/2 $gutter $gutter/2 0;
+
+    &:before {
+      content: " ";
+    }
+  }
+}

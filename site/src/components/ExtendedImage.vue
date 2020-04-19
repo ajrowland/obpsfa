@@ -7,9 +7,13 @@
       :class="cssClass"
     />
     <div class="extended-image__caption" v-if="image.caption">
-      {{image.caption}}
+      <div class="extended-image__caption-text">
+       {{image.caption}}
+      </div>
     </div>
-    <div class="extended-image__attribution" v-if="image.attribution" v-html="image.attribution" />
+    <div class="extended-image__attribution" v-if="image.attribution">
+      ©{{image.attribution}}
+    </div>
   </div>
 
 </template>
@@ -34,31 +38,60 @@ export default {
 <style lang="scss">
 .extended-image {
   position: relative;
+  overflow: hidden;
+  margin: $vertical-spacing 0;
 
   img {
     display: block;
   }
 
   &__caption {
-    position: absolute;
-    top: 0;
-    left: 0;
+    display: inline-block;
     right: 0;
-    background: rgba(0, 0, 0, 0.6);
-    color: #fff;
-    padding: 5px 10px;
-    font-size: 0.8rem;
+    background: $colour-red;
 
     @include mq($from: tablet) {
-      left: auto;
-      font-size: 1rem;
-      padding: 10px 20px;
+      position: absolute;
+      top: 60%;
+      right: -50px;
+      padding-right: 50px;
+      transform: skew(-30deg);
+      padding-left: $gutter * 2;
+      max-width: 35%;
+    }
+
+    &-text {
+      padding: 5px 10px;
+      color: #fff;
+      line-height: 1;
+
+      @include mq($from: tablet) {
+        padding: 10px 20px 10px 0;
+        display: inline-block;
+        transform: skew(30deg);
+        text-transform: uppercase;
+        line-height: 2rem;
+        font-weight: bold;
+      }
     }
   }
 
   &__attribution {
     font-size: 0.8rem;
-    padding: 4px 0;
+    position: absolute;
+    display: inline-block;
+    padding: 4px;
+    top: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.9);
+
+    @include mq($from: tablet) {
+      position: static;
+      display: block;
+      background: none;
+      padding: 4px 0;
+      text-align: right;
+    }
   }
 }
 </style>

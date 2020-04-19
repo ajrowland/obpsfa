@@ -3,7 +3,7 @@
     <header class="header">
       <div class="header__top-bar">
         <div class="container">
-          social links
+          &nbsp;
         </div>
       </div>
       <div class="container">
@@ -20,9 +20,11 @@
       </div>
     </header>
 
-    <div class="container">
-      <slot />
-    </div>
+    <main class="main">
+      <div class="container">
+        <slot />
+      </div>
+    </main>
 
     <footer class="footer">
       <div class="container">
@@ -60,41 +62,41 @@ body {
   line-height: 1.5;
 }
 
+.layout {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
 .container {
-  max-width: 760px;
+  max-width: 992px;
   margin: 0 auto;
   padding-left: $gutter;
   padding-right: $gutter;
 }
 
 .header {
-  margin-bottom: 20px;
+  background: lighten($colour-blue, 10%);
+  box-shadow: 0px 1px 2px 0px rgba(51, 51, 51, 0.75);
+
+  @include mq($from: tablet) {
+    margin: $vertical-spacing 0;
+  }
 
   &__top-bar {
     background-color: $colour-red;
     color: #fff;
     padding: 10px 0;
-    margin-bottom: $vertical-spacing;
   }
 
   &__nav {
-    display: flex;
-    justify-content: space-between;
-
     @include mq($from: tablet) {
-      align-items: center;
     }
   }
 
   &__nav-links {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-
-    @include mq($from: tablet) {
-      margin-left: 20px;
-      flex-direction: row;
-    }
+    padding: $vertical-spacing * 1.5 0;
+    text-align: right;
   }
 
   &__logo {
@@ -104,15 +106,57 @@ body {
     height: 100px;
     background-size: cover;
     text-indent: -9999px;
+    border: 5px solid #fff;
+    border-radius: 110px;
+    position: absolute;
+    top: $vertical-spacing / 4.2;
+
+    @include mq($from: tablet) {
+      width: 200px;
+      height: 200px;
+      border-radius: 120px;
+      border-width: 10px;
+    }
   }
 
   &__nav-link {
     padding: 10px 0;
-    text-align: right;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: $colour-grey;
+    font-weight:bold;
+    border-bottom: 2px solid transparent;
+    display: block;
+    transition: border-color .2s ease-in-out;
+
+    &.active--exact.active,
+    &:hover {
+      border-color: $colour-grey;
+    }
 
     @include mq($from: tablet) {
-      padding: 0;
-      margin-left: 20px;
+      padding: 5px 0;
+      margin: 10px;
+      display: inline;
+    }
+  }
+}
+
+.main {
+  flex-grow: 1;
+
+  p {
+    line-height: 2;
+  }
+
+  a {
+    background-color: rgba($colour-red, 0.2);
+    color: #000;
+    text-decoration: none;
+    padding: 4px 10px;
+
+    &:hover {
+      text-decoration: underline;
     }
   }
 }
@@ -126,7 +170,7 @@ figure {
 }
 
 .footer {
-  background: #333;
+  background: $colour-grey;
   color: #fff;
   padding: $vertical-spacing 0;
   margin-top: $vertical-spacing;
