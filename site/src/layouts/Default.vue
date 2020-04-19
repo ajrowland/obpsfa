@@ -10,6 +10,8 @@
         <nav class="header__nav">
           <g-link to="/" class="header__logo" title="Home">Home</g-link>
 
+          <button class="header__menu-toggle" @click="toggleMenu">Menu</button>
+
           <div class="header__nav-links">
             <g-link class="header__nav-link" to="/">Home</g-link>
             <template v-for="edge in $static.pages.edges">
@@ -54,12 +56,35 @@ query {
 }
 </static-query>
 
+<script>
+export default {
+  methods: {
+    toggleMenu () {
+      const bodyClasses = document.querySelector('body').classList
+
+      bodyClasses.contains('menu-active') ? bodyClasses.remove('menu-active') : bodyClasses.add('menu-active')
+    }
+  }
+}
+</script>
+
 <style lang="scss">
 body {
   font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   margin:0;
   padding:0;
   line-height: 1.5;
+}
+
+.menu-active {
+  main,
+  footer {
+    display: none;
+
+    @include mq($from: tablet) {
+      display: block;
+    }
+  }
 }
 
 .layout {
@@ -78,9 +103,15 @@ body {
 .header {
   background: lighten($colour-blue, 10%);
   box-shadow: 0px 1px 2px 0px rgba(51, 51, 51, 0.75);
+  height: 100px;
+  z-index: 1;
+  position: sticky;
+  top: 0;
 
   @include mq($from: tablet) {
+    position: static;
     margin: $vertical-spacing 0;
+    height: auto;
   }
 
   &__top-bar {
@@ -95,8 +126,18 @@ body {
   }
 
   &__nav-links {
-    padding: $vertical-spacing * 1.5 0;
+    padding: $vertical-spacing * 3 0;
     text-align: right;
+    display: none;
+
+    .menu-active & {
+      display: block;
+    }
+
+    @include mq($from: tablet) {
+      display: block;
+      padding: $vertical-spacing * 1.5 0;
+    }
   }
 
   &__logo {
@@ -116,6 +157,20 @@ body {
       height: 200px;
       border-radius: 120px;
       border-width: 10px;
+    }
+  }
+
+  &__menu-toggle {
+    position: absolute;
+    right: $gutter;
+    text-transform: uppercase;
+    background: none;
+    border: none;
+    font-weight: bold;
+    padding: 20px;
+
+    @include mq($from: tablet) {
+      display: none;
     }
   }
 

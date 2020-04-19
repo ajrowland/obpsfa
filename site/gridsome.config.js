@@ -23,9 +23,8 @@ function addStyleResource (rule) {
     })
 }
 
-
 module.exports = {
-  siteName: 'ODPSFA',
+  siteName: 'OBPSFA',
 
   templates: {
     SanityPage: '/:slug__current'
@@ -45,6 +44,28 @@ module.exports = {
         // use `graphqlTag` to specify the tag name. Defaults to `default`.
         //graphqlTag: 'default',
       }
+    },
+    {
+      use: "gridsome-plugin-service-worker",
+      options: {
+        networkFirst: {
+          routes: [
+            "/",
+            /\.(js|css|png)$/, // means "every JS, CSS, and PNG images"
+          ],
+        },
+      },
+    },
+    {
+      use: "gridsome-plugin-manifest",
+      options: {
+          background_color: "#000000",
+          icon_path: "./src/favicon.png",
+          name: "Orpington and Bromley PSFA",
+          short_name: "OBPSFA",
+          theme_color: "#FFFFFF",
+          lang: "en",
+      },
     }
   ],
   chainWebpack (config) {

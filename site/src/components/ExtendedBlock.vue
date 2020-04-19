@@ -33,7 +33,7 @@ export default {
         types: {
           fixtureList: FixtureList,
           extendedImage: ({node}) => {
-            return <extended-image image={node} width="800" height="400" />
+            return <extended-image cssClass="main-image" image={node} width="800" height="400" />
           }
         },
         marks: {

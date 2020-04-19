@@ -8,7 +8,7 @@
         :image="$page.home.edges[0].node.mainImage"
         width="800"
         height="400"
-        cssClass="mainImage"
+        cssClass="main-image"
       />
 
       <extended-block
