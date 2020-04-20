@@ -147,13 +147,13 @@ button {
       padding: 5px;
       font-size: .8rem;
 
-      &:hover {
-        background: darken($colour-red, 10%);
-      }
-
       @include mq($from: tablet) {
         font-size: 1rem;
         padding: 10px;
+
+        &:hover {
+          background: darken($colour-red, 10%);
+        }
       }
 
       svg {

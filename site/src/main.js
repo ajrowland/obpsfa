@@ -22,4 +22,10 @@ export default function (Vue, { router, head, isClient }) {
 
   // Inject global image URL builder
   Vue.prototype.$urlForImage = urlForImage
+
+  Vue.mixin({
+    methods: {
+      formatDate: dateStr => new Date(dateStr).toDateString()
+    }
+  })
 }
