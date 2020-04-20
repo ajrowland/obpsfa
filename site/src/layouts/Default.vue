@@ -3,7 +3,14 @@
     <header class="header">
       <div class="header__top-bar">
         <div class="container">
-          &nbsp;
+          <div class="header__top-links">
+            <a class="header__top-link" href="https://twitter.com/odpsfa" title="View our Twitter feed" target="blank" rel="noopener noreferer">
+              <svg viewBox="0 0 512 512"><path d="M419.6 168.6c-11.7 5.2-24.2 8.7-37.4 10.2 13.4-8.1 23.8-20.8 28.6-36 -12.6 7.5-26.5 12.9-41.3 15.8 -11.9-12.6-28.8-20.6-47.5-20.6 -42 0-72.9 39.2-63.4 79.9 -54.1-2.7-102.1-28.6-134.2-68 -17 29.2-8.8 67.5 20.1 86.9 -10.7-0.3-20.7-3.3-29.5-8.1 -0.7 30.2 20.9 58.4 52.2 64.6 -9.2 2.5-19.2 3.1-29.4 1.1 8.3 25.9 32.3 44.7 60.8 45.2 -27.4 21.4-61.8 31-96.4 27 28.8 18.5 63 29.2 99.8 29.2 120.8 0 189.1-102.1 185-193.6C399.9 193.1 410.9 181.7 419.6 168.6z"/></svg>
+            </a>
+            <a class="header__top-link" href="mailto://info@odpsfa.co.uk" title="Send us an email" target="blank" rel="noopener noreferer">
+              Contact us
+            </a>
+          </div>
         </div>
       </div>
       <div class="container">
@@ -118,10 +125,44 @@ button {
     height: auto;
   }
 
-  &__top-bar {
-    background-color: $colour-red;
-    color: #fff;
-    padding: 10px 0;
+  &__top {
+    &-bar {
+      background-color: $colour-red;
+      color: #fff;
+      text-align: right;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    &-links {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    &-link {
+      display: flex;
+      align-items: center;
+      color: #fff;
+      text-decoration: none;
+      padding: 5px;
+      font-size: .8rem;
+
+      &:hover {
+        background: darken($colour-red, 10%);
+      }
+
+      @include mq($from: tablet) {
+        font-size: 1rem;
+        padding: 10px;
+      }
+
+      svg {
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        fill: #fff;
+      }
+    }
   }
 
   &__nav {
@@ -155,18 +196,20 @@ button {
     border-radius: 110px;
     position: absolute;
     top: $vertical-spacing / 4.2;
+    z-index: 1;
 
     @include mq($from: tablet) {
       width: 200px;
       height: 200px;
       border-radius: 120px;
       border-width: 10px;
+      margin-left: $gutter*-1;
     }
   }
 
   &__menu-toggle {
     position: absolute;
-    right: 0;
+    right: 10px;
     text-transform: uppercase;
     background: $colour-blue;
     border: none;
