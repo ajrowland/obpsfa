@@ -10,11 +10,7 @@
         <nav class="header__nav">
           <g-link to="/" class="header__logo" title="Home">Home</g-link>
 
-          <button class="header__menu-toggle" v-on:click="toggleMenu">
-            Menu
-            <span class="open">&#9776;</span>
-            <span class="close">&#10006;</span>
-          </button>
+          <button class="header__menu-toggle" v-on:click="toggleMenu">Menu</button>
 
           <div class="header__nav-links" @click="toggleMenu">
             <g-link class="header__nav-link" to="/">Home</g-link>
@@ -111,7 +107,7 @@ button {
 .header {
   background: lighten($colour-blue, 10%);
   box-shadow: 0px 1px 2px 0px rgba(51, 51, 51, 0.75);
-  height: 105px;
+  height: 103px;
   z-index: 1;
   position: sticky;
   top: 0;
@@ -175,30 +171,20 @@ button {
     background: $colour-blue;
     border: none;
     font-weight: bold;
-    padding: 10px 40px 10px 10px;
+    padding: 10px;
     margin: 10px;
     outline: 0;
     font-size: 1rem;
 
-    .close,
-    .open {
-      position: absolute;
-      top: 10px;
-      right: 10px;
+    &:after {
+      content: "\2630";
+      width: 20px;
+      display: inline-block;
+      text-align: right;
     }
 
-    .close {
-      display: none;
-    }
-
-    .menu-active & {
-      .open {
-        display: none;
-      }
-
-      .close {
-        display: inline-block;
-      }
+    .menu-active &:after {
+      content: "\2715";
     }
 
     @include mq($from: tablet) {
