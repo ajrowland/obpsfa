@@ -10,13 +10,13 @@
         <nav class="header__nav">
           <g-link to="/" class="header__logo" title="Home">Home</g-link>
 
-          <button class="header__menu-toggle" @click="toggleMenu">
+          <button class="header__menu-toggle" v-on:click="toggleMenu">
             Menu
             <span class="open">&#9776;</span>
-            <span class="close">&times;</span>
+            <span class="close">&#10006;</span>
           </button>
 
-          <div class="header__nav-links">
+          <div class="header__nav-links" @click="toggleMenu">
             <g-link class="header__nav-link" to="/">Home</g-link>
             <template v-for="edge in $static.pages.edges">
               <g-link class="header__nav-link" :to="edge.node.slug.current" :key="edge.node.id" :title="edge.node.title">{{edge.node.title}}</g-link>
@@ -74,10 +74,14 @@ export default {
 
 <style lang="scss">
 body {
-  font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   margin:0;
   padding:0;
   line-height: 1.5;
+}
+
+body,
+button {
+  font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 
 .menu-active {
@@ -107,7 +111,7 @@ body {
 .header {
   background: lighten($colour-blue, 10%);
   box-shadow: 0px 1px 2px 0px rgba(51, 51, 51, 0.75);
-  height: 100px;
+  height: 105px;
   z-index: 1;
   position: sticky;
   top: 0;
@@ -168,11 +172,20 @@ body {
     position: absolute;
     right: 0;
     text-transform: uppercase;
-    background: none;
+    background: $colour-blue;
     border: none;
     font-weight: bold;
-    padding: 20px;
+    padding: 10px 40px 10px 10px;
+    margin: 10px;
     outline: 0;
+    font-size: 1rem;
+
+    .close,
+    .open {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
 
     .close {
       display: none;
