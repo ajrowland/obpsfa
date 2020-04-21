@@ -12,10 +12,9 @@
       </fieldset>
 
       <ul class="fixture-list__fixtures">
-
-        <li class="fixture-list__fixture" v-for="(fixture, i) in fixtureList" :key="i">
+        <li class="fixture-list__fixture" v-for="(fixture, i) in filteredFixtures" :key="fixture.id">
           <time v-if="i === 0 || fixtures[i - 1].date !== fixture.date" class="fixture-list__date">{{formatDate(fixture.date)}}</time>
-          <div v-if="inFilter(fixture.teamHome.id, fixture.teamAway.id)" class="fixture-list__teams" :style="'background-color: ' + ((fixture.teamHome.accentColor && fixture.teamHome.accentColor.hex) || (fixture.teamAway.accentColor && fixture.teamAway.accentColor.hex))">
+          <div class="fixture-list__teams" :style="'background-color: ' + ((fixture.teamHome.accentColor && fixture.teamHome.accentColor.hex) || (fixture.teamAway.accentColor && fixture.teamAway.accentColor.hex))">
             <div class="fixture-list__team">
               {{fixture.teamHome.name}}
               <div class="fixture-list__badge">
@@ -63,9 +62,9 @@ export default {
       fixtureList: this.fixtures
     }
   },
-  methods: {
-    inFilter(id1, id2) {
-      return this.filterList.includes(id1) || this.filterList.includes(id2)
+  computed: {
+    filteredFixtures() {
+      return this.fixtureList.filter(f => (this.filterList.includes(f.teamHome.id) || this.filterList.includes(f.teamAway.id)))
     }
   }
 }
@@ -159,10 +158,6 @@ export default {
     font-size: 0.8rem;
     text-align: center;
     margin: 10px 0 4px 0;
-
-    &:only-child {
-      display: none;
-    }
   }
 
   &__score {

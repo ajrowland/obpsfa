@@ -118,6 +118,7 @@ button {
   z-index: 1;
   position: sticky;
   top: 0;
+  margin-bottom: 10px;
 
   @include mq($from: tablet) {
     position: static;
