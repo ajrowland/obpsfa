@@ -6,16 +6,8 @@ export default {
     {
       name: 'name',
       title: 'Name',
-      type: 'string'
-    },
-    {
-      name: 'slug',
-      title: 'Slug',
-      type: 'slug',
-      options: {
-        source: 'name',
-        maxLength: 96
-      }
+      type: 'string',
+      validation: Rule => Rule.required()
     },
     {
       name: 'venue',
@@ -42,6 +34,12 @@ export default {
           lists: []
         }
       ]
+    },
+    {
+      name: 'accentColor',
+      title: 'Accent colour',
+      type: 'color',
+      description: 'Used for various design cues'
     }
   ],
   preview: {

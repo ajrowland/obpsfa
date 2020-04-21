@@ -75,7 +75,10 @@ export default {
       type: 'extendedImage'
     },
     {
-      type: 'fixtureList'
+      title: 'Fixture list',
+      name: 'fixtureList',
+      type: 'reference',
+      to: { type: 'fixtureList' }
     }
   ]
 }

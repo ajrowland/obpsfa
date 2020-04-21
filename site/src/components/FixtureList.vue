@@ -1,12 +1,21 @@
 <template>
 
     <div class="fixture-list">
-      <h2>{{team.name}}</h2>
+
+      <fieldset class="fixture-list__filter">
+        <legend class="fixture-list__filter-legend">Filter fixtures:</legend>
+        <template class="fixture-list__filter-item" v-for="team in teamFilter">
+          <label :key="team.id" class="fixture-list__filter-item">
+            <input type="checkbox" :id="team.id" :value="team.id" :checked="filterList.includes(team.id)" :disabled="(filterList.length === 1 && filterList.includes(team.id))" v-model="filterList" /> {{team.name}}
+          </label>
+        </template>
+      </fieldset>
 
       <ul class="fixture-list__fixtures">
-        <li class="fixture-list__fixture" v-for="fixture in fixtures" :key="fixture._key">
-          <time class="fixture-list__date">{{formatDate(fixture.date)}}</time>
-          <div class="fixture-list__teams">
+
+        <li class="fixture-list__fixture" v-for="(fixture, i) in fixtureList" :key="i">
+          <time v-if="i === 0 || fixtures[i - 1].date !== fixture.date" class="fixture-list__date">{{formatDate(fixture.date)}}</time>
+          <div v-if="inFilter(fixture.teamHome.id, fixture.teamAway.id)" class="fixture-list__teams" :style="'background-color: ' + ((fixture.teamHome.accentColor && fixture.teamHome.accentColor.hex) || (fixture.teamAway.accentColor && fixture.teamAway.accentColor.hex))">
             <div class="fixture-list__team">
               {{fixture.teamHome.name}}
               <div class="fixture-list__badge">
@@ -19,7 +28,7 @@
                 />
               </div>
               <div class="fixture-list__score">
-                <strong v-html="fixture.scoreHome != undefined ? fixture.scoreHome : '-'" />
+                <strong v-html="fixture.scoreHome !== undefined ? fixture.scoreHome : '-'" />
               </div>
             </div>
             <div class="fixture-list__team">
@@ -47,14 +56,57 @@
 
 <script>
 export default {
-  props: ['team', 'fixtures']
+  props: ['teamFilter', 'fixtures'],
+  data() {
+    return {
+      filterList: this.teamFilter.map(t => t.id),
+      fixtureList: this.fixtures
+    }
+  },
+  methods: {
+    inFilter(id1, id2) {
+      return this.filterList.includes(id1) || this.filterList.includes(id2)
+    }
+  }
 }
 </script>
 
 <style lang="scss">
 .fixture-list {
-  display: flex;
-  flex-direction: column;
+  &__filter {
+    background: #333;
+    border: 0;
+    color: #fff;
+    padding: 10px;
+    margin-bottom: $vertical-spacing;
+
+    @include mq($from: tablet) {
+      padding: 20px;
+    }
+
+    &-legend {
+      float: left;
+      font-weight: bold;
+      text-transform: uppercase;
+      width: 100%;
+      margin-bottom: 10px;
+
+      @include mq($from: tablet) {
+        width: auto;
+        margin-bottom: 0;
+      }
+    }
+
+    &-item {
+      padding: 5px 0;
+      display: block;
+
+      @include mq($from: tablet) {
+        padding: 10px;
+        display: inline;
+      }
+    }
+  }
 
   &__fixtures {
     margin: 0;
@@ -63,6 +115,8 @@ export default {
   }
 
   &__fixture {
+    margin-bottom: 2px;
+
     &:nth-child(even) .fixture-list__teams {
       background: lighten($colour-red, 58%);
     }
@@ -105,6 +159,10 @@ export default {
     font-size: 0.8rem;
     text-align: center;
     margin: 10px 0 4px 0;
+
+    &:only-child {
+      display: none;
+    }
   }
 
   &__score {
