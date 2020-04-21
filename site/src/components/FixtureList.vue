@@ -181,6 +181,8 @@ export default {
 
     strong {
       display: inline-block;
+      width: 20px;
+      text-align: center;
 
       @include mq($from: tablet) {
         transform: skew(30deg);
