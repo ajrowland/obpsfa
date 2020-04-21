@@ -35,7 +35,7 @@
               <div class="fixture-list__badge">
                 <extended-image
                   :image="fixture.teamAway.badge"
-                  :alt="fixture.teamHome.away"
+                  :alt="fixture.teamHome.name"
                   width="30"
                   height="30"
                   cssClass="badge-image"
