@@ -6,7 +6,7 @@
     <extended-image
       :image="$page.page.mainImage"
       width="800"
-      height="400"
+      height="350"
       cssClass="main-image"
     />
 

@@ -7,7 +7,7 @@
       <extended-image
         :image="$page.home.edges[0].node.mainImage"
         width="800"
-        height="400"
+        height="350"
         cssClass="main-image"
       />
 
