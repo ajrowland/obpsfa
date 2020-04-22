@@ -16,6 +16,7 @@ import season from './season'
 import fixture from './fixture'
 import seo from './seo'
 import extendedImage from './extendedImage'
+import iframe from './iframe'
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -39,6 +40,7 @@ export default createSchema({
     // { type: 'typename' } in other document schemas
     blockContent,
     seo,
-    extendedImage
+    extendedImage,
+    iframe
   ])
 })

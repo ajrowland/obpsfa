@@ -4,6 +4,7 @@
 import DefaultLayout from '~/layouts/Default.vue'
 import ExtendedImage from '~/components/ExtendedImage.vue'
 import ExtendedBlock from '~/components/ExtendedBlock.vue'
+import Iframe from '~/components/Iframe.vue'
 import urlBuilder from '@sanity/image-url'
 
 const urlForImage = (source, data) => {
@@ -19,6 +20,7 @@ export default function (Vue, { router, head, isClient }) {
   Vue.component('Layout', DefaultLayout)
   Vue.component('ExtendedImage', ExtendedImage)
   Vue.component('ExtendedBlock', ExtendedBlock)
+  Vue.component('Iframe', Iframe)
 
   // Inject global image URL builder
   Vue.prototype.$urlForImage = urlForImage

@@ -24,6 +24,7 @@ query {
 import PortableText from 'sanity-blocks-vue-component'
 import ExtendedImage from '~/components/ExtendedImage'
 import FixtureList from '~/components/FixtureList'
+import Iframe from '~/components/Iframe'
 
 export default {
   props: ['blocks'],
@@ -32,6 +33,7 @@ export default {
       serializers: {
         types: {
           fixtureList: FixtureList,
+          iframe: Iframe,
           extendedImage: ({node}) => {
             return <extended-image cssClass="main-image" image={node} width="800" height="350" />
           }

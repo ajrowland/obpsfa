@@ -79,6 +79,9 @@ export default {
       name: 'fixtureList',
       type: 'reference',
       to: { type: 'fixtureList' }
+    },
+    {
+      type: 'iframe'
     }
   ]
 }
