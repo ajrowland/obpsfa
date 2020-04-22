@@ -76,17 +76,6 @@ export default {
 </script>
 
 <style lang="scss">
-body {
-  margin:0;
-  padding:0;
-  line-height: 1.5;
-}
-
-body,
-button {
-  font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-}
-
 .menu-active {
   main,
   footer {
@@ -101,6 +90,7 @@ button {
 .layout {
   display: flex;
   min-height: 100vh;
+  min-width: 320px;
   flex-direction: column;
 }
 
@@ -121,6 +111,10 @@ button {
   margin-bottom: 10px;
 
   @include mq($from: tablet) {
+    height: 150px;
+  }
+
+  @include mq($from: desktop) {
     position: static;
     margin: $vertical-spacing 0;
     height: auto;
@@ -148,7 +142,7 @@ button {
       padding: 5px;
       font-size: .8rem;
 
-      @include mq($from: tablet) {
+      @include mq($from: desktop) {
         font-size: 1rem;
         padding: 10px;
 
@@ -166,11 +160,6 @@ button {
     }
   }
 
-  &__nav {
-    @include mq($from: tablet) {
-    }
-  }
-
   &__nav-links {
     padding: $vertical-spacing * 3 0;
     text-align: right;
@@ -180,7 +169,7 @@ button {
       display: block;
     }
 
-    @include mq($from: tablet) {
+    @include mq($from: desktop) {
       display: block;
       padding: $vertical-spacing * 1.5 0;
     }
@@ -200,6 +189,13 @@ button {
     z-index: 1;
 
     @include mq($from: tablet) {
+      width: 150px;
+      height: 150px;
+      border-radius: 78px;
+      border-width: 6px;
+    }
+
+    @include mq($from: desktop) {
       width: 200px;
       height: 200px;
       border-radius: 120px;
@@ -232,6 +228,10 @@ button {
     }
 
     @include mq($from: tablet) {
+      margin: 34px 10px;
+    }
+
+    @include mq($from: desktop) {
       display: none;
     }
   }
@@ -251,7 +251,7 @@ button {
       border-color: $colour-grey;
     }
 
-    @include mq($from: tablet) {
+    @include mq($from: desktop) {
       padding: 5px 0;
       margin: 10px;
       display: inline;
@@ -276,14 +276,6 @@ button {
       text-decoration: underline;
     }
   }
-}
-
-img {
-  width: 100%;
-}
-
-figure {
-  margin: 0;
 }
 
 .footer {
