@@ -5,9 +5,9 @@
       <fieldset class="fixture-list__filter">
         <legend class="fixture-list__filter-legend">Filter fixtures:</legend>
         <template class="fixture-list__filter-item" v-for="team in teamFilter">
-          <label :key="team.id" class="fixture-list__filter-item">
-            <input type="checkbox" :id="team.id" :value="team.id" :checked="filterList.includes(team.id)" :disabled="(filterList.length === 1 && filterList.includes(team.id))" v-model="filterList" /> {{team.name}}
-          </label>
+          <span :key="team.id" class="fixture-list__filter-item">
+            <input type="checkbox" :id="team.id" :value="team.id" :checked="filterList.includes(team.id)" :disabled="(filterList.length === 1 && filterList.includes(team.id))" v-model="filterList" /><label :for="team.id">{{team.name}}</label>
+          </span>
         </template>
       </fieldset>
 
