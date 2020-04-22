@@ -270,7 +270,7 @@ export default {
     background-color: rgba($colour-red, 0.2);
     color: #000;
     text-decoration: none;
-    padding: 4px 10px;
+    padding: 4px;
 
     &:hover {
       text-decoration: underline;
