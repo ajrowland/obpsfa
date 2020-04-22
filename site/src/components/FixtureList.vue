@@ -29,6 +29,7 @@
               <div class="fixture-list__score">
                 <strong v-html="fixture.scoreHome !== undefined ? fixture.scoreHome : '-'" />
               </div>
+              <div v-if="fixture.competition" :class="'fixture-list__competition fixture-list__competition-' + fixture.competition"><span class="sr-only">{{ fixture.competition }}</span></div>
             </div>
             <div class="fixture-list__team">
               {{fixture.teamAway.name}}
@@ -115,6 +116,7 @@ export default {
 
   &__fixture {
     margin-bottom: 2px;
+    position: relative;
 
     &:nth-child(even) .fixture-list__teams {
       background: lighten($colour-red, 58%);
@@ -198,6 +200,31 @@ export default {
 
     @include mq($from: tablet) {
       display: inline-block;
+    }
+  }
+
+  &__competition {
+    position: absolute;
+    right: 60px;
+
+    @include mq($from: tablet) {
+      right: $gutter;
+    }
+
+    &:after {
+      display: block;
+    }
+
+    &-cup:after {
+      content: "\1F3C6";
+    }
+
+    &-league:after {
+      content: "\1F3C5";
+    }
+
+    &-friendly:after {
+      content: "\1F91D";
     }
   }
 }

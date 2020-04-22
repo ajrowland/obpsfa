@@ -29,6 +29,29 @@ export default {
       name: 'scoreAway',
       title: 'Away score',
       type: 'number'
+    },
+    {
+      name: 'competition',
+      title: 'Competition',
+      type: 'string',
+      options: {
+        sortable: false,
+        layout: 'radio',
+        list: [
+          {
+            value: 'league',
+            title: 'League'
+          },
+          {
+            value: 'cup',
+            title: 'Cup'
+          },
+          {
+            value: 'friendly',
+            title: 'Friendly'
+          }
+        ]
+      }
     }
   ],
   preview: {
