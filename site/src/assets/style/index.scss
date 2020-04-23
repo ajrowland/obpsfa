@@ -31,7 +31,9 @@ button {
   }
 }
 
-h1 {
+h1,
+.news h3 {
+  z-index: 1;
 
   @include mq($from: tablet) {
     position: relative;

@@ -30,9 +30,11 @@
     </header>
 
     <main class="main">
+      <slot name="contentTop" />
       <div class="container">
         <slot />
       </div>
+      <slot name="contentBottom" />
     </main>
 
     <footer class="footer">
@@ -264,16 +266,16 @@ export default {
 
   p {
     line-height: 2;
-  }
 
-  a {
-    background-color: rgba($colour-red, 0.2);
-    color: #000;
-    text-decoration: none;
-    padding: 4px;
+    a {
+      background-color: rgba($colour-red, 0.2);
+      color: #000;
+      text-decoration: none;
+      padding: 4px;
 
-    &:hover {
-      text-decoration: underline;
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 }
@@ -282,6 +284,5 @@ export default {
   background: $colour-grey;
   color: #fff;
   padding: $vertical-spacing 0;
-  margin-top: $vertical-spacing;
 }
 </style>
