@@ -47,7 +47,7 @@
 
 <static-query>
 query {
-  pages: allSanityPage(sortBy: "sortOrder", order: ASC) {
+  pages: allSanityPage(sortBy: "sortOrder", order: ASC, filter: { sortOrder: { gt: 0 } }) {
     edges {
       node {
         id
@@ -179,6 +179,7 @@ export default {
 
   &__logo {
     background: url(~@/favicon.png);
+    background-color: #fff;
     background-repeat: no-repeat;
     width: 100px;
     height: 100px;
@@ -198,10 +199,10 @@ export default {
     }
 
     @include mq($from: desktop) {
-      width: 200px;
-      height: 200px;
+      width: 204px;
+      height: 204px;
       border-radius: 120px;
-      border-width: 10px;
+      border-width: 8px;
       margin-left: $gutter*-1;
     }
   }

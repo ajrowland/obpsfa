@@ -19,40 +19,26 @@
       <h1>ERROR: No home page document exists.</h1>
     </template>
     <template slot="contentBottom">
-      <section class="news" :nostyle="'background-image:url(' + this.$page.home.edges[0].node.mainImage.asset.url + ')'">
+      <section class="news">
         <div class="container">
-          <H2>LATEST NEWS</h2>
+          <H2>Latest news</h2>
 
           <div class="news__items">
-            <a class="news__item" href="#" title="Clubs rally to our call!">
+            <g-link v-for="newsItem in $page.news.edges" :key="newsItem.node.id" class="news__item" :to="newsItem.node.slug.current" :title="newsItem.node.title">
               <div class="news__item-text">
-                <h3 class="news__item-title">Clubs rally to our call!</h3>
-                <time>Sat Oct 19 2019</time>
-                <p>A fantastic response from the footballing communitity, as clubs have kindly offered to help us provide district football next season.</p>
+                <h3 class="news__item-title" v-html="newsItem.node.title" />
+                <time v-html="formatDate(newsItem.node.seo.publishedAt)" />
+                <p>{{newsItem.node.seo.description}}</p>
                 <p class="news__item-more">Read more</p>
               </div>
-              <g-image :src="this.$page.home.edges[0].node.mainImage.asset.url" width="400" height="175" />
-            </a>
-
-            <a class="news__item" href="#" title="A new home required">
-              <div class="news__item-text">
-                <h3 class="news__item-title">A new home required</h3>
-                <time>Sat Oct 19 2019</time>
-                <p>Over 20 years we have played at Orpington Rovers FC and there have been so many great memories, but unfortunately they have decided to part ways.</p>
-                <p class="news__item-more">Read more</p>
-              </div>
-              <g-image :src="this.$page.home.edges[0].node.mainImage.asset.url" />
-            </a>
-
-            <a class="news__item" href="#" title="Kent Schools FA suspends all football">
-              <div class="news__item-text">
-                <h3 class="news__item-title">Kent Schools FA suspends all football</h3>
-                <time>Sat Oct 19 2019</time>
-                <p>Due to Coronavirus, Kent Schools FA has cancelled all schools football matches.</p>
-                <p class="news__item-more">Read more</p>
-              </div>
-              <g-image :src="this.$page.home.edges[0].node.mainImage.asset.url" />
-            </a>
+              <extended-image
+                :image="newsItem.node.mainImage"
+                width="800"
+                height="600"
+                cssClass="news__image"
+                :hideCaption=true
+              />
+            </g-link>
           </div>
         </div>
       </section>
@@ -82,6 +68,30 @@ query {
           author {
             name
           }
+        }
+      }
+    }
+  }
+  news: allSanityPage(sortBy: "seo.publishedAt", order: DESC, filter: { sortOrder: {lt: 10} }) {
+    edges {
+      node {
+        id
+        title
+        slug {
+          current
+        }
+        mainImage {
+          alt
+          caption
+          attribution
+          asset {
+            _id
+            url
+          }
+        }
+        seo {
+          description
+          publishedAt
         }
       }
     }
@@ -117,27 +127,26 @@ export default {
 <style lang="scss">
 .news {
   background-image: linear-gradient(to bottom right, rgba($colour-red, 0.6), #fff);
-  background-repeat: no-repeat;
-  background-size: cover;
-  padding: $vertical-spacing;
+  padding-top: $vertical-spacing;
   margin-top: $vertical-spacing * 2;
   color: #fff;
 
   h2 {
-    font-size: 2.5rem;
-  }
-
-  &__items {
+    text-transform: uppercase;
   }
 
   &__item {
     display: block;
     background-color: #666;
-    margin: $gutter * 2 0;
     color: #fff;
-    display: flex;
     text-decoration: none;
     transition: all .25s ease-in-out;
+    margin: 0 -20px;
+
+    @include mq($from: tablet) {
+      display: flex;
+      margin: $gutter * 2 0;
+    }
 
     &:hover {
       transform: scale(1.02);
@@ -159,12 +168,11 @@ export default {
         left: $gutter * -1;
       }
 
-      padding-left: $gutter;
-    }
+      padding: $gutter;
 
-    img {
-      width: 45%;
-      display: inline-block;
+      @include mq($from: tablet) {
+        padding: 10px 20px;
+      }
     }
 
     time {
@@ -177,14 +185,28 @@ export default {
       margin: 20px;
     }
 
+    img {
+      display: block;
+    }
+
     &-more {
       font-weight: bold;
+    }
+  }
 
-      /*&:after {
-        content: "\25b6";
-        margin-left: 4px;
-        font-size: .8rem;
-      }*/
+  @include mq($from: tablet) {
+    padding-bottom: $vertical-spacing;
+
+    h2 {
+      font-size: 2.5rem;
+    }
+
+    &__item-text {
+      width: 55%;
+    }
+
+    &__image {
+      width: 45%;
     }
   }
 }

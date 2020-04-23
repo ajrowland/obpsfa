@@ -6,7 +6,7 @@
       :alt="image.alt || alt"
       :class="cssClass && `${cssClass}__img`"
     />
-    <div :class="cssClass && `${cssClass}__caption`" v-if="image.caption">
+    <div :class="cssClass && `${cssClass}__caption`" v-if="!hideCaption && image.caption">
       <div :class="cssClass && `${cssClass}__caption-text`">
        {{image.caption}}
       </div>
@@ -31,7 +31,7 @@ query {
 
 <script>
 export default {
-  props: ['image', 'width', 'height', 'cssClass', 'alt']
+  props: ['image', 'width', 'height', 'cssClass', 'alt', 'hideCaption']
 }
 </script>
 
