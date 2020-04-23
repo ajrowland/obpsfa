@@ -120,7 +120,7 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
   padding: $vertical-spacing;
-  margin-top: $vertical-spacing;
+  margin-top: $vertical-spacing * 2;
   color: #fff;
 
   h2 {
@@ -138,7 +138,6 @@ export default {
     display: flex;
     text-decoration: none;
     transition: all .25s ease-in-out;
-    text-rendering: optimizelegibility;
 
     &:hover {
       transform: scale(1.02);
