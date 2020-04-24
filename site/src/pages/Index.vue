@@ -72,7 +72,7 @@ query {
       }
     }
   }
-  news: allSanityPage(sortBy: "seo.publishedAt", order: DESC, filter: { sortOrder: {lt: 10} }) {
+  news: allSanityPage(sortBy: "seo.publishedAt", order: DESC, filter: { sortOrder: {lt: 0} }) {
     edges {
       node {
         id
