@@ -158,6 +158,8 @@ export default {
 
     h3 {
       background: $colour-red;
+      padding: $gutter;
+      margin-top: 0;
 
       &:before,
       &:after {
@@ -167,8 +169,6 @@ export default {
       &:before {
         left: $gutter * -1;
       }
-
-      padding: $gutter;
 
       @include mq($from: tablet) {
         padding: 10px 20px;
