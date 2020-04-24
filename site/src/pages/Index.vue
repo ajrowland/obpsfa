@@ -19,26 +19,12 @@
       <h1>ERROR: No home page document exists.</h1>
     </template>
     <template slot="contentBottom">
-      <section class="news">
+      <section class="news" v-if="$page.news">
         <div class="container">
           <H2>Latest news</h2>
 
           <div class="news__items">
-            <g-link v-for="newsItem in $page.news.edges" :key="newsItem.node.id" class="news__item" :to="newsItem.node.slug.current" :title="newsItem.node.title">
-              <div class="news__item-text">
-                <h3 class="news__item-title" v-html="newsItem.node.title" />
-                <time v-html="formatDate(newsItem.node.seo.publishedAt)" />
-                <p>{{newsItem.node.seo.description}}</p>
-                <p class="news__item-more">Read more</p>
-              </div>
-              <extended-image
-                :image="newsItem.node.mainImage"
-                width="800"
-                height="600"
-                cssClass="news__image"
-                :hideCaption=true
-              />
-            </g-link>
+            <NewsItem v-for="newsItem in $page.news.edges" :key="newsItem.node.id" :item="newsItem.node" />
           </div>
         </div>
       </section>
@@ -105,7 +91,12 @@ query {
 </page-query>
 
 <script>
+import NewsItem from '~/components/NewsItem.vue'
+
 export default {
+  components: {
+    NewsItem
+  },
   metaInfo() {
     return {
       title: this.$page.home.edges[0].node.title,
