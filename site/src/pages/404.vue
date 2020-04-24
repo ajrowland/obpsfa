@@ -40,6 +40,10 @@ export default {
       title: 'Page not found',
       meta: [
         {
+          name: 'author',
+          content: 'OBPSFA'
+        },
+        {
           name: 'description',
           content: 'Page not found'
         }
