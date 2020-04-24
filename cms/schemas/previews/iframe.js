@@ -1,7 +1,7 @@
 import React from "react";
 
 const IframePreview = ({ value }) => {
-  const { url } = value;
+  const { url, title } = value;
   if (!url) {
     return <p>Missing URL for iframe</p>;
   }
@@ -9,6 +9,7 @@ const IframePreview = ({ value }) => {
   return (
     <iframe
       src={url}
+      title={title}
       width="100%"
       height="300"
     />
