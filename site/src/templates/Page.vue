@@ -53,6 +53,9 @@ query Page ($id: ID!) {
         url
       }
     }
+    slug {
+      current
+    }
     seo {
       description
       author {
@@ -61,8 +64,7 @@ query Page ($id: ID!) {
     }
   }
   metadata {
-    siteName
-    siteDescription
+    siteTwitterName
     siteUrl
   }
 }
@@ -71,32 +73,38 @@ query Page ($id: ID!) {
 <script>
 export default {
   metaInfo() {
-    return this.$page.page ?
-      {
-        title: this.$page.page.title,
-        meta: [
-          {
-            name: 'author',
-            content: this.$page.page.seo.author.name
-          },
-          {
-            name: 'description',
-            content: this.$page.page.seo.description
-          }
-        ]
-      } : {
-        title: 'Page not found',
-        meta: [
-          {
-            name: 'author',
-            content: 'OBPSFA'
-          },
-          {
-            name: 'description',
-            content: 'Page not found'
-          }
-        ]
-      }
+    const page = this.$page.page
+
+    return page ? {
+      title: 'Home',
+      meta: [
+        { name: 'author', content: page.seo.author.name },
+        { name: 'description', content: page.seo.description },
+        { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'twitter:description', content: page.seo.description },
+        { name: 'twitter:title', content: page.title },
+        { name: 'twitter:site', content: this.$page.metadata.siteTwitterName },
+        { name: 'twitter:creator', content: this.$page.metadata.siteTwitterName },
+        { name: 'twitter:image', content: page.mainImage.asset.url },
+        { property: 'og:type', content: 'article' },
+        { property: 'og:title', content: page.title },
+        { property: 'og:description', content: page.seo.description },
+        { property: 'og:url', content: `${this.$page.metadata.siteUrl}/${page.slug.current}` },
+        { property: 'og:image', content: page.mainImage.asset.url }
+      ]
+    } : {
+      title: 'Page not found',
+      meta: [
+        {
+          name: 'author',
+          content: 'OBPSFA'
+        },
+        {
+          name: 'description',
+          content: 'Page not found'
+        }
+      ]
+    }
   }
 }
 </script>

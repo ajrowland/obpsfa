@@ -83,9 +83,8 @@ query {
     }
   }
   metadata {
-    siteName
-    siteDescription
-    siteUrl
+    siteUrl,
+    siteTwitterName
   }
 }
 </page-query>
@@ -98,17 +97,23 @@ export default {
     NewsItem
   },
   metaInfo() {
+    const page = this.$page.home.edges[0].node
     return {
-      title: this.$page.home.edges[0].node.title,
+      title: 'Home',
       meta: [
-        {
-          name: 'author',
-          content: this.$page.home.edges[0].node.seo.author.name
-        },
-        {
-          name: 'description',
-          content: this.$page.home.edges[0].node.seo.description
-        }
+        { name: 'author', content: page.seo.author.name },
+        { name: 'description', content: page.seo.description },
+        { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'twitter:description', content: page.seo.description },
+        { name: 'twitter:title', content: 'Home' },
+        { name: 'twitter:site', content: this.$page.metadata.siteTwitterName },
+        { name: 'twitter:creator', content: this.$page.metadata.siteTwitterName },
+        { name: 'twitter:image', content: page.mainImage.asset.url },
+        { property: 'og:type', content: 'article' },
+        { property: 'og:title', content: 'Home' },
+        { property: 'og:description', content: page.seo.description },
+        { property: 'og:url', content: this.$page.metadata.siteUrl },
+        { property: 'og:image', content: page.mainImage.asset.url }
       ]
     }
   }

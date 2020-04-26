@@ -25,9 +25,18 @@ function addStyleResource (rule) {
 
 module.exports = {
   siteName: 'OBPSFA',
+  siteUrl: 'https://www.obpsfa.com',
+  siteTwitterName: 'odpsfa',
 
   templates: {
-    SanityPage: '/:slug__current'
+    SanityPage: [
+      {
+        path: (node) => {
+          return `/${node.slug.current}`
+        },
+        component: './src/templates/Page.vue'
+      }
+    ]
   },
 
   plugins: [
