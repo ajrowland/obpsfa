@@ -1,7 +1,7 @@
 <template>
   <Layout>
 
-    <h1>Page not found</h1>
+    <h1>Page not found 😢</h1>
 
     <div class="main-image">
       <g-image
@@ -22,16 +22,6 @@
 
   </Layout>
 </template>
-
-<page-query>
-query {
-  metadata {
-    siteName
-    siteDescription
-    siteUrl
-  }
-}
-</page-query>
 
 <script>
 export default {
