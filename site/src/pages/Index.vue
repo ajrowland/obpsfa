@@ -54,6 +54,11 @@ query {
           author {
             name
           }
+          image {
+            asset {
+              url
+            }
+          }
         }
       }
     }
@@ -98,6 +103,8 @@ export default {
   },
   metaInfo() {
     const page = this.$page.home.edges[0].node
+    const imageUrl = page.seo.image ? page.seo.image.asset.url : (page.mainImage ? page.mainImage.asset.url : '')
+
     return {
       title: 'Home',
       meta: [
@@ -108,12 +115,12 @@ export default {
         { name: 'twitter:title', content: 'Home' },
         { name: 'twitter:site', content: this.$page.metadata.siteTwitterName },
         { name: 'twitter:creator', content: this.$page.metadata.siteTwitterName },
-        { name: 'twitter:image', content: page.mainImage.asset.url },
+        { name: 'twitter:image', content: imageUrl },
         { property: 'og:type', content: 'article' },
         { property: 'og:title', content: 'Home' },
         { property: 'og:description', content: page.seo.description },
         { property: 'og:url', content: this.$page.metadata.siteUrl },
-        { property: 'og:image', content: page.mainImage.asset.url }
+        { property: 'og:image', content: imageUrl }
       ]
     }
   }

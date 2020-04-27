@@ -12,16 +12,16 @@ module.exports = function(api) {
     // Use the Data store API here: https://gridsome.org/docs/data-store-api
     store.addMetadata('sanityOptions', clientConfig.sanity)
     store.addMetadata('siteTwitterName', 'odpsfa')
+    store.addMetadata('siteEmail', 'info@odpsfa.co.uk')
 
     const santityPageCollection = store.getCollection('SanityPage')
     const pages = santityPageCollection.data()
 
-    //console.log(pages)
-    pages.forEach(page => {
+    /*pages.forEach(page => {
       if (page.parent) {
         console.log(page.title, page.parent._ref)
       }
-    });
+    });*/
 
     store.addSchemaResolvers({
       SanityPage: {
