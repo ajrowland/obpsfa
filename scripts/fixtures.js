@@ -95,7 +95,8 @@ const addResults = async () => {
     }
 
     const dateObj = new Date($(cell[4]).text().substr(11).trim())
-    const date = dateObj != 'Invalid Date' ? dateObj.toISOString().slice(0,10) : undefined
+
+    const date = dateObj != 'Invalid Date' ? new Date(dateObj.getTime() - (dateObj.getTimezoneOffset() * 60000 )).toISOString().split("T")[0] : undefined
 
     const scores = $(cell[1]).text().trim().split('-')
 
@@ -121,6 +122,8 @@ const addResults = async () => {
   })
 
   doc.fixtures.sort((a, b) => (!b.date && -1 || new Date(a.date) - new Date(b.date)))
+
+  console.log(doc.fixtures.map(f => f.date))
 
   client.createOrReplace(doc).then(res => {
     console.log(`fixtureList was created, document ID is ${res._id}`)
