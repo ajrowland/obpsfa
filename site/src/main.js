@@ -27,7 +27,7 @@ export default function (Vue, { router, head, isClient }) {
 
   Vue.mixin({
     methods: {
-      formatDate: dateStr => new Date(dateStr).toDateString()
+      formatDate: dateStr => dateStr ? new Date(dateStr).toDateString() : 'No date'
     }
   })
 }
