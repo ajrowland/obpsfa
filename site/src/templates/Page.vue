@@ -59,8 +59,8 @@ export default {
     const page = this.$page.page
     const imageUrl = page.seo.image ? page.seo.image.asset.url : (page.mainImage ? page.mainImage.asset.url : '')
 
-    return page ? {
-      title: 'Home',
+    return {
+      title: page.title,
       meta: [
         { name: 'author', content: page.seo.author.name },
         { name: 'description', content: page.seo.description },
@@ -75,18 +75,6 @@ export default {
         { property: 'og:description', content: page.seo.description },
         { property: 'og:url', content: `${this.$page.metadata.siteUrl}/${page.slug.current}` },
         { property: 'og:image', content: imageUrl }
-      ]
-    } : {
-      title: 'Page not found',
-      meta: [
-        {
-          name: 'author',
-          content: 'OBPSFA'
-        },
-        {
-          name: 'description',
-          content: 'Page not found'
-        }
       ]
     }
   }
