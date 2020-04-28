@@ -70,6 +70,13 @@ h1,
   }
 }
 
+blockquote {
+  margin-left: 0;
+  padding-left: $gutter;
+  border-left: $gutter solid #999;
+  font-style: italic;
+}
+
 iframe,
 img {
   width: 100%;

@@ -274,6 +274,7 @@ export default {
 
 .main {
   flex-grow: 1;
+  margin-bottom: 2rem;
 
   p {
     line-height: 2;
@@ -295,5 +296,9 @@ export default {
   background: $colour-grey;
   color: #fff;
   padding: $vertical-spacing 0;
+
+  @include mq($from: desktop) {
+    padding: $vertical-spacing * 2 0;
+  }
 }
 </style>
