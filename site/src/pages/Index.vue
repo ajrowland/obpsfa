@@ -71,6 +71,7 @@ query {
         slug {
           current
         }
+        _rawBody,
         mainImage {
           alt
           caption
@@ -131,11 +132,15 @@ export default {
 .news {
   background-image: linear-gradient(to bottom right, rgba($colour-red, 0.6), #fff);
   padding-top: $vertical-spacing;
-  margin-top: $vertical-spacing * 2;
+  margin: $vertical-spacing * 2 0 $vertical-spacing * -1 0;
   color: #fff;
 
   h2 {
     text-transform: uppercase;
+  }
+
+  a.news__item:hover {
+    transform: scale(1.02);
   }
 
   &__item {
@@ -149,10 +154,6 @@ export default {
     @include mq($from: tablet) {
       display: flex;
       margin: $gutter * 2 0;
-    }
-
-    &:hover {
-      transform: scale(1.02);
     }
 
     &:nth-child(even) {
@@ -210,6 +211,7 @@ export default {
 
     &__image {
       width: 45%;
+      background: #fff;
     }
   }
 }
