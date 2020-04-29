@@ -188,7 +188,7 @@ export default {
   }
 
   &__logo {
-    background: url(~@/favicon.png);
+    background: url(~@/assets/images/logo.png);
     background-color: #fff;
     background-repeat: no-repeat;
     width: 100px;
