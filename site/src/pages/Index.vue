@@ -1,23 +1,19 @@
 <template>
   <Layout>
 
-    <template v-if="$page.home.edges.length">
-      <h1>{{$page.home.edges[0].node.title}}</h1>
+    <h1>{{$page.home.title}}</h1>
 
-      <extended-image
-        :image="$page.home.edges[0].node.mainImage"
-        width="800"
-        height="350"
-        cssClass="main-image"
-      />
+    <extended-image
+      :image="$page.home.mainImage"
+      width="800"
+      height="350"
+      cssClass="main-image"
+    />
 
-      <extended-block
-        :blocks="$page.home.edges[0].node._rawBody"
-      />
-    </template>
-    <template v-else>
-      <h1>ERROR: No home page document exists.</h1>
-    </template>
+    <extended-block
+      :blocks="$page.home._rawBody"
+    />
+
     <template slot="contentBottom">
       <section class="news" v-if="$page.news">
         <div class="container">
@@ -35,30 +31,26 @@
 
 <page-query>
 query {
-  home: allSanityHome {
-    edges {
-      node {
-        title
-        _rawBody(resolveReferences: {maxDepth: 5})
-        mainImage {
-          alt
-          caption
-          attribution
-          asset {
-            _id
-            url
-          }
-        }
-        seo {
-          description
-          author {
-            name
-          }
-          image {
-            asset {
-              url
-            }
-          }
+  home: sanityHome (id: "site-home") {
+    title
+    _rawBody(resolveReferences: {maxDepth: 5})
+    mainImage {
+      alt
+      caption
+      attribution
+      asset {
+        _id
+        url
+      }
+    }
+    seo {
+      description
+      author {
+        name
+      }
+      image {
+        asset {
+          url
         }
       }
     }
@@ -103,7 +95,7 @@ export default {
     NewsItem
   },
   metaInfo() {
-    const page = this.$page.home.edges[0].node
+    const page = this.$page.home
     const imageUrl = page.seo.image ? page.seo.image.asset.url : (page.mainImage ? page.mainImage.asset.url : '')
 
     return {
