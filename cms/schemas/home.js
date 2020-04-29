@@ -1,8 +1,11 @@
+import MdHome from 'react-icons/lib/md/home'
+
 export default {
   name: 'home',
   title: 'Home',
   type: 'document',
   __experimental_actions: [/*'create',*/ 'update', /*'delete',*/ 'publish'],
+  icon: MdHome,
   fields: [
     {
       name: 'title',

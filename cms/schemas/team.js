@@ -1,7 +1,10 @@
+import MdPeopleOutline from 'react-icons/lib/md/people-outline'
+
 export default {
   name: 'team',
   title: 'Team',
   type: 'document',
+  icon: MdPeopleOutline,
   fields: [
     {
       name: 'name',

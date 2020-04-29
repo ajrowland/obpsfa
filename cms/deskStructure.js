@@ -1,4 +1,5 @@
-import S from "@sanity/desk-tool/structure-builder";
+import S from "@sanity/desk-tool/structure-builder"
+import MdHome from 'react-icons/lib/md/home'
 
 export default () =>
   S.list()
@@ -6,6 +7,7 @@ export default () =>
     .items([
       S.listItem()
         .title('Home')
+        .icon(MdHome)
         .child(
           S.document()
             .schemaType('home')

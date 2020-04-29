@@ -1,7 +1,10 @@
+import MdInsertDriveFile from 'react-icons/lib/md/insert-drive-file'
+
 export default {
   name: 'page',
   title: 'Page',
   type: 'document',
+  icon: MdInsertDriveFile,
   fields: [
     {
       name: 'title',

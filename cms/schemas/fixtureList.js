@@ -1,7 +1,10 @@
+import MdFormatListBulleted from 'react-icons/lib/md/format-list-bulleted'
+
 export default {
   name: 'fixtureList',
   title: 'Fixture list',
   type: 'document',
+  icon: MdFormatListBulleted,
   fields: [
     {
       name: 'teamFilter',
