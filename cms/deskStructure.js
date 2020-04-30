@@ -14,6 +14,9 @@ import ColorblindPreview from './previews/a11y/colorblind-filter/ColorblindPrevi
 import TextToSpeechPreview from './previews/a11y/text-to-speech/TextToSpeechPreview'
 //import BraillePreview from './previews/a11y/braille/Braille'
 
+// JSON preview
+import JsonPreview from './previews/json/JSONpreview'
+
 // Web preview configuration
 const remoteURL = 'https://some-deployed-dev-site.com'
 const localURL = 'http://localhost:8080'
@@ -21,16 +24,21 @@ const previewURL = window.location.hostname === 'localhost' ? localURL : remoteU
 
 export const getDefaultDocumentNode = ({schemaType}) => {
   // Conditionally return a different configuration based on the schema type
-  if (schemaType === "page") {
+  if (schemaType ==='page' || schemaType === 'home') {
     return S.document().views([
       S.view.form().icon(EditIcon),
       S.view.component(IframePreview).options({previewURL}).title('Web').icon(EyeIcon),
       S.view.component(SeoPreview).options({previewURL}).icon(EyeIcon).title('SEO Preview'),
       S.view.component(ColorblindPreview).options({previewURL}).icon(EyeIcon).title('Colorblind'),
       S.view.component(TextToSpeechPreview).options({fields: ['title', 'excerpt', 'body']}).icon(MdAccessibility).title('Text to speech'),
-      //S.view.component(BraillePreview).icon(MdAccessibility).title('Braille')
+      //S.view.component(BraillePreview).icon(MdAccessibility).title('Braille'),
+      S.view.component(JsonPreview).icon(EyeIcon).title('JSON')
     ])
   }
+  return S.document().views([
+    S.view.form(),
+    S.view.component(JsonPreview).icon(EyeIcon).title('JSON')
+  ])
  }
 
 export default () =>
@@ -45,8 +53,6 @@ export default () =>
             .schemaType('home')
             .documentId('site-home')
         ),
-      // Add a visual divider (optional)
-      S.divider(),
       // List out the rest of the document types, but filter out the home type
       ...S.documentTypeListItems()
         .filter(listItem => !['home'].includes(listItem.getId()))
