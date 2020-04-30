@@ -1,10 +1,18 @@
 import S from "@sanity/desk-tool/structure-builder"
-import MdHome from 'react-icons/lib/md/home'
+import {MdAccessibility, MdHome} from 'react-icons/lib/md'
 import EyeIcon from 'part:@sanity/base/eye-icon'
 import EditIcon from 'part:@sanity/base/edit-icon'
 
 // Web preview
 import IframePreview from './previews/iframe/IframePreview'
+
+// SEO preview
+import SeoPreview from './previews/seo/SeoPreviews'
+
+// a11y preview
+import ColorblindPreview from './previews/a11y/colorblind-filter/ColorblindPreview'
+import TextToSpeechPreview from './previews/a11y/text-to-speech/TextToSpeechPreview'
+//import BraillePreview from './previews/a11y/braille/Braille'
 
 // Web preview configuration
 const remoteURL = 'https://some-deployed-dev-site.com'
@@ -16,7 +24,11 @@ export const getDefaultDocumentNode = ({schemaType}) => {
   if (schemaType === "page") {
     return S.document().views([
       S.view.form().icon(EditIcon),
-      S.view.component(IframePreview).options({previewURL}).title('Web').icon(EyeIcon)
+      S.view.component(IframePreview).options({previewURL}).title('Web').icon(EyeIcon),
+      S.view.component(SeoPreview).options({previewURL}).icon(EyeIcon).title('SEO Preview'),
+      S.view.component(ColorblindPreview).options({previewURL}).icon(EyeIcon).title('Colorblind'),
+      S.view.component(TextToSpeechPreview).options({fields: ['title', 'excerpt', 'body']}).icon(MdAccessibility).title('Text to speech'),
+      //S.view.component(BraillePreview).icon(MdAccessibility).title('Braille')
     ])
   }
  }
