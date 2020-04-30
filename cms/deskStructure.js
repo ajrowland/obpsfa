@@ -22,18 +22,20 @@ const remoteURL = 'https://some-deployed-dev-site.com'
 const localURL = 'http://localhost:8080'
 const previewURL = window.location.hostname === 'localhost' ? localURL : remoteURL
 
+const previewOptions = [
+  S.view.form().icon(EditIcon),
+  S.view.component(IframePreview).options({previewURL}).title('Web').icon(EyeIcon),
+  S.view.component(SeoPreview).options({previewURL}).icon(EyeIcon).title('SEO Preview'),
+  S.view.component(ColorblindPreview).options({previewURL}).icon(EyeIcon).title('Colorblind'),
+  S.view.component(TextToSpeechPreview).options({fields: ['title', 'excerpt', 'body']}).icon(MdAccessibility).title('Text to speech'),
+  //S.view.component(BraillePreview).icon(MdAccessibility).title('Braille'),
+  S.view.component(JsonPreview).icon(EyeIcon).title('JSON')
+]
+
 export const getDefaultDocumentNode = ({schemaType}) => {
   // Conditionally return a different configuration based on the schema type
   if (schemaType ==='page' || schemaType === 'home') {
-    return S.document().views([
-      S.view.form().icon(EditIcon),
-      S.view.component(IframePreview).options({previewURL}).title('Web').icon(EyeIcon),
-      S.view.component(SeoPreview).options({previewURL}).icon(EyeIcon).title('SEO Preview'),
-      S.view.component(ColorblindPreview).options({previewURL}).icon(EyeIcon).title('Colorblind'),
-      S.view.component(TextToSpeechPreview).options({fields: ['title', 'excerpt', 'body']}).icon(MdAccessibility).title('Text to speech'),
-      //S.view.component(BraillePreview).icon(MdAccessibility).title('Braille'),
-      S.view.component(JsonPreview).icon(EyeIcon).title('JSON')
-    ])
+    return S.document().views(previewOptions)
   }
   return S.document().views([
     S.view.form(),
@@ -52,6 +54,7 @@ export default () =>
           S.document()
             .schemaType('home')
             .documentId('site-home')
+            .views(previewOptions)
         ),
       // List out the rest of the document types, but filter out the home type
       ...S.documentTypeListItems()

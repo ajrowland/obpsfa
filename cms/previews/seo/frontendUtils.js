@@ -1,11 +1,12 @@
 export const assemblePageUrl = ({document, options}) => {
   const {slug} = document
   const {previewURL} = options
-  if (!slug || !previewURL) {
-    console.warn('Missing slug or previewURL', {slug, previewURL})
+  if (!previewURL) {
+    console.warn('Missing previewURL', {slug, previewURL})
     return ''
   }
-  return `${previewURL}/project/${slug.current}`
+
+  return slug ? `${previewURL}/${slug.current}` : previewURL
 }
 
 const defaults = {nonTextBehavior: 'remove'}

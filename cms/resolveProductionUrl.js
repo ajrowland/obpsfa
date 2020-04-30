@@ -1,3 +1,4 @@
 export default function resolveProductionUrl(document) {
-  return `https://obpsfa.andrewrowland.com/${document.slug.current}`
+  const slug = document.slug ? document.slug.current : ''
+  return `https://obpsfa.andrewrowland.com/${slug}`
 }
