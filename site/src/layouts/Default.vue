@@ -117,7 +117,7 @@ export default {
   background: lighten($colour-blue, 10%);
   box-shadow: 0px 1px 2px 0px rgba(51, 51, 51, 0.75);
   height: 103px;
-  z-index: 1;
+  z-index: 2;
   position: sticky;
   top: 0;
   margin-bottom: 10px;
