@@ -55,6 +55,14 @@ module.exports = {
       }
     },
     {
+      use: 'gridsome-plugin-gtm',
+      options: {
+        id: 'GTM-W6XW753',
+        enabled: true,
+        debug: false
+      }
+    },
+    {
       use: "gridsome-plugin-service-worker",
       options: {
         networkFirst: {
