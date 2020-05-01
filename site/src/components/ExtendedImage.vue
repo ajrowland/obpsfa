@@ -2,7 +2,7 @@
 
   <div :class="cssClass" v-if="image">
     <g-image
-      :src="$urlForImage(image, $static.metadata.sanityOptions).height(height).width(width).auto('format').url()"
+      :src="$urlForImage(image, $static.metadata.sanityOptions).height(height).width(width).auto('format').dpr(1).url()"
       :alt="image.alt || alt"
       :class="cssClass && `${cssClass}__img`"
     />
