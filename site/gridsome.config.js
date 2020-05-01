@@ -25,7 +25,7 @@ function addStyleResource (rule) {
 
 module.exports = {
   siteName: 'OBPSFA',
-  siteUrl: 'https://obpsfa.andrewrowland.com',
+  siteUrl: 'https://www.obpsfa.com',
   siteTwitterName: 'odpsfa',
 
   templates: {
