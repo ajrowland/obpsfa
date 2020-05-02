@@ -13,6 +13,11 @@ export default {
       validation: Rule => Rule.required()
     },
     {
+      name: 'date',
+      title: 'Date',
+      type: 'date'
+    },
+    {
       name: 'sortOrder',
       title: 'Sort order',
       type: 'number',
@@ -46,6 +51,12 @@ export default {
       name: 'seo',
       title: 'SEO information',
       type: 'seo'
+    },
+    {
+      name: 'isArchived',
+      description: 'Move page to archive section',
+      title: 'Archive',
+      type: 'boolean',
     }
   ],
 

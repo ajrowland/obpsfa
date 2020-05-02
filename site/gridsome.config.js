@@ -29,14 +29,21 @@ module.exports = {
   siteTwitterName: 'odpsfa',
 
   templates: {
-    SanityPage: [
+    /*SanityPage: [
       {
+        name: 'content',
         path: (node) => {
           return `/${node.slug.current}`
         },
+        path: '/:title',
         component: './src/templates/Page.vue'
+      },
+      {
+        name: 'archive',
+        path: '/archive/:date-:title',
+        component: './src/templates/PageArchived.vue'
       }
-    ]
+    ]*/
   },
 
   plugins: [

@@ -1,5 +1,5 @@
 import S from "@sanity/desk-tool/structure-builder"
-import {MdAccessibility, MdHome} from 'react-icons/lib/md'
+import {MdAccessibility, MdHome, MdInsertDriveFile} from 'react-icons/lib/md'
 import EyeIcon from 'part:@sanity/base/eye-icon'
 import EditIcon from 'part:@sanity/base/edit-icon'
 
@@ -58,5 +58,23 @@ export default () =>
         ),
       // List out the rest of the document types, but filter out the home type
       ...S.documentTypeListItems()
-        .filter(listItem => !['home'].includes(listItem.getId()))
+        .filter(listItem => !['home'].includes(listItem.getId())),
+
+        S.listItem()
+        .title('Page (archived)')
+        .icon(MdInsertDriveFile)
+        .child(
+          // List out all categories
+          S.documentTypeList('category')
+            .title('Category')
+            .child(catId =>
+              S.documentList()
+                .schemaType('page')
+                .title('Pages')
+                .filter(
+                  '_type == "page" && isArchived == true && $catId in seo.categories[]._ref'
+                )
+                .params({ catId })
+            )
+        ),
     ])

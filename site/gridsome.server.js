@@ -21,7 +21,7 @@ module.exports = function(api) {
       if (page.parent) {
         console.log(page.title, page.parent._ref)
       }
-    });*/
+    });
 
     store.addSchemaResolvers({
       SanityPage: {
@@ -32,19 +32,79 @@ module.exports = function(api) {
           }
         }
       }
+    })*/
+  })
+
+  api.onCreateNode(node => {
+    if (node.internal.typeName === 'SanityPage') {
+      return {
+        ...node,
+        path: node.isArchived ? `/archive/${node.date}-${api._app.slugify(node.title)}` : (node.slug ? `/${node.slug.current}` : `/${api._app.slugify(node.title)}`)
+      }
+    }
+
+    return node
+  })
+
+  api.createPages(async ({ graphql, createPage, slugify }) => {
+    const { data } = await graphql(`{
+      allSanityPage {
+        edges {
+          node {
+            path
+            date
+            title
+            _rawBody(resolveReferences: {maxDepth: 5})
+            mainImage {
+              alt
+              caption
+              attribution
+              asset {
+                _id
+                url
+              }
+            }
+            slug {
+              current
+            }
+            seo {
+              description
+              author {
+                name
+              }
+              authorDisplay
+              image {
+                asset {
+                  url
+                }
+              }
+            }
+            isArchived
+          }
+        }
+      }
+      metadata {
+        siteTwitterName
+        siteUrl
+      }
+    }`)
+
+    const metadata = JSON.parse(JSON.stringify(data.metadata))
+
+    data.allSanityPage.edges.forEach(({ node }) => {
+      const doc = JSON.parse(JSON.stringify(node))
+      const template = doc.isArchived ? 'PageArchived' : 'Page'
+
+      createPage({
+        path: doc.path,
+        component: `./src/templates/${template}.vue`,
+        context: {
+          ...doc,
+          metadata: {
+            ...metadata
+          }
+        }
+      })
     })
   })
 }
-
-/*
-module.exports = function (api) {
-  api.loadSource(({ addCollection }) => {
-    // Use the Data Store API here: https://gridsome.org/docs/data-store-api/
-  })
-
-  api.createPages(({ createPage }) => {
-    // Use the Pages API here: https://gridsome.org/docs/pages-api/
-  })
-}
-*/
-

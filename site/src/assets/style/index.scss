@@ -32,7 +32,7 @@ button {
 }
 
 h1,
-.news h3 {
+h3 {
   z-index: 1;
 
   @include mq($from: tablet) {

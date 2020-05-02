@@ -20,7 +20,12 @@
           <H2>Latest news</h2>
 
           <div class="news__items">
-            <NewsItem v-for="newsItem in $page.news.edges" :key="newsItem.node.id" :item="newsItem.node" />
+            <NewsItem v-for="newsItem in $page.news.edges"
+              :key="newsItem.node.id"
+              :item="newsItem.node"
+              :url="newsItem.node.slug.current"
+              :date="newsItem.node.date"
+            />
           </div>
         </div>
       </section>
@@ -55,7 +60,18 @@ query {
       }
     }
   }
-  news: allSanityPage(sortBy: "seo.publishedAt", order: DESC, filter: { sortOrder: {lt: 0} }) {
+  news: allSanityPage (
+    sortBy: "date",
+    order: DESC,
+    filter: {
+      sortOrder: {
+        lt: 0
+      },
+      isArchived: {
+        ne: true
+      }
+    }
+  ) {
     edges {
       node {
         id
@@ -75,7 +91,6 @@ query {
         }
         seo {
           description
-          publishedAt
         }
       }
     }
@@ -131,79 +146,11 @@ export default {
     text-transform: uppercase;
   }
 
-  a.news__item:hover {
-    transform: scale(1.02);
-  }
-
-  &__item {
-    display: block;
-    background-color: #666;
-    color: #fff;
-    text-decoration: none;
-    transition: all .25s ease-in-out;
-    margin: 0 -20px;
-
-    @include mq($from: tablet) {
-      display: flex;
-      margin: $gutter * 2 0;
-    }
-
-    &:nth-child(even) {
-      flex-direction: row-reverse;
-    }
-
-    h3 {
-      background: $colour-red;
-      padding: $gutter;
-      margin-top: 0;
-
-      &:before,
-      &:after {
-        background: $colour-red;
-      }
-
-      &:before {
-        left: $gutter * -1;
-      }
-
-      @include mq($from: tablet) {
-        padding: 10px 20px;
-      }
-    }
-
-    time {
-      font-size: .8rem;
-      display: block;
-      margin: 0 $gutter;
-    }
-
-    p {
-      margin: 20px;
-    }
-
-    img {
-      display: block;
-    }
-
-    &-more {
-      font-weight: bold;
-    }
-  }
-
   @include mq($from: tablet) {
     padding-bottom: $vertical-spacing;
 
     h2 {
       font-size: 2.5rem;
-    }
-
-    &__item-text {
-      width: 55%;
-    }
-
-    &__image {
-      width: 45%;
-      background: #fff;
     }
   }
 }

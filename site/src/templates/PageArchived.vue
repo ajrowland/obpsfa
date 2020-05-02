@@ -3,6 +3,8 @@
 
     <h1>{{$context.title}}</h1>
 
+    <div class="blog__date">{{formatDate($context.date)}}, by {{$context.seo.authorDisplay || $context.seo.author.name}}</div>
+
     <extended-image
       :image="$context.mainImage"
       width="800"
@@ -26,7 +28,7 @@ export default {
     return {
       title: page.title,
       meta: [
-        { name: 'author', content: page.seo.author.name },
+        { name: 'author', content: page.seo.authorDisplay || page.seo.author.name },
         { name: 'description', content: page.seo.description },
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:description', content: page.seo.description },
