@@ -56,25 +56,39 @@ export default () =>
             .documentId('site-home')
             .views(previewOptions)
         ),
-      // List out the rest of the document types, but filter out the home type
-      ...S.documentTypeListItems()
-        .filter(listItem => !['home'].includes(listItem.getId())),
 
+      // Page list that are not archived
+      S.listItem()
+        .title('Page')
+        .icon(MdInsertDriveFile)
+        .child(
+          S.documentList()
+            .schemaType('page')
+            .title('Page')
+            .filter(
+              '_type == "page" && (!isArchived || !defined(isArchived))'
+            )
+        ),
+
+        // Page list that are archived by category
         S.listItem()
         .title('Page (archived)')
         .icon(MdInsertDriveFile)
         .child(
-          // List out all categories
           S.documentTypeList('category')
             .title('Category')
             .child(catId =>
               S.documentList()
                 .schemaType('page')
-                .title('Pages')
+                .title('Page')
                 .filter(
                   '_type == "page" && isArchived == true && $catId in seo.categories[]._ref'
                 )
                 .params({ catId })
             )
         ),
+
+      // List out the rest of the document types, but filter out the home type
+      ...S.documentTypeListItems()
+        .filter(listItem => !['home', 'page'].includes(listItem.getId())),
     ])
