@@ -24,8 +24,10 @@ export default {
 </script>
 
 <style lang="scss">
-a.news-item:hover {
-  transform: scale(1.02);
+@include mq($from: tablet) {
+  a.news-item:hover {
+    transform: scale(1.02);
+  }
 }
 
 .news-item {
@@ -34,7 +36,8 @@ a.news-item:hover {
   color: #fff;
   text-decoration: none;
   transition: all .25s ease-in-out;
-  margin: 0 -20px;
+  margin: 0 $gutter * -1;
+  overflow: hidden;
 
   &:nth-child(even) {
     flex-direction: row-reverse;
@@ -90,6 +93,11 @@ a.news-item:hover {
     &__image {
       width: 45%;
       background: #fff;
+
+      img {
+        height: 100%;
+        object-fit: cover;
+      }
     }
   }
 }

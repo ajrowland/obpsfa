@@ -34,7 +34,7 @@ const previewOptions = [
 
 export const getDefaultDocumentNode = ({schemaType}) => {
   // Conditionally return a different configuration based on the schema type
-  if (schemaType ==='page' || schemaType === 'home') {
+  if (schemaType ==='page' || schemaType === 'home' || schemaType == 'archive') {
     return S.document().views(previewOptions)
   }
   return S.document().views([
@@ -48,13 +48,21 @@ export default () =>
     .title('Content')
     .items([
       S.listItem()
-        .title('Home')
+        .title('Index page')
         .icon(MdHome)
         .child(
+          /*
           S.document()
             .schemaType('home')
             .documentId('site-home')
             .views(previewOptions)
+          */
+         S.documentList()
+          //.schemaType('page')
+          .title('Page')
+          .filter(
+            '_type == "home" || _type == "archive"'
+          )
         ),
 
       // Page list that are not archived
@@ -82,7 +90,7 @@ export default () =>
                 .schemaType('page')
                 .title('Page')
                 .filter(
-                  '_type == "page" && isArchived == true && $catId in seo.categories[]._ref'
+                  '_type == "page" && (isArchived == true && $catId in seo.categories[]._ref)'
                 )
                 .params({ catId })
             )
@@ -90,5 +98,5 @@ export default () =>
 
       // List out the rest of the document types, but filter out the home type
       ...S.documentTypeListItems()
-        .filter(listItem => !['home', 'page'].includes(listItem.getId())),
+        .filter(listItem => !['home', 'archive', 'page'].includes(listItem.getId())),
     ])

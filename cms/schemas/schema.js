@@ -8,6 +8,7 @@ import schemaTypes from 'all:part:@sanity/base/schema-type'
 import blockContent from './blockContent'
 import category from './category'
 import home from './home'
+import archive from './archive'
 import page from './page'
 import author from './author'
 import fixtureList from './fixtureList'
@@ -28,6 +29,7 @@ export default createSchema({
     // The following are document types which will appear
     // in the studio.
     home,
+    archive,
     page,
     author,
     category,

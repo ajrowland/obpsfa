@@ -1,16 +1,22 @@
 <template>
   <Layout>
 
-    <h1>Archive: The District diary</h1>
+    <h1>{{$page.home.title}}</h1>
 
-    <p>We are currently rebuilding our site. This section inparticular requires some work to add additional content and photos.</p>
-    <p>If you have any content you would like to share, please send to: <a href="mailto:mail@obpsfa.com" title="Contact us">mail@obpsfa.com</a></p>
+    <extended-image
+      :image="$page.home.mainImage"
+      width="800"
+      height="350"
+      cssClass="main-image"
+    />
+
+    <extended-block
+      :blocks="$page.home._rawBody"
+    />
 
     <template slot="contentBottom">
-      <section class="blog">
+      <section class="archive">
         <div class="container">
-          <h2>Articles</h2>
-
           <Pager :info="$page.archive.pageInfo" class="pager" />
 
           <div class="news__items">
@@ -32,6 +38,30 @@
 
 <page-query>
 query ($page: Int) {
+  home: sanityArchive (id: "cfb9a604-be08-4616-a0c5-84e686b3be88") {
+    title
+    _rawBody(resolveReferences: {maxDepth: 5})
+    mainImage {
+      alt
+      caption
+      attribution
+      asset {
+        _id
+        url
+      }
+    }
+    seo {
+      description
+      author {
+        name
+      }
+      image {
+        asset {
+          url
+        }
+      }
+    }
+  }
   archive: allSanityPage (
     sortBy: "date"
     order: DESC
@@ -90,24 +120,24 @@ export default {
     NewsItem
   },
   metaInfo() {
-    const page = this.$page.archive
-    const imageUrl = ''
+    const page = this.$page.home
+    const imageUrl = page.seo.image ? page.seo.image.asset.url : (page.mainImage ? page.mainImage.asset.url : '')
 
     return {
-      title: page.title,
+      title: 'Archive',
       meta: [
-        { name: 'author', content: 'OBPSFA' },
-        { name: 'description', content: 'OBPSFA archive.' },
+        { name: 'author', content: page.seo.author.name },
+        { name: 'description', content: page.seo.description },
         { name: 'twitter:card', content: 'summary_large_image' },
-        { name: 'twitter:description', content: 'OBPSFA archive.' },
-        { name: 'twitter:title', content: page.title },
+        { name: 'twitter:description', content: page.seo.description },
+        { name: 'twitter:title', content: 'Home' },
         { name: 'twitter:site', content: this.$page.metadata.siteTwitterName },
         { name: 'twitter:creator', content: this.$page.metadata.siteTwitterName },
         { name: 'twitter:image', content: imageUrl },
         { property: 'og:type', content: 'article' },
-        { property: 'og:title', content: page.title },
-        { property: 'og:description', content: 'OBPSFA archive.' },
-        { property: 'og:url', content: `${this.$page.metadata.siteUrl}/archive` },
+        { property: 'og:title', content: 'Home' },
+        { property: 'og:description', content: page.seo.description },
+        { property: 'og:url', content: this.$page.metadata.siteUrl },
         { property: 'og:image', content: imageUrl }
       ]
     }
@@ -116,9 +146,9 @@ export default {
 </script>
 
 <style lang="scss">
-.blog {
+.archive {
   background-image: linear-gradient(to bottom right, rgba($colour-red, 0.6), #fff);
-  padding-top: $vertical-spacing;
+  padding: $vertical-spacing 0;
   margin: $vertical-spacing * 2 0 $vertical-spacing * -1 0;
   color: #fff;
 
@@ -138,7 +168,14 @@ export default {
 
 .pager {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
+  padding: 2rem;
+  margin: 0 $vertical-spacing;
+
+  @include mq($from: tablet) {
+    justify-content: flex-end;
+    padding: 0;
+  }
 
   a {
     display: inline-block;
