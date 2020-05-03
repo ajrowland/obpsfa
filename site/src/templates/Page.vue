@@ -37,8 +37,11 @@ export default {
         { property: 'og:type', content: 'article' },
         { property: 'og:title', content: page.title },
         { property: 'og:description', content: page.seo.description },
-        { property: 'og:url', content: `${page.metadata.siteUrl}/${page.path}` },
+        { property: 'og:url', content: `${page.metadata.siteUrl}${page.path}` },
         { property: 'og:image', content: imageUrl }
+      ],
+      link: [
+        { rel: 'canonical', href: `${page.metadata.siteUrl}${page.path}` }
       ]
     }
   }

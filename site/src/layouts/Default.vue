@@ -80,13 +80,6 @@ query {
 
 <script>
 export default {
-  metaInfo() {
-    return {
-      link: [
-        { rel: 'canonical', href: this.$static.metadata.siteUrl }
-      ]
-    }
-  },
   methods: {
     toggleMenu () {
       const bodyClasses = document.querySelector('body').classList

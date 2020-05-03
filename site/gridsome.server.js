@@ -36,7 +36,7 @@ module.exports = function(api) {
   })
 
   api.onCreateNode(node => {
-    if (node.internal.typeName === 'SanityPage') {
+    if (node.internal.typeName === 'SanityPage' || node.internal.typeName === 'SanityArchive') {
       return {
         ...node,
         path: node.isArchived ? `/archive/${node.date}-${api._app.slugify(node.title)}` : (node.slug ? `/${node.slug.current}` : `/${api._app.slugify(node.title)}`)
@@ -46,7 +46,7 @@ module.exports = function(api) {
     return node
   })
 
-  api.createPages(async ({ graphql, createPage, slugify }) => {
+  api.createPages(async ({ graphql, createPage }) => {
     const { data } = await graphql(`{
       allSanityPage {
         edges {

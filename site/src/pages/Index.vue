@@ -129,6 +129,9 @@ export default {
         { property: 'og:description', content: page.seo.description },
         { property: 'og:url', content: this.$page.metadata.siteUrl },
         { property: 'og:image', content: imageUrl }
+      ],
+      link: [
+        { rel: 'canonical', href: this.$page.metadata.siteUrl }
       ]
     }
   }
