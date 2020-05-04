@@ -153,7 +153,7 @@ export default {
 .archive {
   background-image: linear-gradient(to bottom right, rgba($colour-red, 0.6), #fff);
   padding: $vertical-spacing 0;
-  margin: $vertical-spacing * 2 0 $vertical-spacing * -1 0;
+  margin: $vertical-spacing*2 0 $vertical-spacing*-1 0;
   color: #fff;
 
   &__entry {
@@ -174,7 +174,7 @@ export default {
   display: flex;
   justify-content: center;
   padding: 2rem;
-  margin: 0 $vertical-spacing;
+  margin: $vertical-spacing 0;
 
   @include mq($from: tablet) {
     justify-content: flex-end;
