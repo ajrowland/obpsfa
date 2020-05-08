@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="gallery__thumbnail-container">
-      <div v-for="(thumbnail, i) in images" :key="i" class="gallery__thumbnail" @click="goto(i)">
+      <div v-for="(thumbnail, i) in images" :key="i" class="gallery__thumbnail" @click="goto(i)" :class="currentNumber === i && 'active'">
         <g-image :src="thumbnail.link" />
       </div>
     </div>
@@ -25,9 +25,13 @@
   &__controls {
     position: absolute;
     top: 50%;
-    display: flex;
+    display: none;
     width: 100%;
     justify-content: space-between;
+
+    @include mq($from: tablet) {
+      display: flex;
+    }
   }
 
   &__prev,
@@ -73,14 +77,23 @@
   &__thumbnail-container {
     display: flex;
     flex-wrap: wrap;
-    margin: 2px -1px;
+    margin: 1px -1px;
   }
 
   &__thumbnail {
-    width: 20%;
-    margin: 0 1px;
+    width: calc(20% - 2px);
+    margin: 1px;
     cursor: pointer;
-    flex-basis: 7%;
+    display: inline-flex;
+    opacity: .4;
+
+    &.active {
+      opacity: 1;
+    }
+
+    @include mq($from: tablet) {
+      width: calc(10% - 2px);
+    }
   }
 
   &__image {
@@ -127,26 +140,30 @@ export default {
     }
   },
   methods: {
-    getImages() {
+    async getImages() {
       let component = this
 
-      axios.get(`https://api.imgur.com/3/album/${this.imgurId}`, {
-        headers: {
-          Authorization: `Client-ID ${process.env.IMGUR_CLIENT_ID}`
-        }
-      }).then(response => {
+      try {
+        const response = await axios.get(`https://api.imgur.com/3/album/${this.imgurId}`, {
+          headers: {
+            Authorization: `Client-ID ${process.env.GRIDSOME_IMGUR_CLIENT_ID}`
+          }
+        })
+
         component.title = response.data.data.title,
         component.images = response.data.data.images;
-      })
-      .catch(error => {
+      } catch(err) {
+        component.title('Unable to load gallery');
         console.log(error)
-      });
+      }
     },
     prev() {
       this.currentNumber -= 1
+      if (this.currentNumber < 0) this.currentNumber = this.images.length - 1;
     },
     next() {
       this.currentNumber += 1
+      if (this.currentNumber >= this.images.length) this.currentNumber = 0;
     },
     goto(i) {
       this.currentNumber = i
