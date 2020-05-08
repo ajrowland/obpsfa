@@ -103,6 +103,8 @@
     margin: 1px;
     cursor: pointer;
     opacity: .4;
+    display: flex;
+    flex-direction: column;
 
     &.active {
       opacity: 1;
