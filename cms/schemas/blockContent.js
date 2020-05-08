@@ -82,6 +82,9 @@ export default {
     },
     {
       type: 'iframe'
+    },
+    {
+      type: 'gallery'
     }
   ]
 }
