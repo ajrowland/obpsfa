@@ -15,9 +15,10 @@
     />
 
     <template slot="contentBottom">
+      <a name="articles"></a>
       <section class="archive">
         <div class="container">
-          <Pager :info="$page.archive.pageInfo" class="pager" />
+          <Pager :info="$page.archive.pageInfo" anchor="articles" class="pager" />
 
           <div class="news__items">
             <NewsItem v-for="page in $page.archive.edges"
@@ -28,7 +29,7 @@
             />
           </div>
 
-          <Pager :info="$page.archive.pageInfo" class="pager" />
+          <Pager :info="$page.archive.pageInfo" anchor="articles" class="pager" />
         </div>
       </section>
     </template>
