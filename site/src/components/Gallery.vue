@@ -1,31 +1,30 @@
 <template>
   <div class="gallery">
-    <h1>TITLE: {{title}}</h1>
-    <div class="gallery__thumbnail-container">
-      <div v-for="(thumbnail, i) in images" :key="i" class="gallery__thumbnail" @click="goto(i)">
-        <g-image :src="thumbnail" />
+    <h1>{{title}}</h1>
+    <div class="gallery__main-container">
+      <transition-group v-if="images.length" name='fade' tag='div' class="gallery__image-container">
+        <div v-for="number in [currentNumber]" :key='number' class="gallery__image">
+          <g-image :src="currentImage.link" />
+        </div>
+      </transition-group>
+      <div class="gallery__controls" v-if="images.length">
+        <a class="gallery__prev" @click="prev" title="Previous image"><span class="gallery__label">Previous</span></a>
+        <a class="gallery__next" @click="next" title="Next image"><span class="gallery__label">Next</span></a>
       </div>
     </div>
-    <transition-group name='fade' tag='div' class="gallery__image-container">
-      <div v-for="number in [currentNumber]" :key='number' class="gallery__image">
-        <g-image :src="currentImage" />
+    <div class="gallery__thumbnail-container">
+      <div v-for="(thumbnail, i) in images" :key="i" class="gallery__thumbnail" @click="goto(i)">
+        <g-image :src="thumbnail.link" />
       </div>
-    </transition-group>
-    <div class="gallery__controls">
-      <a class="gallery__prev" @click="prev" title="Previous image"><span class="gallery__label">Previous</span></a>
-      <a class="gallery__next" @click="next" title="Next image"><span class="gallery__label">Next</span></a>
     </div>
   </div>
 </template>
 
 <style lang="scss">
 .gallery {
-  position: relative;
-  overflow: hidden;
-
   &__controls {
     position: absolute;
-    top: 55%;
+    top: 50%;
     display: flex;
     width: 100%;
     justify-content: space-between;
@@ -59,24 +58,29 @@
     font-weight: bold;
   }
 
+  &__main-container {
+    position: relative;
+    overflow: hidden;
+  }
+
   &__image-container {
     position: relative;
-    padding-top: 43.75%;
+    padding-top: 65%;
     height: 0;
     overflow: hidden;
   }
 
   &__thumbnail-container {
     display: flex;
+    flex-wrap: wrap;
     margin: 2px -1px;
-    height: 120px;
-    overflow: hidden;
   }
 
   &__thumbnail {
     width: 20%;
     margin: 0 1px;
     cursor: pointer;
+    flex-basis: 7%;
   }
 
   &__image {
@@ -106,11 +110,16 @@
 import axios from 'axios'
 
 export default {
-  props: ['title', 'imgurId', 'images'],
+  props: ['imgurId'],
   data() {
     return {
+      title: '',
+      images: [],
       currentNumber: 0
     }
+  },
+  created() {
+    this.getImages()
   },
   computed: {
     currentImage() {
@@ -118,6 +127,21 @@ export default {
     }
   },
   methods: {
+    getImages() {
+      let component = this
+
+      axios.get(`https://api.imgur.com/3/album/${this.imgurId}`, {
+        headers: {
+          Authorization: `Client-ID ${process.env.IMGUR_CLIENT_ID}`
+        }
+      }).then(response => {
+        component.title = response.data.data.title,
+        component.images = response.data.data.images;
+      })
+      .catch(error => {
+        console.log(error)
+      });
+    },
     prev() {
       this.currentNumber -= 1
     },
