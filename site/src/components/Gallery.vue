@@ -24,42 +24,60 @@
 .gallery {
   &__controls {
     position: absolute;
-    top: 50%;
-    display: none;
+    top: 0;
+    height: 100%;
     width: 100%;
-    justify-content: space-between;
 
     @include mq($from: tablet) {
       display: flex;
+      top: 50%;
+      height: auto;
+      justify-content: space-between;
     }
   }
 
   &__prev,
   &__next {
-    background: $colour-red;
-    cursor: pointer;
-    transform: skew(-30deg);
-    padding: 0 30px;
-    margin-left: -20px;
+    width: 50%;
+    height: 100%;
+    position: absolute;
+
+    @include mq($from: tablet) {
+      background: $colour-red;
+      cursor: pointer;
+      transform: skew(-30deg);
+      padding: 0 30px;
+      margin-left: -20px;
+      width: auto;
+      height: auto;
+    }
   }
 
   &__next {
     left: auto;
-    margin-left: 0;
-    margin-right: -20px;
+    right: 0;
+
+    @include mq($from: tablet) {
+      margin-left: 0;
+      margin-right: -20px;
+    }
   }
 
   &__label {
-    color: #fff;
-    font-size: .8rem;
-    font-weight: bold;
-    transform: skew(30deg);
-    display: block;
-    padding: 10px;
-    display: inline-block;
-    text-transform: uppercase;
-    line-height: 2rem;
-    font-weight: bold;
+    display: none;
+
+    @include mq($from: tablet) {
+      color: #fff;
+      font-size: .8rem;
+      font-weight: bold;
+      transform: skew(30deg);
+      display: block;
+      padding: 10px;
+      display: inline-block;
+      text-transform: uppercase;
+      line-height: 2rem;
+      font-weight: bold;
+    }
   }
 
   &__main-container {
@@ -84,7 +102,6 @@
     width: calc(20% - 2px);
     margin: 1px;
     cursor: pointer;
-    display: inline-flex;
     opacity: .4;
 
     &.active {
@@ -93,6 +110,10 @@
 
     @include mq($from: tablet) {
       width: calc(10% - 2px);
+    }
+
+    img {
+      display: inline-block;
     }
   }
 
