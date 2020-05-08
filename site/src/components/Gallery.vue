@@ -103,7 +103,7 @@
 </style>
 
 <script>
-import apollo from 'apollo'
+import axios from 'axios'
 
 export default {
   props: ['title', 'imgurId', 'images'],
