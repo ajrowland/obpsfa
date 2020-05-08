@@ -1,13 +1,13 @@
 <template>
   <div class="gallery">
-    <h1>{{title}}</h1>
-    <div class="gallery__main-container">
-      <transition-group v-if="images.length" name='fade' tag='div' class="gallery__image-container">
+    <h1 v-if="title">{{title}}</h1>
+    <div class="gallery__main-container" v-if="images.length">
+      <transition-group name='fade' tag='div' class="gallery__image-container">
         <div v-for="number in [currentNumber]" :key='number' class="gallery__image">
           <g-image :src="currentImage.link" />
         </div>
       </transition-group>
-      <div class="gallery__controls" v-if="images.length">
+      <div class="gallery__controls">
         <a class="gallery__prev" @click="prev" title="Previous image"><span class="gallery__label">Previous</span></a>
         <a class="gallery__next" @click="next" title="Next image"><span class="gallery__label">Next</span></a>
       </div>
