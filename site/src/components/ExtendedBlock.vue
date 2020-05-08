@@ -25,6 +25,7 @@ import PortableText from 'sanity-blocks-vue-component'
 import ExtendedImage from '~/components/ExtendedImage'
 import FixtureList from '~/components/FixtureList'
 import Iframe from '~/components/Iframe'
+import Gallery from '~/components/Gallery'
 
 export default {
   props: ['blocks'],
@@ -34,6 +35,7 @@ export default {
         types: {
           fixtureList: FixtureList,
           iframe: Iframe,
+          gallery: Gallery,
           extendedImage: ({node}) => {
             return <extended-image cssClass="main-image" image={node} width="800" height="350" />
           }
