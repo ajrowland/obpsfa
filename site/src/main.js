@@ -7,6 +7,7 @@ import ExtendedBlock from '~/components/ExtendedBlock.vue'
 import Gallery from '~/components/Gallery.vue'
 import Iframe from '~/components/Iframe.vue'
 import urlBuilder from '@sanity/image-url'
+import Vue2TouchEvents from 'vue2-touch-events'
 
 const urlForImage = (source, data) => {
   const isBrowser = typeof window !== 'undefined'
@@ -26,6 +27,8 @@ export default function (Vue, { router, head, isClient }) {
 
   // Inject global image URL builder
   Vue.prototype.$urlForImage = urlForImage
+
+  Vue.use(Vue2TouchEvents)
 
   Vue.mixin({
     methods: {

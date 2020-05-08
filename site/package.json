@@ -14,7 +14,8 @@
     "gridsome": "^0.7.14",
     "gridsome-plugin-gtm": "^0.1.1",
     "sanity-blocks-vue-component": "^0.1.0",
-    "sass-mq": "^5.0.1"
+    "sass-mq": "^5.0.1",
+    "vue2-touch-events": "^2.2.1"
   },
   "devDependencies": {
     "gridsome-plugin-manifest": "^0.3.4",

@@ -1,7 +1,7 @@
 <template>
   <div class="gallery">
     <h1 v-if="title">{{title}}</h1>
-    <div class="gallery__main-container" v-if="images.length">
+    <div class="gallery__main-container" v-if="images.length" v-touch:swipe="this.swipe">
       <transition-group name='fade' tag='div' class="gallery__image-container">
         <div v-for="number in [currentNumber]" :key='number' class="gallery__image">
           <g-image :src="currentImage.link" />
@@ -167,6 +167,10 @@ export default {
     },
     goto(i) {
       this.currentNumber = i
+    },
+    swipe(direction) {
+      if (direction === 'left') this.prev();
+      if (direction === 'right') this.next();
     }
   }
 }
