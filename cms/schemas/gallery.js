@@ -29,7 +29,7 @@ export default {
       title: 'Aspect ratio',
       description: 'Dafault is 66.66%. Images that are not within a 1% tolerance of this will be filtered out.',
       type: 'number',
-      validation: Rule => precision(2).min(1).max(100)
+      validation: Rule => Rule.precision(2).min(1).max(100)
     }
   ],
   preview: {
