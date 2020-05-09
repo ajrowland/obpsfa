@@ -23,7 +23,7 @@
 export default {
   metaInfo() {
     const page = this.$context
-    const imageUrl = page.seo.image ? page.seo.image.asset.url : (page.mainImage ? page.mainImage.asset.url : '')
+    const imageUrl = page.seo.image && page.seo.image.asset ? page.seo.image.asset.url : (page.mainImage && page.mainImage.asset ? page.mainImage.asset.url : '')
 
     return {
       title: page.title,
