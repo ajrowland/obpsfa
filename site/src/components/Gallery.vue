@@ -4,7 +4,7 @@
     <div class="gallery__main-container" v-if="images.length" v-touch:swipe="this.swipe">
       <transition-group name='fade' tag='div' class="gallery__image-container" v-bind:style="{ paddingTop: aspectRatio + '%' }">
         <div v-for="number in [currentNumber]" :key='number' class="gallery__image">
-          <video v-if="currentImage.type.indexOf('video') != -1" controls>
+          <video v-if="currentImage.type.indexOf('video') != -1" muted controls playsInline>
             <source :src="currentImage.link" :type="currentImage.type">
           </video>
           <g-image v-else :src="currentImage.link" :alt="`Gallery image ${currentNumber + 1} of ${images.length}`" />
@@ -116,7 +116,7 @@
 
   &__prev,
   &__next {
-    width: 50%;
+    width: 20%;
     height: 100%;
     position: absolute;
 
@@ -210,6 +210,7 @@ export default {
           const aspectRatio = image.height / image.width * 100
 
           if (image.type.indexOf('video') != -1 || (image.height >= this.minHeight && aspectRatio >= this.aspectRatio - 1 && aspectRatio <= this.aspectRatio + 1)) {
+            console.log(image)
             return image
           }
         })
@@ -229,8 +230,8 @@ export default {
       this.currentNumber = i
     },
     swipe(direction) {
-      if (direction === 'left') this.prev();
-      if (direction === 'right') this.next();
+      if (direction === 'left') this.next();
+      if (direction === 'right') this.prev();
     }
   }
 }
