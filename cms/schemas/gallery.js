@@ -17,6 +17,19 @@ export default {
       name: 'displayTitle',
       title: 'Display title',
       type: 'boolean'
+    },
+    {
+      name: 'minHeight',
+      title: 'Minimum height',
+      description: 'Images below this height will be filtered out.',
+      type: 'number'
+    },
+    {
+      name: 'aspectRatio',
+      title: 'Aspect ratio',
+      description: 'Dafault is 66.66%. Images that are not within a 1% tolerance of this will be filtered out.',
+      type: 'number',
+      validation: Rule => precision(2).min(1).max(100)
     }
   ],
   preview: {

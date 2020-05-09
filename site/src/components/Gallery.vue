@@ -2,7 +2,7 @@
   <div class="gallery">
     <h2 v-if="showTitle && title">{{title}}</h2>
     <div class="gallery__main-container" v-if="images.length" v-touch:swipe="this.swipe">
-      <transition-group name='fade' tag='div' class="gallery__image-container">
+      <transition-group name='fade' tag='div' class="gallery__image-container" v-bind:style="{ paddingTop: aspectRatio + '%' }">
         <div v-for="number in [currentNumber]" :key='number' class="gallery__image">
           <g-image :src="currentImage.link" :alt="`Gallery image ${currentNumber + 1} of ${images.length}`" />
         </div>
@@ -23,6 +23,65 @@
 <style lang="scss">
 .gallery {
   margin: $vertical-spacing 0;
+
+  &__main-container {
+    position: relative;
+    overflow: hidden;
+  }
+
+  &__image-container {
+    position: relative;
+    height: 0;
+    overflow: hidden;
+  }
+
+  &__thumbnail-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 1px -1px;
+  }
+
+  &__thumbnail {
+    width: calc(20% - 2px);
+    margin: 1px;
+    cursor: pointer;
+    opacity: .4;
+    display: flex;
+    flex-direction: column;
+
+    &.active {
+      opacity: 1;
+    }
+
+    @include mq($from: tablet) {
+      width: calc(10% - 2px);
+    }
+
+    img {
+      display: inline-block;
+    }
+  }
+
+  &__image {
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: all 0.8s ease;
+    overflow: hidden;
+    visibility: visible;
+    opacity: 1;
+    position: absolute;
+  }
+  .fade-enter,
+  .fade-leave-to {
+    opacity: 0;
+    visibility: hidden;
+    top: 0;
+  }
 
   &__controls {
     position: absolute;
@@ -81,66 +140,6 @@
       font-weight: bold;
     }
   }
-
-  &__main-container {
-    position: relative;
-    overflow: hidden;
-  }
-
-  &__image-container {
-    position: relative;
-    padding-top: 66.66%;
-    height: 0;
-    overflow: hidden;
-  }
-
-  &__thumbnail-container {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 1px -1px;
-  }
-
-  &__thumbnail {
-    width: calc(20% - 2px);
-    margin: 1px;
-    cursor: pointer;
-    opacity: .4;
-    display: flex;
-    flex-direction: column;
-
-    &.active {
-      opacity: 1;
-    }
-
-    @include mq($from: tablet) {
-      width: calc(10% - 2px);
-    }
-
-    img {
-      display: inline-block;
-    }
-  }
-
-  &__image {
-    position: absolute;
-    top: 0;
-    width: 100%;
-  }
-
-  .fade-enter-active,
-  .fade-leave-active {
-    transition: all 0.8s ease;
-    overflow: hidden;
-    visibility: visible;
-    opacity: 1;
-    position: absolute;
-  }
-  .fade-enter,
-  .fade-leave-to {
-    opacity: 0;
-    visibility: hidden;
-    top: 0;
-  }
 }
 </style>
 
@@ -148,7 +147,23 @@
 import axios from 'axios'
 
 export default {
-  props: ['imgurId', 'showTitle'],
+  props: {
+    imgurId: {
+      type: String
+    },
+    showTitle: {
+      default: false,
+      type: Boolean
+    },
+    minHeight: {
+      default: 1000,
+      type: Number
+    },
+    aspectRatio: {
+      default: 66.66,
+      type: Number
+    }
+  },
   data() {
     return {
       title: '',
@@ -175,15 +190,14 @@ export default {
 
         this.title = response.data.data.title,
         this.images = response.data.data.images.filter(image => {
-          const aspectRatio = image.height / image.width
-          console.log(image.height)
+          const aspectRatio = image.height / image.width * 100
 
-          if (image.height > 1000 && aspectRatio > .66 && aspectRatio < .67) {
+          if (image.height > this.minHeight && aspectRatio >= this.aspectRatio - 1 && aspectRatio <= this.aspectRatio + 1) {
             return image
           }
         })
       } catch(err) {
-        console.log(error)
+        console.log(err)
       }
     },
     prev() {
