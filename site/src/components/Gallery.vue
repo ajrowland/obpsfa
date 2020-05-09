@@ -1,6 +1,6 @@
 <template>
   <div class="gallery">
-    <h1 v-if="title">{{title}}</h1>
+    <h2 v-if="showTitle && title">{{title}}</h2>
     <div class="gallery__main-container" v-if="images.length" v-touch:swipe="this.swipe">
       <transition-group name='fade' tag='div' class="gallery__image-container">
         <div v-for="number in [currentNumber]" :key='number' class="gallery__image">
@@ -22,6 +22,8 @@
 
 <style lang="scss">
 .gallery {
+  margin: $vertical-spacing 0;
+
   &__controls {
     position: absolute;
     top: 0;
@@ -146,7 +148,7 @@
 import axios from 'axios'
 
 export default {
-  props: ['imgurId'],
+  props: ['imgurId', 'showTitle'],
   data() {
     return {
       title: '',
@@ -164,8 +166,6 @@ export default {
   },
   methods: {
     async getImages() {
-      let component = this
-
       try {
         const response = await axios.get(`https://api.imgur.com/3/album/${this.imgurId}`, {
           headers: {
@@ -173,10 +173,9 @@ export default {
           }
         })
 
-        component.title = response.data.data.title,
-        component.images = response.data.data.images;
+        this.title = response.data.data.title,
+        this.images = response.data.data.images;
       } catch(err) {
-        component.title('Unable to load gallery');
         console.log(error)
       }
     },

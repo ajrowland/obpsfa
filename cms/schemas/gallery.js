@@ -10,6 +10,11 @@ export default {
       title: 'Imgur ID',
       type: 'string',
       validation: Rule => Rule.required()
+    },
+    {
+      name: 'displayTitle',
+      title: 'Display title',
+      type: 'boolean'
     }
   ],
   preview: {
