@@ -173,7 +173,7 @@ export default {
       type: Boolean
     },
     minHeight: {
-      default: 1000,
+      default: 640,
       type: Number
     },
     aspectRatio: {
@@ -209,9 +209,7 @@ export default {
         this.images = response.data.data.images.filter(image => {
           const aspectRatio = image.height / image.width * 100
 
-          if (image.id === 'YaqElQV') console.log(image)
-
-          if (image.type.indexOf('video') != -1 || (image.height > this.minHeight && aspectRatio >= this.aspectRatio - 1 && aspectRatio <= this.aspectRatio + 1)) {
+          if (image.type.indexOf('video') != -1 || (image.height >= this.minHeight && aspectRatio >= this.aspectRatio - 1 && aspectRatio <= this.aspectRatio + 1)) {
             return image
           }
         })

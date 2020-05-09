@@ -1,6 +1,6 @@
 <template>
 
-  <div :class="cssClass" v-if="image">
+  <div :class="cssClass" v-if="image && image.asset">
     <g-image
       :src="$urlForImage(image, $static.metadata.sanityOptions).height(height).width(width).auto('format').dpr(1).url()"
       :alt="image.alt || alt"
