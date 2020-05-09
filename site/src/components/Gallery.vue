@@ -4,7 +4,7 @@
     <div class="gallery__main-container" v-if="images.length" v-touch:swipe="this.swipe">
       <transition-group name='fade' tag='div' class="gallery__image-container">
         <div v-for="number in [currentNumber]" :key='number' class="gallery__image">
-          <g-image :src="currentImage.link" />
+          <g-image :src="currentImage.link" :alt="`Gallery image ${currentNumber + 1} of ${images.length}`" />
         </div>
       </transition-group>
       <div class="gallery__controls">
@@ -14,7 +14,7 @@
     </div>
     <div class="gallery__thumbnail-container">
       <div v-for="(thumbnail, i) in images" :key="i" class="gallery__thumbnail" @click="goto(i)" :class="currentNumber === i && 'active'">
-        <g-image :src="thumbnail.link" />
+        <g-image :src="thumbnail.link" :alt="`Gallery thumnail ${currentNumber + 1} of ${images.length}`" />
       </div>
     </div>
   </div>
@@ -89,7 +89,7 @@
 
   &__image-container {
     position: relative;
-    padding-top: 65%;
+    padding-top: 66.66%;
     height: 0;
     overflow: hidden;
   }
@@ -174,7 +174,14 @@ export default {
         })
 
         this.title = response.data.data.title,
-        this.images = response.data.data.images;
+        this.images = response.data.data.images.filter(image => {
+          const aspectRatio = image.height / image.width
+          console.log(image.height)
+
+          if (image.height > 1000 && aspectRatio > .66 && aspectRatio < .67) {
+            return image
+          }
+        })
       } catch(err) {
         console.log(error)
       }
