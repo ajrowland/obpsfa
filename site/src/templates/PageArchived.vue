@@ -5,6 +5,8 @@
 
     <div class="blog__date">{{formatDate($context.date)}}, by {{$context.seo.authorDisplay || $context.seo.author.name}}</div>
 
+    <p><a href="/archive" title="Back to archive">&#10229; Back to archive</a></p>
+
     <extended-image
       :image="$context.mainImage"
       width="800"
@@ -15,6 +17,8 @@
     <extended-block
       :blocks="$context._rawBody"
     />
+
+    <p><a href="/archive" title="Back to archive">&#10229; Back to archive</a></p>
 
   </Layout>
 </template>
