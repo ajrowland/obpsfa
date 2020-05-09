@@ -210,7 +210,6 @@ export default {
           const aspectRatio = image.height / image.width * 100
 
           if (image.type.indexOf('video') != -1 || (image.height >= this.minHeight && aspectRatio >= this.aspectRatio - 1 && aspectRatio <= this.aspectRatio + 1)) {
-            console.log(image)
             return image
           }
         })
