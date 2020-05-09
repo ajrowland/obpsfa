@@ -1,9 +1,11 @@
-import IframePreview from "./previews/iframe";
+import MdCrop169 from 'react-icons/lib/md/crop-16-9'
+import IframePreview from './previews/iframe'
 
 export default {
   name: 'iframe',
   title: 'Iframe',
   type: 'object',
+  icon: MdCrop169,
   fields: [
     {
       name: 'title',

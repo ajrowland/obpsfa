@@ -1,9 +1,11 @@
+import MdBurstMode from 'react-icons/lib/md/burst-mode'
 //import IframePreview from "./previews/iframe";
 
 export default {
   name: 'gallery',
   title: 'Gallery',
   type: 'object',
+  icon: MdBurstMode,
   fields: [
     {
       name: 'imgurId',
