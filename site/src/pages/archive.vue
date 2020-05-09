@@ -99,6 +99,12 @@ query ($page: Int) {
           author {
             name
           }
+          image {
+            asset {
+              _id
+              url
+            }
+          }
           authorDisplay
           description
         }

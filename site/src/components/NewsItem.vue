@@ -8,7 +8,7 @@
       <p v-if="item._rawBody" class="news-item__more">Read more</p>
     </div>
     <extended-image
-      :image="item.mainImage"
+      :image="item.seo.image || item.mainImage"
       width="400"
       height="300"
       cssClass="news-item__image"

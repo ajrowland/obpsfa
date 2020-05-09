@@ -4,7 +4,10 @@
     <div class="gallery__main-container" v-if="images.length" v-touch:swipe="this.swipe">
       <transition-group name='fade' tag='div' class="gallery__image-container" v-bind:style="{ paddingTop: aspectRatio + '%' }">
         <div v-for="number in [currentNumber]" :key='number' class="gallery__image">
-          <g-image :src="currentImage.link" :alt="`Gallery image ${currentNumber + 1} of ${images.length}`" />
+          <video v-if="currentImage.type.indexOf('video') != -1" controls>
+            <source :src="currentImage.link" :type="currentImage.type">
+          </video>
+          <g-image v-else :src="currentImage.link" :alt="`Gallery image ${currentNumber + 1} of ${images.length}`" />
         </div>
       </transition-group>
       <div class="gallery__controls">
@@ -14,7 +17,8 @@
     </div>
     <div class="gallery__thumbnail-container">
       <div v-for="(thumbnail, i) in images" :key="i" class="gallery__thumbnail" @click="goto(i)" :class="currentNumber === i && 'active'">
-        <g-image :src="thumbnail.link" :alt="`Gallery thumnail ${currentNumber + 1} of ${images.length}`" />
+        <div v-if="thumbnail.type.indexOf('video') != -1" class="gallery__thumbnail-video">Video</div>
+        <g-image v-else :src="thumbnail.link" :alt="`Gallery thumbnail ${currentNumber + 1} of ${images.length}`" />
       </div>
     </div>
   </div>
@@ -60,12 +64,25 @@
     img {
       display: inline-block;
     }
+
+    &-video {
+      background: $colour-red;
+      display: flex;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
   }
 
   &__image {
     position: absolute;
     top: 0;
     width: 100%;
+
+    video {
+      width: 100%;
+    }
   }
 
   .fade-enter-active,
@@ -192,7 +209,9 @@ export default {
         this.images = response.data.data.images.filter(image => {
           const aspectRatio = image.height / image.width * 100
 
-          if (image.height > this.minHeight && aspectRatio >= this.aspectRatio - 1 && aspectRatio <= this.aspectRatio + 1) {
+          if (image.id === 'YaqElQV') console.log(image)
+
+          if (image.type.indexOf('video') != -1 || (image.height > this.minHeight && aspectRatio >= this.aspectRatio - 1 && aspectRatio <= this.aspectRatio + 1)) {
             return image
           }
         })
