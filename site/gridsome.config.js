@@ -24,7 +24,7 @@ function addStyleResource (rule) {
 }
 
 module.exports = {
-  siteName: 'OBPSFA',
+  siteName: 'Orpington & Bromley Primary Schools Football Association',
   siteUrl: 'https://www.obpsfa.com',
   siteTwitterName: 'odpsfa',
 
