@@ -101,15 +101,11 @@
   }
 
   &__controls {
-    position: absolute;
-    top: 0;
-    height: 100%;
-    width: 100%;
-
     @include mq($from: tablet) {
+      position: absolute;
       display: flex;
+      width: 100%;
       top: 50%;
-      height: auto;
       justify-content: space-between;
     }
   }
@@ -119,6 +115,7 @@
     width: 20%;
     height: 100%;
     position: absolute;
+    top: 0;
 
     @include mq($from: tablet) {
       background: $colour-red;
