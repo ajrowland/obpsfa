@@ -3,7 +3,7 @@
     <h2 v-if="showTitle && title">{{title}}</h2>
     <div class="gallery__main-container" v-if="images.length" v-touch:swipe="this.swipe">
       <transition-group name='fade' tag='div' class="gallery__image-container" v-bind:style="{ paddingTop: aspectRatio + '%' }">
-        <div v-for="number in [currentNumber]" :key='number' class="gallery__image">
+        <div v-for="number in [currentNumber]" :key='number' class="gallery__image" :class="{ fullscreen: showFullscreen }" @click="showFullscreen = !showFullscreen">
           <video v-if="currentImage.isVideo" muted controls playsInline>
             <source :src="currentImage.link" :type="currentImage.type">
           </video>
@@ -79,9 +79,29 @@
     position: absolute;
     top: 0;
     width: 100%;
+    transition: all .2s ease-in-out;
 
-    video {
+    video,
+    img {
       width: 100%;
+    }
+
+    img {
+      pointer-events: none;
+    }
+
+    &.fullscreen {
+      position: fixed;
+      left: 0;
+      height: 100%;
+      background: rgba(0, 0, 0, .8);
+      display: flex;
+      z-index: 5;
+
+      video,
+      img {
+        object-fit: contain;
+      }
     }
   }
 
@@ -182,7 +202,8 @@ export default {
     return {
       title: '',
       images: [],
-      currentNumber: 0
+      currentNumber: 0,
+      showFullscreen: false
     }
   },
   created() {
