@@ -46,7 +46,7 @@
   }
 
   &__thumbnail {
-    width: calc(10% - 2px);
+    width: calc(20% - 2px);
     margin: 1px;
     cursor: pointer;
     opacity: .4;
@@ -58,7 +58,7 @@
     }
 
     @include mq($from: tablet) {
-      width: calc(5% - 2px);
+      width: calc(10% - 2px);
     }
 
     img {
