@@ -206,7 +206,6 @@ export default {
         this.images = response.data.data.images.filter(image => {
           const aspectRatio = image.height / image.width * 100
 
-          console.log(image)
           image.isVideo = image.type.indexOf('video') != -1
 
           if (image.isVideo || (image.height >= this.minHeight && aspectRatio >= this.aspectRatio - 1 && aspectRatio <= this.aspectRatio + 1)) {
