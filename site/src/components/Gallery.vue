@@ -1,10 +1,10 @@
 <template>
-  <div class="gallery">
+  <div class="gallery" v-if="images.length">
     <h2 v-if="showTitle && title">{{title}}</h2>
     <div class="gallery__main-container" v-if="images.length" v-touch:swipe="this.swipe">
       <transition-group name='fade' tag='div' class="gallery__image-container" v-bind:style="{ paddingTop: aspectRatio + '%' }">
         <div v-for="number in [currentNumber]" :key='number' class="gallery__image">
-          <video v-if="currentImage.type.indexOf('video') != -1" muted controls playsInline>
+          <video v-if="currentImage.isVideo" muted controls playsInline>
             <source :src="currentImage.link" :type="currentImage.type">
           </video>
           <g-image v-else :src="currentImage.link" :alt="`Gallery image ${currentNumber + 1} of ${images.length}`" />
@@ -17,8 +17,8 @@
     </div>
     <div class="gallery__thumbnail-container">
       <div v-for="(thumbnail, i) in images" :key="i" class="gallery__thumbnail" @click="goto(i)" :class="currentNumber === i && 'active'">
-        <div v-if="thumbnail.type.indexOf('video') != -1" class="gallery__thumbnail-video">Video</div>
-        <g-image v-else :src="thumbnail.link" :alt="`Gallery thumbnail ${currentNumber + 1} of ${images.length}`" />
+        <div v-if="thumbnail.isVideo" class="gallery__thumbnail-video">Video</div>
+        <g-image v-else :src="thumbnail.thumbnail" :alt="`Gallery thumbnail ${currentNumber + 1} of ${images.length}`" />
       </div>
     </div>
   </div>
@@ -46,7 +46,7 @@
   }
 
   &__thumbnail {
-    width: calc(20% - 2px);
+    width: calc(10% - 2px);
     margin: 1px;
     cursor: pointer;
     opacity: .4;
@@ -58,7 +58,7 @@
     }
 
     @include mq($from: tablet) {
-      width: calc(10% - 2px);
+      width: calc(5% - 2px);
     }
 
     img {
@@ -206,7 +206,14 @@ export default {
         this.images = response.data.data.images.filter(image => {
           const aspectRatio = image.height / image.width * 100
 
-          if (image.type.indexOf('video') != -1 || (image.height >= this.minHeight && aspectRatio >= this.aspectRatio - 1 && aspectRatio <= this.aspectRatio + 1)) {
+          console.log(image)
+          image.isVideo = image.type.indexOf('video') != -1
+
+          if (image.isVideo || (image.height >= this.minHeight && aspectRatio >= this.aspectRatio - 1 && aspectRatio <= this.aspectRatio + 1)) {
+            if (!image.isVideo) {
+              image.thumbnail = image.link.substr(0, image.link.lastIndexOf('.')) + 's' + image.link.substr(image.link.lastIndexOf('.'))
+            }
+
             return image
           }
         })
