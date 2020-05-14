@@ -76,6 +76,7 @@ query {
       node {
         id
         title
+        date
         slug {
           current
         }
