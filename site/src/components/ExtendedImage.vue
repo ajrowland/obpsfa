@@ -1,5 +1,4 @@
 <template>
-
   <div :class="cssClass" v-if="image && image.asset">
     <g-image
       :src="$urlForImage(image, $static.metadata.sanityOptions).height(height).width(width).auto('format').dpr(1).url()"
@@ -7,15 +6,13 @@
       :class="cssClass && `${cssClass}__img`"
     />
     <div :class="cssClass && `${cssClass}__caption`" v-if="!hideCaption && image.caption">
-      <div :class="cssClass && `${cssClass}__caption-text`">
-       {{image.caption}}
-      </div>
+      <div :class="cssClass && `${cssClass}__caption-text`">{{image.caption}}</div>
     </div>
-    <div :class="cssClass && `${cssClass}__attribution`" v-if="image.attribution">
-      ©{{image.attribution}}
-    </div>
+    <div
+      :class="cssClass && `${cssClass}__attribution`"
+      v-if="image.attribution"
+    >©{{image.attribution}}</div>
   </div>
-
 </template>
 
 <static-query>
@@ -31,8 +28,8 @@ query {
 
 <script>
 export default {
-  props: ['image', 'width', 'height', 'cssClass', 'alt', 'hideCaption']
-}
+  props: ["image", "width", "height", "cssClass", "alt", "hideCaption"],
+};
 </script>
 
 <style lang="scss">
@@ -40,7 +37,7 @@ export default {
   position: relative;
   overflow: hidden;
   margin: $vertical-spacing $gutter * -1;
-  font-size: .8rem;
+  font-size: 0.8rem;
   padding-top: calc(43.75% + 17px);
 
   @include mq($from: tablet) {
@@ -93,7 +90,7 @@ export default {
 
     @include mq($from: tablet) {
       padding: 5px 0;
-      font-size: .8rem;
+      font-size: 0.8rem;
     }
   }
 }

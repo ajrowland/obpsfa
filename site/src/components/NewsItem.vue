@@ -1,6 +1,10 @@
 <template>
-
-  <component :is="item._rawBody ? 'g-link' : 'div'" :to="item._rawBody && url" :title="item._rawBody && item.title" class="news-item">
+  <component
+    :is="item._rawBody ? 'g-link' : 'div'"
+    :to="item._rawBody && url"
+    :title="item._rawBody && item.title"
+    class="news-item"
+  >
     <div class="news-item__text">
       <h3 class="news-item__title" v-html="item.title" />
       <time v-html="formatDate(date)" />
@@ -12,15 +16,16 @@
       width="400"
       height="300"
       cssClass="news-item__image"
-      :hideCaption=true
+      :hideCaption="true"
+      :alt="item.seo.description || item.mainImage.alt"
     />
   </component>
 </template>
 
 <script>
 export default {
-  props: ['item','url','date']
-}
+  props: ["item", "url", "date"],
+};
 </script>
 
 <style lang="scss">
@@ -35,7 +40,7 @@ export default {
   background-color: #666;
   color: #fff;
   text-decoration: none;
-  transition: all .25s ease-in-out;
+  transition: all 0.25s ease-in-out;
   margin: 0 $gutter * -1;
   overflow: hidden;
 
@@ -63,7 +68,7 @@ export default {
   }
 
   time {
-    font-size: .8rem;
+    font-size: 0.8rem;
     display: block;
     margin: 0 $gutter;
   }
