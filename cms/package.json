@@ -19,11 +19,13 @@
     "@sanity/color-input": "^1.150.1",
     "@sanity/components": "^1.150.3",
     "@sanity/core": "^1.150.3",
+    "@sanity/dashboard": "^1.150.4",
     "@sanity/default-layout": "^1.150.3",
     "@sanity/default-login": "^1.150.1",
     "@sanity/desk-tool": "^1.150.4",
     "@sanity/production-preview": "^1.150.1",
     "@sanity/vision": "^1.150.1",
+    "node-fetch": "^2.6.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"

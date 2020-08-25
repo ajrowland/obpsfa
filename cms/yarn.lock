@@ -1099,6 +1099,15 @@
     postcss-value-parser "^3.3.0"
     source-list-map "^2.0.0"
 
+"@sanity/dashboard@^1.150.4":
+  version "1.150.4"
+  resolved "https://registry.npmjs.org/@sanity/dashboard/-/dashboard-1.150.4.tgz#7a552c51c8cde241043a20388888656d5d1af34d"
+  dependencies:
+    "@sanity/image-url" "^0.140.19"
+    lodash "^4.17.15"
+    react-icons "^2.2.7"
+    rxjs "^6.5.3"
+
 "@sanity/data-aspects@1.150.1":
   version "1.150.1"
   resolved "https://registry.npmjs.org/@sanity/data-aspects/-/data-aspects-1.150.1.tgz#27b7062021e73772c57d5fcf4372b114fcd9c8df"
@@ -5280,6 +5289,10 @@ node-fetch@^1.0.1:
   dependencies:
     encoding "^0.1.11"
     is-stream "^1.0.1"
+
+node-fetch@^2.6.0:
+  version "2.6.0"
+  resolved "https://registry.npmjs.org/node-fetch/-/node-fetch-2.6.0.tgz#e633456386d4aa55863f676a7ab0daa8fdecb0fd"
 
 node-libs-browser@^2.0.0:
   version "2.2.1"
