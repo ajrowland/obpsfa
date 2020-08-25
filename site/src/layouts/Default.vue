@@ -3,25 +3,54 @@
     <header class="header">
       <div class="header__top-bar">
         <div class="container">
-          <div class="header__top-links">
-            <g-link class="header__top-link" to="/archive" title="Archive">Archive</g-link>
-            <a class="header__top-link" :href="`mailto:${$static.metadata.siteEmail}`" title="Send us an email" target="blank" rel="noopener noreferer">Contact us</a>
-            <a class="header__top-link" :href="`https://twitter.com/${$static.metadata.siteTwitterName}`" title="View our Twitter feed" target="blank" rel="noopener noreferer">
-              <svg viewBox="0 0 512 512"><path d="M419.6 168.6c-11.7 5.2-24.2 8.7-37.4 10.2 13.4-8.1 23.8-20.8 28.6-36 -12.6 7.5-26.5 12.9-41.3 15.8 -11.9-12.6-28.8-20.6-47.5-20.6 -42 0-72.9 39.2-63.4 79.9 -54.1-2.7-102.1-28.6-134.2-68 -17 29.2-8.8 67.5 20.1 86.9 -10.7-0.3-20.7-3.3-29.5-8.1 -0.7 30.2 20.9 58.4 52.2 64.6 -9.2 2.5-19.2 3.1-29.4 1.1 8.3 25.9 32.3 44.7 60.8 45.2 -27.4 21.4-61.8 31-96.4 27 28.8 18.5 63 29.2 99.8 29.2 120.8 0 189.1-102.1 185-193.6C399.9 193.1 410.9 181.7 419.6 168.6z"/></svg>
+          <div class="header__top-links" @click="closeMenu">
+            <g-link class="header__top-link" to="/archive" title="Archive"
+              >Archive</g-link
+            >
+            <a
+              class="header__top-link"
+              :href="`mailto:${$static.metadata.siteEmail}`"
+              title="Send us an email"
+              target="blank"
+              rel="noopener noreferer"
+              >Contact us</a
+            >
+            <a
+              class="header__top-link"
+              :href="`https://twitter.com/${$static.metadata.siteTwitterName}`"
+              title="View our Twitter feed"
+              target="blank"
+              rel="noopener noreferer"
+            >
+              <svg viewBox="0 0 512 512">
+                <path
+                  d="M419.6 168.6c-11.7 5.2-24.2 8.7-37.4 10.2 13.4-8.1 23.8-20.8 28.6-36 -12.6 7.5-26.5 12.9-41.3 15.8 -11.9-12.6-28.8-20.6-47.5-20.6 -42 0-72.9 39.2-63.4 79.9 -54.1-2.7-102.1-28.6-134.2-68 -17 29.2-8.8 67.5 20.1 86.9 -10.7-0.3-20.7-3.3-29.5-8.1 -0.7 30.2 20.9 58.4 52.2 64.6 -9.2 2.5-19.2 3.1-29.4 1.1 8.3 25.9 32.3 44.7 60.8 45.2 -27.4 21.4-61.8 31-96.4 27 28.8 18.5 63 29.2 99.8 29.2 120.8 0 189.1-102.1 185-193.6C399.9 193.1 410.9 181.7 419.6 168.6z"
+                />
+              </svg>
             </a>
           </div>
         </div>
       </div>
       <div class="container">
         <nav class="header__nav">
-          <g-link to="/" class="header__logo" title="Home">Home</g-link>
+          <div @click="closeMenu">
+            <g-link to="/" class="header__logo" title="Home">Home</g-link>
+          </div>
 
-          <button class="header__menu-toggle" v-on:click="toggleMenu">Menu</button>
+          <button class="header__menu-toggle" v-on:click="toggleMenu">
+            Menu
+          </button>
 
-          <div class="header__nav-links" @click="toggleMenu">
+          <div class="header__nav-links" @click="closeMenu">
             <g-link class="header__nav-link" to="/">Home</g-link>
             <template v-for="edge in $static.pages.edges">
-              <g-link class="header__nav-link" :to="edge.node.slug.current" :key="edge.node.id" :title="edge.node.title">{{edge.node.title}}</g-link>
+              <g-link
+                class="header__nav-link"
+                :to="edge.node.slug.current"
+                :key="edge.node.id"
+                :title="edge.node.title"
+                >{{ edge.node.title }}</g-link
+              >
             </template>
           </div>
         </nav>
@@ -37,9 +66,7 @@
     </main>
 
     <footer class="footer">
-      <div class="container">
-        ©{{ new Date().getFullYear() }} OBPSFA
-      </div>
+      <div class="container">©{{ new Date().getFullYear() }} OBPSFA</div>
     </footer>
   </div>
 </template>
@@ -81,13 +108,18 @@ query {
 <script>
 export default {
   methods: {
-    toggleMenu () {
-      const bodyClasses = document.querySelector('body').classList
+    toggleMenu() {
+      const bodyClasses = document.querySelector("body").classList;
 
-      bodyClasses.contains('menu-active') ? bodyClasses.remove('menu-active') : bodyClasses.add('menu-active')
-    }
-  }
-}
+      bodyClasses.contains("menu-active")
+        ? bodyClasses.remove("menu-active")
+        : bodyClasses.add("menu-active");
+    },
+    closeMenu() {
+      document.querySelector("body").classList.remove("menu-active");
+    },
+  },
+};
 </script>
 
 <style lang="scss">
@@ -155,7 +187,7 @@ export default {
       color: #fff;
       text-decoration: none;
       padding: 5px;
-      font-size: .8rem;
+      font-size: 0.8rem;
 
       @include mq($from: desktop) {
         font-size: 1rem;
@@ -220,7 +252,7 @@ export default {
       height: 204px;
       border-radius: 120px;
       border-width: 8px;
-      margin-left: $gutter*-1;
+      margin-left: $gutter * -1;
     }
   }
 
@@ -261,10 +293,10 @@ export default {
     text-transform: uppercase;
     text-decoration: none;
     color: $colour-grey;
-    font-weight:bold;
+    font-weight: bold;
     border-bottom: 2px solid transparent;
     display: block;
-    transition: border-color .2s ease-in-out;
+    transition: border-color 0.2s ease-in-out;
 
     &.active--exact.active,
     &:hover {
