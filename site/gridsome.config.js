@@ -22,35 +22,6 @@ function addStyleResource(rule) {
     });
 }
 
-const collections = [
-  {
-    query: `{
-      allSanityPage {
-        edges {
-          node {
-            id
-            title
-            path
-            date
-          }
-        }
-      }
-    }`,
-    transformer: ({ data }) => data.allSanityPage.edges.map(({ node }) => node),
-    indexName: process.env.ALGOLIA_INDEX_NAME || "pages", // Algolia index name
-    itemFormatter: (item) => {
-      console.log(item);
-      return {
-        objectID: item.id,
-        title: item.title,
-        path: item.path,
-        date: item.date,
-      };
-    }, // optional
-    matchFields: ["path", "date"], // Array<String> required with PartialUpdates
-  },
-];
-
 module.exports = {
   siteName: "Orpington & Bromley Primary Schools Football Association",
   siteUrl: "https://www.obpsfa.com",
@@ -121,16 +92,6 @@ module.exports = {
       },
     }
     */
-    {
-      use: `gridsome-plugin-algolia`,
-      options: {
-        appId: process.env.ALGOLIA_APP_ID,
-        apiKey: process.env.ALGOLIA_ADMIN_KEY,
-        collections,
-        chunkSize: 10000, // default: 1000
-        enablePartialUpdates: true, // default: false
-      },
-    },
   ],
   chainWebpack(config) {
     // Load variables for all vue-files
