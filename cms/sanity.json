@@ -16,7 +16,8 @@
     "@sanity/color-input",
     "@sanity/production-preview",
     "dashboard-widget-deploy-vercel",
-    "@sanity/dashboard"
+    "@sanity/dashboard",
+    "datatable"
   ],
   "env": {
     "development": {

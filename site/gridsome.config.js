@@ -3,30 +3,58 @@
 
 // Changes here require a server restart.
 // To restart press CTRL + C in terminal and run `gridsome develop`
-const path = require('path')
+const path = require("path");
 
-require('dotenv').config({
-  path: `.env.${process.env.NODE_ENV || 'development'}`
-})
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV || "development"}`,
+});
 
-const clientConfig = require('./client-config')
+const clientConfig = require("./client-config");
 
-const isProd = process.env.NODE_ENV === 'production'
+const isProd = process.env.NODE_ENV === "production";
 
-function addStyleResource (rule) {
-  rule.use('style-resource')
-    .loader('style-resources-loader')
+function addStyleResource(rule) {
+  rule
+    .use("style-resource")
+    .loader("style-resources-loader")
     .options({
-      patterns: [
-        path.resolve(__dirname, './src/assets/style/index.scss'),
-      ],
-    })
+      patterns: [path.resolve(__dirname, "./src/assets/style/index.scss")],
+    });
 }
 
+const collections = [
+  {
+    query: `{
+      allSanityPage {
+        edges {
+          node {
+            id
+            title
+            path
+            date
+          }
+        }
+      }
+    }`,
+    transformer: ({ data }) => data.allSanityPage.edges.map(({ node }) => node),
+    indexName: process.env.ALGOLIA_INDEX_NAME || "pages", // Algolia index name
+    itemFormatter: (item) => {
+      console.log(item);
+      return {
+        objectID: item.id,
+        title: item.title,
+        path: item.path,
+        date: item.date,
+      };
+    }, // optional
+    matchFields: ["path", "date"], // Array<String> required with PartialUpdates
+  },
+];
+
 module.exports = {
-  siteName: 'Orpington & Bromley Primary Schools Football Association',
-  siteUrl: 'https://www.obpsfa.com',
-  siteTwitterName: 'odpsfa',
+  siteName: "Orpington & Bromley Primary Schools Football Association",
+  siteUrl: "https://www.obpsfa.com",
+  siteTwitterName: "odpsfa",
 
   templates: {
     /*SanityPage: [
@@ -48,26 +76,26 @@ module.exports = {
 
   plugins: [
     {
-      use: 'gridsome-source-sanity',
+      use: "gridsome-source-sanity",
       options: {
         ...clientConfig.sanity,
-        typeName: 'Sanity',
+        typeName: "Sanity",
         token: process.env.SANITY_TOKEN,
         overlayDrafts: !isProd,
-        watchMode: !isProd
+        watchMode: !isProd,
 
         // If the Sanity GraphQL API was deployed using `--tag <name>`,
         // use `graphqlTag` to specify the tag name. Defaults to `default`.
         //graphqlTag: 'default',
-      }
+      },
     },
     {
-      use: 'gridsome-plugin-gtm',
+      use: "gridsome-plugin-gtm",
       options: {
-        id: 'GTM-W6XW753',
+        id: "GTM-W6XW753",
         enabled: true,
-        debug: false
-      }
+        debug: false,
+      },
     },
     /*
     {
@@ -93,13 +121,23 @@ module.exports = {
       },
     }
     */
+    {
+      use: `gridsome-plugin-algolia`,
+      options: {
+        appId: process.env.ALGOLIA_APP_ID,
+        apiKey: process.env.ALGOLIA_ADMIN_KEY,
+        collections,
+        chunkSize: 10000, // default: 1000
+        enablePartialUpdates: true, // default: false
+      },
+    },
   ],
-  chainWebpack (config) {
+  chainWebpack(config) {
     // Load variables for all vue-files
-    const types = ['vue-modules', 'vue', 'normal-modules', 'normal']
+    const types = ["vue-modules", "vue", "normal-modules", "normal"];
 
-    types.forEach(type => {
-      addStyleResource(config.module.rule('scss').oneOf(type))
-    })
-  }
-}
+    types.forEach((type) => {
+      addStyleResource(config.module.rule("scss").oneOf(type));
+    });
+  },
+};
