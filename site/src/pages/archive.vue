@@ -1,7 +1,6 @@
 <template>
   <Layout>
-
-    <h1>{{$page.home.title}}</h1>
+    <h1>{{ $page.home.title }}</h1>
 
     <extended-image
       :image="$page.home.mainImage"
@@ -10,18 +9,21 @@
       cssClass="main-image"
     />
 
-    <extended-block
-      :blocks="$page.home._rawBody"
-    />
+    <extended-block :blocks="$page.home._rawBody" />
 
     <template slot="contentBottom">
       <a name="article-list"></a>
       <section class="archive">
         <div class="container">
-          <Pager :info="$page.archive.pageInfo" anchor="article-list" class="pager" />
+          <Pager
+            :info="$page.archive.pageInfo"
+            anchor="article-list"
+            class="pager"
+          />
 
           <div class="news__items">
-            <NewsItem v-for="page in $page.archive.edges"
+            <NewsItem
+              v-for="page in $page.archive.edges"
               :key="page.node.id"
               :item="page.node"
               :url="page.node.path"
@@ -29,11 +31,14 @@
             />
           </div>
 
-          <Pager :info="$page.archive.pageInfo" anchor="article-list" class="pager" />
+          <Pager
+            :info="$page.archive.pageInfo"
+            anchor="article-list"
+            class="pager"
+          />
         </div>
       </section>
     </template>
-
   </Layout>
 </template>
 
@@ -72,6 +77,9 @@ query ($page: Int) {
     filter: {
       isArchived: {
         eq: true
+      }
+      isHidden: {
+        ne: true
       }
     }
   ) @paginate {
@@ -119,48 +127,65 @@ query ($page: Int) {
 </page-query>
 
 <script>
-import { Pager } from 'gridsome'
-import NewsItem from '~/components/NewsItem.vue'
+import { Pager } from "gridsome";
+import NewsItem from "~/components/NewsItem.vue";
 
 export default {
   components: {
     Pager,
-    NewsItem
+    NewsItem,
   },
   metaInfo() {
-    const page = this.$page.home
-    const imageUrl = page.seo.image ? page.seo.image.asset.url : (page.mainImage ? page.mainImage.asset.url : '')
+    const page = this.$page.home;
+    const imageUrl = page.seo.image
+      ? page.seo.image.asset.url
+      : page.mainImage
+      ? page.mainImage.asset.url
+      : "";
 
     return {
       title: page.title,
       meta: [
-        { name: 'author', content: page.seo.author.name },
-        { name: 'description', content: page.seo.description },
-        { name: 'twitter:card', content: 'summary_large_image' },
-        { name: 'twitter:description', content: page.seo.description },
-        { name: 'twitter:title', content: page.title },
-        { name: 'twitter:site', content: this.$page.metadata.siteTwitterName },
-        { name: 'twitter:creator', content: this.$page.metadata.siteTwitterName },
-        { name: 'twitter:image', content: imageUrl },
-        { property: 'og:type', content: 'article' },
-        { property: 'og:title', content: page.title },
-        { property: 'og:description', content: page.seo.description },
-        { property: 'og:url', content: `${this.$page.metadata.siteUrl}${page.path}` },
-        { property: 'og:image', content: imageUrl }
+        { name: "author", content: page.seo.author.name },
+        { name: "description", content: page.seo.description },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:description", content: page.seo.description },
+        { name: "twitter:title", content: page.title },
+        { name: "twitter:site", content: this.$page.metadata.siteTwitterName },
+        {
+          name: "twitter:creator",
+          content: this.$page.metadata.siteTwitterName,
+        },
+        { name: "twitter:image", content: imageUrl },
+        { property: "og:type", content: "article" },
+        { property: "og:title", content: page.title },
+        { property: "og:description", content: page.seo.description },
+        {
+          property: "og:url",
+          content: `${this.$page.metadata.siteUrl}${page.path}`,
+        },
+        { property: "og:image", content: imageUrl },
       ],
       link: [
-        { rel: 'canonical', href: `${this.$page.metadata.siteUrl}${page.path}` }
-      ]
-    }
-  }
-}
+        {
+          rel: "canonical",
+          href: `${this.$page.metadata.siteUrl}${page.path}`,
+        },
+      ],
+    };
+  },
+};
 </script>
 
 <style lang="scss">
 .archive {
-  background-image: linear-gradient(to bottom right, rgba($colour-red, 0.6), #fff);
+  background-image: linear-gradient(
+    to bottom right,
+    rgba($colour-red, 0.6),
+    #fff
+  );
   padding: $vertical-spacing 0;
-  margin: $vertical-spacing*2 0 $vertical-spacing*-1 0;
+  margin: $vertical-spacing * 2 0 $vertical-spacing * -1 0;
   color: #fff;
 
   &__entry {
@@ -172,7 +197,7 @@ export default {
   }
 
   &__date {
-    font-size: .8rem;
+    font-size: 0.8rem;
     font-style: italic;
   }
 }
@@ -193,7 +218,7 @@ export default {
     padding: 5px 10px;
     background: $colour-red;
     color: #fff;
-    transition: all .25s ease-in-out;
+    transition: all 0.25s ease-in-out;
     margin: 0 1px;
     text-decoration: none;
 

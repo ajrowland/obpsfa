@@ -1,7 +1,6 @@
 <template>
   <Layout>
-
-    <h1>{{$page.home.title}}</h1>
+    <h1>{{ $page.home.title }}</h1>
 
     <extended-image
       :image="$page.home.mainImage"
@@ -10,17 +9,16 @@
       cssClass="main-image"
     />
 
-    <extended-block
-      :blocks="$page.home._rawBody"
-    />
+    <extended-block :blocks="$page.home._rawBody" />
 
     <template slot="contentBottom">
       <section class="news" v-if="$page.news">
         <div class="container">
-          <H2>Latest news</h2>
+          <H2>Latest news</H2>
 
           <div class="news__items">
-            <NewsItem v-for="newsItem in $page.news.edges"
+            <NewsItem
+              v-for="newsItem in $page.news.edges"
               :key="newsItem.node.id"
               :item="newsItem.node"
               :url="newsItem.node.slug.current"
@@ -30,7 +28,6 @@
         </div>
       </section>
     </template>
-
   </Layout>
 </template>
 
@@ -69,6 +66,9 @@ query {
       },
       isArchived: {
         ne: true
+      },
+      isHidden: {
+        ne: true
       }
     }
   ) {
@@ -104,44 +104,53 @@ query {
 </page-query>
 
 <script>
-import NewsItem from '~/components/NewsItem.vue'
+import NewsItem from "~/components/NewsItem.vue";
 
 export default {
   components: {
-    NewsItem
+    NewsItem,
   },
   metaInfo() {
-    const page = this.$page.home
-    const imageUrl = page.seo.image ? page.seo.image.asset.url : (page.mainImage ? page.mainImage.asset.url : '')
+    const page = this.$page.home;
+    const imageUrl = page.seo.image
+      ? page.seo.image.asset.url
+      : page.mainImage
+      ? page.mainImage.asset.url
+      : "";
 
     return {
-      title: 'Home',
+      title: "Home",
       meta: [
-        { name: 'author', content: page.seo.author.name },
-        { name: 'description', content: page.seo.description },
-        { name: 'twitter:card', content: 'summary_large_image' },
-        { name: 'twitter:description', content: page.seo.description },
-        { name: 'twitter:title', content: 'Home' },
-        { name: 'twitter:site', content: this.$page.metadata.siteTwitterName },
-        { name: 'twitter:creator', content: this.$page.metadata.siteTwitterName },
-        { name: 'twitter:image', content: imageUrl },
-        { property: 'og:type', content: 'article' },
-        { property: 'og:title', content: 'Home' },
-        { property: 'og:description', content: page.seo.description },
-        { property: 'og:url', content: this.$page.metadata.siteUrl },
-        { property: 'og:image', content: imageUrl }
+        { name: "author", content: page.seo.author.name },
+        { name: "description", content: page.seo.description },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:description", content: page.seo.description },
+        { name: "twitter:title", content: "Home" },
+        { name: "twitter:site", content: this.$page.metadata.siteTwitterName },
+        {
+          name: "twitter:creator",
+          content: this.$page.metadata.siteTwitterName,
+        },
+        { name: "twitter:image", content: imageUrl },
+        { property: "og:type", content: "article" },
+        { property: "og:title", content: "Home" },
+        { property: "og:description", content: page.seo.description },
+        { property: "og:url", content: this.$page.metadata.siteUrl },
+        { property: "og:image", content: imageUrl },
       ],
-      link: [
-        { rel: 'canonical', href: this.$page.metadata.siteUrl }
-      ]
-    }
-  }
-}
+      link: [{ rel: "canonical", href: this.$page.metadata.siteUrl }],
+    };
+  },
+};
 </script>
 
 <style lang="scss">
 .news {
-  background-image: linear-gradient(to bottom right, rgba($colour-red, 0.6), #fff);
+  background-image: linear-gradient(
+    to bottom right,
+    rgba($colour-red, 0.6),
+    #fff
+  );
   padding-top: $vertical-spacing;
   margin: $vertical-spacing * 2 0 $vertical-spacing * -1 0;
   color: #fff;

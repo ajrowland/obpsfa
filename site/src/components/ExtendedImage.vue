@@ -1,17 +1,31 @@
 <template>
   <div :class="cssClass" v-if="image && image.asset">
     <g-image
-      :src="$urlForImage(image, $static.metadata.sanityOptions).height(height).width(width).auto('format').dpr(1).url()"
+      :src="
+        $urlForImage(image, $static.metadata.sanityOptions)
+          .height(height)
+          .width(width)
+          .auto('format')
+          .dpr(1)
+          .url()
+      "
       :alt="image.alt || alt"
       :class="cssClass && `${cssClass}__img`"
     />
-    <div :class="cssClass && `${cssClass}__caption`" v-if="!hideCaption && image.caption">
-      <div :class="cssClass && `${cssClass}__caption-text`">{{image.caption}}</div>
+    <div
+      :class="cssClass && `${cssClass}__caption`"
+      v-if="!hideCaption && image.caption"
+    >
+      <div :class="cssClass && `${cssClass}__caption-text`">
+        {{ image.caption }}
+      </div>
     </div>
     <div
       :class="cssClass && `${cssClass}__attribution`"
       v-if="image.attribution"
-    >©{{image.attribution}}</div>
+    >
+      ©{{ image.attribution }}
+    </div>
   </div>
 </template>
 
@@ -33,6 +47,29 @@ export default {
 </script>
 
 <style lang="scss">
+.article-image {
+  &--left,
+  &--right {
+    margin-bottom: $vertical-spacing;
+  }
+
+  &--left {
+    @include mq($from: tablet) {
+      float: left;
+      margin-right: 20px;
+      width: 45%;
+    }
+  }
+
+  &--right {
+    @include mq($from: tablet) {
+      float: right;
+      margin-left: 20px;
+      width: 45%;
+    }
+  }
+}
+
 .main-image {
   position: relative;
   overflow: hidden;

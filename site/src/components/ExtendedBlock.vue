@@ -36,11 +36,18 @@ export default {
           iframe: Iframe,
           gallery: Gallery,
           extendedImage: ({ node }) => {
+            console.log(node);
+            const cssClass =
+              node.position === "left" || node.position === "right"
+                ? `article-image article-image--${node.position}`
+                : "main-image";
+            const width =
+              node.position === "left" || node.position === "right" ? 350 : 800;
             return (
               <extended-image
-                cssClass="main-image"
+                cssClass={cssClass}
                 image={node}
-                width="800"
+                width={width}
                 height="350"
               />
             );

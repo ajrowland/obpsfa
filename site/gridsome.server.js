@@ -5,14 +5,14 @@
 // Changes here require a server restart.
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
-const clientConfig = require('./client-config')
+const clientConfig = require("./client-config");
 
 module.exports = function(api) {
-  api.loadSource(store => {
+  api.loadSource((store) => {
     // Use the Data store API here: https://gridsome.org/docs/data-store-api
-    store.addMetadata('sanityOptions', clientConfig.sanity)
-    store.addMetadata('siteTwitterName', 'odpsfa')
-    store.addMetadata('siteEmail', 'mail@obpsfa.com')
+    store.addMetadata("sanityOptions", clientConfig.sanity);
+    store.addMetadata("siteTwitterName", "odpsfa");
+    store.addMetadata("siteEmail", "mail@obpsfa.com");
 
     //const santityPageCollection = store.getCollection('SanityPage')
     //const pages = santityPageCollection.data()
@@ -33,67 +33,76 @@ module.exports = function(api) {
         }
       }
     })*/
-  })
+  });
 
-  api.onCreateNode(node => {
-    if (node.internal.typeName === 'SanityPage' || node.internal.typeName === 'SanityArchive') {
+  api.onCreateNode((node) => {
+    if (
+      node.internal.typeName === "SanityPage" ||
+      node.internal.typeName === "SanityArchive"
+    ) {
       return {
         ...node,
-        path: node.isArchived ? `/archive/${node.date}-${api._app.slugify(node.title)}` : (node.slug ? `/${node.slug.current}` : `/${api._app.slugify(node.title)}`)
-      }
+        path: node.isArchived
+          ? `/archive/${node.date}-${api._app.slugify(node.title)}`
+          : node.slug
+          ? `/${node.slug.current}`
+          : `/${api._app.slugify(node.title)}`,
+      };
     }
 
-    return node
-  })
+    return node;
+  });
 
   api.createPages(async ({ graphql, createPage }) => {
-    const { data } = await graphql(`{
-      allSanityPage {
-        edges {
-          node {
-            path
-            date
-            title
-            _rawBody(resolveReferences: {maxDepth: 5})
-            mainImage {
-              alt
-              caption
-              attribution
-              asset {
-                _id
-                url
-              }
-            }
-            slug {
-              current
-            }
-            seo {
-              description
-              author {
-                name
-              }
-              authorDisplay
-              image {
+    const { data } = await graphql(`
+      {
+        allSanityPage {
+          edges {
+            node {
+              path
+              date
+              title
+              _rawBody(resolveReferences: { maxDepth: 5 })
+              mainImage {
+                alt
+                caption
+                attribution
                 asset {
+                  _id
                   url
                 }
               }
+              slug {
+                current
+              }
+              seo {
+                description
+                author {
+                  name
+                }
+                authorDisplay
+                image {
+                  asset {
+                    url
+                  }
+                }
+              }
+              isArchived
             }
-            isArchived
           }
         }
+        metadata {
+          siteTwitterName
+          siteUrl
+        }
       }
-      metadata {
-        siteTwitterName
-        siteUrl
-      }
-    }`)
+    `);
 
-    const metadata = JSON.parse(JSON.stringify(data.metadata))
+    const metadata = JSON.parse(JSON.stringify(data.metadata));
 
     data.allSanityPage.edges.forEach(({ node }) => {
-      const doc = JSON.parse(JSON.stringify(node))
-      const template = doc.isArchived ? 'PageArchived' : 'Page'
+      const doc = JSON.parse(JSON.stringify(node));
+      const template = doc.isArchived ? "PageArchived" : "Page";
 
       createPage({
         path: doc.path,
@@ -101,10 +110,10 @@ module.exports = function(api) {
         context: {
           ...doc,
           metadata: {
-            ...metadata
-          }
-        }
-      })
-    })
-  })
-}
+            ...metadata,
+          },
+        },
+      });
+    });
+  });
+};

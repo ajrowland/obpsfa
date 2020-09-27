@@ -4,6 +4,12 @@
       <div class="header__top-bar">
         <div class="container">
           <div class="header__top-links" @click="closeMenu">
+            <g-link
+              class="header__top-link"
+              to="/covid-19-checklist  "
+              title="Archive"
+              >COVID-19 checklist</g-link
+            >
             <g-link class="header__top-link" to="/archive" title="Archive"
               >Archive</g-link
             >
@@ -66,7 +72,15 @@
     </main>
 
     <footer class="footer">
-      <div class="container">©{{ new Date().getFullYear() }} OBPSFA</div>
+      <div class="container">
+        ©{{ new Date().getFullYear() }} OBPSFA |
+        <a
+          href="/obpsfa-risk-asesssment-2020.docx"
+          target="_blank"
+          rel="noopener"
+          >COVID-19 risk assessment document</a
+        >
+      </div>
     </footer>
   </div>
 </template>
@@ -335,6 +349,10 @@ export default {
   background: $colour-grey;
   color: #fff;
   padding: $vertical-spacing 0;
+
+  a {
+    color: #fff;
+  }
 
   @include mq($from: desktop) {
     padding: $vertical-spacing * 2 0;
