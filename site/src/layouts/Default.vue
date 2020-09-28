@@ -8,7 +8,7 @@
               class="header__top-link"
               to="/covid-19-checklist"
               title="COVID-19 match day checklist"
-              >COVID-19 checklist</g-link
+              >COVID-19</g-link
             >
             <g-link class="header__top-link" to="/archive" title="Archive"
               >Archive</g-link
