@@ -19,7 +19,7 @@
               title="Send us an email"
               target="blank"
               rel="noopener noreferer"
-              >Contact us</a
+              >Email</a
             >
             <a
               class="header__top-link"
