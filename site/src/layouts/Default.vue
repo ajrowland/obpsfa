@@ -329,6 +329,8 @@ export default {
   flex-grow: 1;
   margin-bottom: 2rem;
 
+  ul,
+  ol,
   p {
     line-height: 2;
 
