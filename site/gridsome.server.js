@@ -71,6 +71,18 @@ module.exports = function(api) {
                   _id
                   url
                 }
+                hotspot {
+                  x
+                  y
+                  height
+                  width
+                }
+                crop {
+                  top
+                  left
+                  right
+                  bottom
+                }
               }
               slug {
                 current

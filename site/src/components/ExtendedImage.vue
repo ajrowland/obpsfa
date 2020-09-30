@@ -7,6 +7,7 @@
           .width(width)
           .auto('format')
           .dpr(1)
+          .focalPoint(image.hotspot.x, image.hotspot.y)
           .url()
       "
       :alt="image.alt || alt"
