@@ -4,8 +4,8 @@
 
     <extended-image
       :image="$page.home.mainImage"
-      width="800"
-      height="350"
+      width="800,400"
+      height="350,175"
       cssClass="main-image"
     />
 
