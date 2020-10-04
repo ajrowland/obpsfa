@@ -97,6 +97,18 @@ module.exports = function(api) {
                   asset {
                     url
                   }
+                  hotspot {
+                    x
+                    y
+                    height
+                    width
+                  }
+                  crop {
+                    top
+                    left
+                    right
+                    bottom
+                  }
                 }
               }
               isArchived
