@@ -118,6 +118,10 @@ module.exports = function(api) {
         metadata {
           siteTwitterName
           siteUrl
+          sanityOptions {
+            projectId
+            dataset
+          }
         }
       }
     `);
