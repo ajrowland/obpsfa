@@ -6,18 +6,6 @@
       :alt="image.alt || alt"
       :class="cssClass && `${cssClass}__img`"
     />
-    <!--<g-image
-      :src="
-        $urlForImage(image, $static.metadata.sanityOptions)
-          .height(height)
-          .width(width)
-          .auto('format')
-          .dpr(1)
-          .url()
-      "
-      :alt="image.alt || alt"
-      :class="cssClass && `${cssClass}__img`"
-    />-->
     <div
       :class="cssClass && `${cssClass}__caption`"
       v-if="!hideCaption && image.caption"
@@ -51,8 +39,8 @@ export default {
   props: ["image", "width", "height", "cssClass", "alt", "hideCaption"],
   data() {
     return {
-      widths: this.width.split(","),
-      heights: this.height.split(","),
+      widths: this.width && this.width.split(","),
+      heights: this.height && this.height.split(","),
     };
   },
   computed: {
