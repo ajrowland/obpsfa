@@ -56,6 +56,18 @@ query ($page: Int) {
         _id
         url
       }
+      hotspot {
+        x
+        y
+        height
+        width
+      }
+      crop {
+        top
+        left
+        right
+        bottom
+      }
     }
     seo {
       description
@@ -65,6 +77,18 @@ query ($page: Int) {
       image {
         asset {
           url
+        }
+        hotspot {
+          x
+          y
+          height
+          width
+        }
+        crop {
+          top
+          left
+          right
+          bottom
         }
       }
     }
@@ -101,6 +125,18 @@ query ($page: Int) {
             _id
             url
           }
+          hotspot {
+            x
+            y
+            height
+            width
+          }
+          crop {
+            top
+            left
+            right
+            bottom
+          }
         }
         _rawBody(resolveReferences: {maxDepth: 5})
         seo {
@@ -122,6 +158,10 @@ query ($page: Int) {
   metadata {
     siteTwitterName
     siteUrl
+    sanityOptions {
+      projectId
+      dataset
+    }
   }
 }
 </page-query>
@@ -137,11 +177,22 @@ export default {
   },
   metaInfo() {
     const page = this.$page.home;
-    const imageUrl = page.seo.image
-      ? page.seo.image.asset.url
-      : page.mainImage
-      ? page.mainImage.asset.url
-      : "";
+    const image =
+      page.seo.image && page.seo.image.asset
+        ? page.seo.image
+        : page.mainImage && page.mainImage.asset
+        ? page.mainImage
+        : null;
+
+    const imageUrl =
+      image !== null
+        ? this.$urlForImage(image, this.$page.metadata.sanityOptions)
+            .height(150)
+            .width(280)
+            .auto("format")
+            .dpr(1)
+            .url()
+        : "";
 
     return {
       title: page.title,
