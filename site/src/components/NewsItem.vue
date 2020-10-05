@@ -8,7 +8,7 @@
     <div class="news-item__text">
       <h3 class="news-item__title" v-html="item.title" />
       <time v-html="formatDate(date)" />
-      <p>{{item.seo.description}}</p>
+      <p>{{ item.seo.description }}</p>
       <p v-if="item._rawBody" class="news-item__more">Read more</p>
     </div>
     <extended-image
@@ -85,6 +85,20 @@ export default {
     font-weight: bold;
   }
 
+  &__image {
+    position: relative;
+  }
+
+  &__image__attribution {
+    display: inline-block;
+    background: #fff;
+    color: $colour-grey;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 5px $gutter;
+  }
+
   @include mq($from: tablet) {
     display: flex;
     margin: $gutter * 2 0;
@@ -103,6 +117,10 @@ export default {
         height: 100%;
         object-fit: cover;
       }
+    }
+
+    &__image__attribution {
+      right: auto;
     }
   }
 }
