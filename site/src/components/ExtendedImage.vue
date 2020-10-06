@@ -1,6 +1,6 @@
 <template>
   <div :class="cssClass" v-if="image && image.asset">
-    <g-image
+    <img
       :src="
         $urlForImage(image, $static.metadata.sanityOptions)
           .height(height)
@@ -11,6 +11,7 @@
       "
       :alt="image.alt || alt"
       :class="cssClass && `${cssClass}__img`"
+      loading="lazy"
     />
     <div
       :class="cssClass && `${cssClass}__caption`"
