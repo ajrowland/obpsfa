@@ -1,4 +1,4 @@
-import MdInsertDriveFile from "react-icons/lib/md/insert-drive-file";
+import { MdInsertDriveFile } from "react-icons/md";
 
 export default {
   name: "page",
