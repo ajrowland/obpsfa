@@ -266,7 +266,7 @@ export default {
 
   a {
     display: inline-block;
-    padding: 5px 10px;
+    padding: 15px 20px;
     background: $colour-red;
     color: #fff;
     transition: all 0.25s ease-in-out;
@@ -276,6 +276,10 @@ export default {
     &.active,
     &:hover {
       background: #000;
+    }
+
+    @include mq($from: tablet) {
+      padding: 5px 10px;
     }
   }
 }
