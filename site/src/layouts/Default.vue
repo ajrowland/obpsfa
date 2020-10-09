@@ -241,11 +241,11 @@ export default {
   }
 
   &__logo {
-    background: url(~@/assets/images/logo.webp);
+    background-image: url(~@/assets/images/logo.webp);
 
     _:-ms-fullscreen,
     :root & {
-      background: url(~@/assets/images/logo.png);
+      background-image: url(~@/assets/images/logo.png);
     }
 
     background-color: #fff;
