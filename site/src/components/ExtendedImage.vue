@@ -11,6 +11,8 @@
       "
       :alt="image.alt || alt"
       :class="cssClass && `${cssClass}__img`"
+      :width="width"
+      :height="height"
       loading="lazy"
     />
     <div
@@ -76,18 +78,15 @@ export default {
   overflow: hidden;
   margin: $vertical-spacing $gutter * -1;
   font-size: 0.8rem;
-  padding-top: calc(43.75% + 17px);
 
   @include mq($from: tablet) {
     margin: $vertical-spacing 0;
     font-size: 1rem;
-    padding-top: 43.75%;
   }
 
   img {
-    position: absolute;
-    top: 0;
     display: block;
+    height: auto;
   }
 
   &__caption {

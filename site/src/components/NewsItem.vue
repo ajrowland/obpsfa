@@ -79,6 +79,7 @@ export default {
 
   img {
     display: block;
+    height: auto;
   }
 
   &__more {
