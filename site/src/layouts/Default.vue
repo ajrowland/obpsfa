@@ -241,7 +241,13 @@ export default {
   }
 
   &__logo {
-    background: url(~@/assets/images/logo.png);
+    background: url(~@/assets/images/logo.webp);
+
+    _:-ms-fullscreen,
+    :root & {
+      background: url(~@/assets/images/logo.png);
+    }
+
     background-color: #fff;
     background-repeat: no-repeat;
     width: 100px;
