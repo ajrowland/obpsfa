@@ -41,11 +41,11 @@ export default function(Vue, { router, head, isClient }) {
 
   head.link.push({
     rel: "preconnent",
-    href: "//www.google-analytics.com",
+    href: "https://www.google-analytics.com",
   });
 
   head.link.push({
     rel: "preconnent",
-    href: "/www.googletagmanager.com",
+    href: "https://www.googletagmanager.com",
   });
 }
