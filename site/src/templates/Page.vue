@@ -10,6 +10,11 @@
     />
 
     <extended-block :blocks="$context._rawBody" />
+    
+    <div class="blog__date" v-if="$context.seo.autherDisplay">
+      {{ formatDate($context.date) }}, by
+      {{ $context.seo.authorDisplay }}
+    </div>
   </Layout>
 </template>
 
@@ -37,7 +42,7 @@ export default {
     return {
       title: page.title,
       meta: [
-        { name: "author", content: page.seo.author.name },
+        { name: "author", content: page.seo.authorDisplay || page.seo.author.name },
         { name: "description", content: page.seo.description },
         { name: "twitter:card", content: "summary_large_image" },
         { name: "twitter:description", content: page.seo.description },
