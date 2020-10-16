@@ -128,6 +128,7 @@ query {
         }
         seo {
           description
+          authorDisplay
         }
       }
     }

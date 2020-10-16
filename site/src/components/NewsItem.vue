@@ -7,7 +7,10 @@
   >
     <div class="news-item__text">
       <h3 class="news-item__title" v-html="item.title" />
-      <time v-html="formatDate(date)" />
+      <div class="news-item__date">
+        <time v-html="formatDate(date)" />
+        <template v-if="item.seo.authorDisplay">, by {{ item.seo.authorDisplay }}</template>
+      </div>
       <p>{{ item.seo.description }}</p>
       <p v-if="item._rawBody" class="news-item__more">Read more</p>
     </div>
@@ -48,6 +51,12 @@ export default {
     flex-direction: row-reverse;
   }
 
+  &__date {
+    font-size: 0.8rem;
+    display: block;
+    margin: 0 $gutter;
+  }
+
   h3 {
     background: $colour-red;
     padding: $gutter;
@@ -65,12 +74,6 @@ export default {
     @include mq($from: tablet) {
       padding: 10px 20px;
     }
-  }
-
-  time {
-    font-size: 0.8rem;
-    display: block;
-    margin: 0 $gutter;
   }
 
   p {
