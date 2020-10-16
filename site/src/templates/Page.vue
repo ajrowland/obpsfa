@@ -2,6 +2,11 @@
   <Layout>
     <h1>{{ $context.title }}</h1>
 
+    <div class="blog__date" v-if="$context.seo.authorDisplay">
+      {{ formatDate($context.date) }}, by
+      {{ $context.seo.authorDisplay }}
+    </div>
+
     <extended-image
       :image="$context.mainImage"
       width="800"
@@ -10,11 +15,6 @@
     />
 
     <extended-block :blocks="$context._rawBody" />
-    
-    <div class="blog__date" v-if="$context.seo.autherDisplay">
-      {{ formatDate($context.date) }}, by
-      {{ $context.seo.authorDisplay }}
-    </div>
   </Layout>
 </template>
 
