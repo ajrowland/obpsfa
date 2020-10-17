@@ -36,7 +36,6 @@ export default {
           iframe: Iframe,
           gallery: Gallery,
           extendedImage: ({ node }) => {
-            console.log(node);
             const cssClass =
               node.position === "left" || node.position === "right"
                 ? `article-image article-image--${node.position}`
