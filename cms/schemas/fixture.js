@@ -52,7 +52,12 @@ export default {
           }
         ]
       }
-    }
+    },
+    {
+      name: 'report',
+      title: 'Report',
+      type: 'report',
+    },
   ],
   preview: {
     select: {

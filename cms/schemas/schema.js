@@ -19,6 +19,7 @@ import seo from "./seo";
 import extendedImage from "./extendedImage";
 import iframe from "./iframe";
 import gallery from "./gallery";
+import report from "./report";
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -46,5 +47,6 @@ export default createSchema({
     extendedImage,
     iframe,
     gallery,
+    report,
   ]),
 });
