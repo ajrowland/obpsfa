@@ -35,6 +35,14 @@ module.exports = function(api) {
     })*/
   });
 
+  api.createSchema(({ addSchemaTypes }) => {
+    addSchemaTypes(`
+      type SanityDocument implements Node @infer {
+        id: ID!
+      }
+    `)
+  })
+
   api.onCreateNode((node) => {
     if (
       node.internal.typeName === "SanityPage" ||
