@@ -29,6 +29,8 @@ import Gallery from "~/components/Gallery";
 export default {
   props: ["blocks"],
   data() {
+    const h = this.$createElement;
+
     return {
       serializers: {
         types: {
@@ -42,6 +44,7 @@ export default {
                 : "main-image";
             const width =
               node.position === "left" || node.position === "right" ? 350 : 800;
+
             return (
               <extended-image
                 cssClass={cssClass}
