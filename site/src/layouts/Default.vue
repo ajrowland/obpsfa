@@ -75,7 +75,7 @@
       <div class="container">
         ©{{ new Date().getFullYear() }} OBPSFA |
         <a
-          href="/obpsfa-risk-asesssment-2020.docx"
+          href="/obpsfa-risk-asesssment-2021.docx"
           target="_blank"
           rel="noopener"
           >COVID-19 risk assessment document</a
