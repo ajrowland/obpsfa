@@ -73,13 +73,27 @@
 
     <footer class="footer">
       <div class="container">
-        ©{{ new Date().getFullYear() }} OBPSFA |
-        <a
-          href="/obpsfa-risk-assessment-2021.docx"
+        <ul>
+          <li>©{{ new Date().getFullYear() }} OBPSFA</li>
+          <li><a
+          href="/obpsfa-safeguarding.docx"
           target="_blank"
           rel="noopener"
-          >COVID-19 risk assessment document</a
-        >
+          >Safeguarding</a
+        ></li>
+        <li><a
+          href="/obpsfa-anti-bullying.docx"
+          target="_blank"
+          rel="noopener"
+          >Anti-bullying</a
+        ></li>
+        <li><a
+          href="/obpsfa-codes-of-conduct.docx"
+          target="_blank"
+          rel="noopener"
+          >Codes of conduct</a
+        ></li>
+        </ul>
       </div>
     </footer>
   </div>
@@ -357,6 +371,26 @@ export default {
   background: $colour-grey;
   color: #fff;
   padding: $vertical-spacing 0;
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+
+    @include mq($from: desktop) {
+      flex-direction: row;
+    }
+  }
+
+  li {
+    padding: 0 0 20px 0;
+
+     @include mq($from: desktop) {
+      padding: 0 20px 0 0;
+    }   
+  }
 
   a {
     color: #fff;
