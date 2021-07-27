@@ -76,21 +76,15 @@
         <ul>
           <li>©{{ new Date().getFullYear() }} OBPSFA</li>
           <li><a
-          href="/obpsfa-safeguarding.docx"
-          target="_blank"
-          rel="noopener"
+          href="/safeguarding-children-policy-and-procedures"
           >Safeguarding</a
         ></li>
         <li><a
-          href="/obpsfa-anti-bullying.docx"
-          target="_blank"
-          rel="noopener"
+          href="/anti-bullying-policy"
           >Anti-bullying</a
         ></li>
         <li><a
-          href="/obpsfa-codes-of-conduct.docx"
-          target="_blank"
-          rel="noopener"
+          href="/codes-of-conduct"
           >Codes of conduct</a
         ></li>
         </ul>
