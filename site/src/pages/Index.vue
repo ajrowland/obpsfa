@@ -4,8 +4,8 @@
 
     <extended-image
       :image="$page.home.mainImage"
-      width="800,400"
-      height="350,175"
+      width="800"
+      height="350"
       cssClass="main-image"
     />
 
@@ -44,6 +44,18 @@ query {
         _id
         url
       }
+      hotspot {
+        x
+        y
+        height
+        width
+      }
+      crop {
+        top
+        left
+        right
+        bottom
+      }
     }
     seo {
       description
@@ -53,6 +65,18 @@ query {
       image {
         asset {
           url
+        }
+        hotspot {
+          x
+          y
+          height
+          width
+        }
+        crop {
+          top
+          left
+          right
+          bottom
         }
       }
     }
@@ -89,9 +113,22 @@ query {
             _id
             url
           }
+          hotspot {
+            x
+            y
+            height
+            width
+          }
+          crop {
+            top
+            left
+            right
+            bottom
+          }
         }
         seo {
           description
+          authorDisplay
         }
       }
     }
@@ -99,6 +136,10 @@ query {
   metadata {
     siteUrl,
     siteTwitterName
+    sanityOptions {
+      projectId
+      dataset
+    }
   }
 }
 </page-query>
@@ -112,11 +153,22 @@ export default {
   },
   metaInfo() {
     const page = this.$page.home;
-    const imageUrl = page.seo.image
-      ? page.seo.image.asset.url
-      : page.mainImage
-      ? page.mainImage.asset.url
-      : "";
+    const image =
+      page.seo.image && page.seo.image.asset
+        ? page.seo.image
+        : page.mainImage && page.mainImage.asset
+        ? page.mainImage
+        : null;
+
+    const imageUrl =
+      image !== null
+        ? this.$urlForImage(image, this.$page.metadata.sanityOptions)
+            .height(150)
+            .width(280)
+            .auto("format")
+            .dpr(1)
+            .url()
+        : "";
 
     return {
       title: "Home",

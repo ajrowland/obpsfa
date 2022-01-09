@@ -1,12 +1,12 @@
 <template>
   <div :class="cssClass" v-if="image && image.asset">
-    <img
+    <!--<img
       :srcset="srcset"
       :src="src"
       :alt="image.alt || alt"
       :class="cssClass && `${cssClass}__img`"
-    />
-    <!--<g-image
+    />-->
+    <g-image
       :src="
         $urlForImage(image, $static.metadata.sanityOptions)
           .height(height)
@@ -17,7 +17,10 @@
       "
       :alt="image.alt || alt"
       :class="cssClass && `${cssClass}__img`"
-    />-->
+      :width="width"
+      :height="height"
+      loading="lazy"
+    />
     <div
       :class="cssClass && `${cssClass}__caption`"
       v-if="!hideCaption && image.caption"
@@ -49,6 +52,7 @@ query {
 <script>
 export default {
   props: ["image", "width", "height", "cssClass", "alt", "hideCaption"],
+  /*
   data() {
     return {
       widths: this.width.split(","),
@@ -84,6 +88,7 @@ export default {
         .url();
     },
   },
+  */
 };
 </script>
 
@@ -116,18 +121,15 @@ export default {
   overflow: hidden;
   margin: $vertical-spacing $gutter * -1;
   font-size: 0.8rem;
-  padding-top: calc(43.75% + 17px);
 
   @include mq($from: tablet) {
     margin: $vertical-spacing 0;
     font-size: 1rem;
-    padding-top: 43.75%;
   }
 
   img {
-    position: absolute;
-    top: 0;
     display: block;
+    height: auto;
   }
 
   &__caption {

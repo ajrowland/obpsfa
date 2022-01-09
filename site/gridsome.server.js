@@ -35,6 +35,14 @@ module.exports = function(api) {
     })*/
   });
 
+  api.createSchema(({ addSchemaTypes }) => {
+    addSchemaTypes(`
+      type SanityDocument implements Node @infer {
+        id: ID!
+      }
+    `)
+  })
+
   api.onCreateNode((node) => {
     if (
       node.internal.typeName === "SanityPage" ||
@@ -97,6 +105,18 @@ module.exports = function(api) {
                   asset {
                     url
                   }
+                  hotspot {
+                    x
+                    y
+                    height
+                    width
+                  }
+                  crop {
+                    top
+                    left
+                    right
+                    bottom
+                  }
                 }
               }
               isArchived
@@ -106,6 +126,10 @@ module.exports = function(api) {
         metadata {
           siteTwitterName
           siteUrl
+          sanityOptions {
+            projectId
+            dataset
+          }
         }
       }
     `);

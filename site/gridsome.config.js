@@ -68,7 +68,6 @@ module.exports = {
         debug: false,
       },
     },
-    /*
     {
       use: "gridsome-plugin-service-worker",
       options: {
@@ -91,7 +90,6 @@ module.exports = {
           lang: "en",
       },
     }
-    */
   ],
   chainWebpack(config) {
     // Load variables for all vue-files

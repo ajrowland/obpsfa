@@ -6,9 +6,9 @@
           <div class="header__top-links" @click="closeMenu">
             <g-link
               class="header__top-link"
-              to="/covid-19-checklist"
-              title="COVID-19 match day checklist"
-              >COVID-19</g-link
+              to="/covid-checklist"
+              title="COVID match day checklist"
+              >COVID</g-link
             >
             <g-link class="header__top-link" to="/archive" title="Archive"
               >Archive</g-link
@@ -73,13 +73,21 @@
 
     <footer class="footer">
       <div class="container">
-        ©{{ new Date().getFullYear() }} OBPSFA |
-        <a
-          href="/obpsfa-risk-asesssment-2020.docx"
-          target="_blank"
-          rel="noopener"
-          >COVID-19 risk assessment document</a
-        >
+        <ul>
+          <li>©{{ new Date().getFullYear() }} OBPSFA</li>
+          <li><a
+          href="/safeguarding-children-policy-and-procedures"
+          >Safeguarding</a
+        ></li>
+        <li><a
+          href="/anti-bullying-policy"
+          >Anti-bullying</a
+        ></li>
+        <li><a
+          href="/codes-of-conduct"
+          >Codes of conduct</a
+        ></li>
+        </ul>
       </div>
     </footer>
   </div>
@@ -241,7 +249,13 @@ export default {
   }
 
   &__logo {
-    background: url(~@/assets/images/logo.png);
+    background-image: url(~@/assets/images/logo.webp);
+
+    _:-ms-fullscreen,
+    :root & {
+      background-image: url(~@/assets/images/logo.png);
+    }
+
     background-color: #fff;
     background-repeat: no-repeat;
     width: 100px;
@@ -351,6 +365,26 @@ export default {
   background: $colour-grey;
   color: #fff;
   padding: $vertical-spacing 0;
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+
+    @include mq($from: desktop) {
+      flex-direction: row;
+    }
+  }
+
+  li {
+    padding: 0 0 20px 0;
+
+     @include mq($from: desktop) {
+      padding: 0 20px 0 0;
+    }   
+  }
 
   a {
     color: #fff;

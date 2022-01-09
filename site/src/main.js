@@ -40,12 +40,12 @@ export default function(Vue, { router, head, isClient }) {
   });
 
   head.link.push({
-    rel: "preconnect",
-    href: "//www.googletagmanager.com",
+    rel: "preconnent",
+    href: "https://www.google-analytics.com",
   });
 
   head.link.push({
-    rel: "preconnect",
-    href: "//www.google-analytics.com",
+    rel: "preconnent",
+    href: "https://www.googletagmanager.com",
   });
 }

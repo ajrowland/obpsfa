@@ -7,8 +7,11 @@
   >
     <div class="news-item__text">
       <h3 class="news-item__title" v-html="item.title" />
-      <time v-html="formatDate(date)" />
-      <p>{{item.seo.description}}</p>
+      <div class="news-item__date">
+        <time v-html="formatDate(date)" />
+        <template v-if="item.seo.authorDisplay">, by {{ item.seo.authorDisplay }}</template>
+      </div>
+      <p>{{ item.seo.description }}</p>
       <p v-if="item._rawBody" class="news-item__more">Read more</p>
     </div>
     <extended-image
@@ -48,6 +51,12 @@ export default {
     flex-direction: row-reverse;
   }
 
+  &__date {
+    font-size: 0.8rem;
+    display: block;
+    margin: 0 $gutter;
+  }
+
   h3 {
     background: $colour-red;
     padding: $gutter;
@@ -67,22 +76,31 @@ export default {
     }
   }
 
-  time {
-    font-size: 0.8rem;
-    display: block;
-    margin: 0 $gutter;
-  }
-
   p {
     margin: 20px;
   }
 
   img {
     display: block;
+    height: auto;
   }
 
   &__more {
     font-weight: bold;
+  }
+
+  &__image {
+    position: relative;
+  }
+
+  &__image__attribution {
+    display: inline-block;
+    background: #fff;
+    color: $colour-grey;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 5px $gutter;
   }
 
   @include mq($from: tablet) {
@@ -103,6 +121,10 @@ export default {
         height: 100%;
         object-fit: cover;
       }
+    }
+
+    &__image__attribution {
+      right: auto;
     }
   }
 }
