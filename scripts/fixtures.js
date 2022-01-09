@@ -1,136 +1,156 @@
-require('dotenv').config()
+require("dotenv").config();
 
-const sanityClient = require('@sanity/client')
+const sanityClient = require("@sanity/client");
 
 const client = sanityClient({
   projectId: process.env.PROJECT_ID,
   dataset: process.env.DATASET,
   token: process.env.TOKEN,
-  useCdn: false
-})
+  useCdn: false,
+});
 
-const generateKey = function() {
-  return Math.random().toString(36).substring(10)
-}
+const generateKey = function () {
+  return Math.random().toString(36).substring(10);
+};
 
 let doc = {
-  _id: 'fixture-list-2019-2020',
-  _type: 'fixtureList',
+  _id: "fixture-list-2020-2021",
+  _type: "fixtureList",
   season: {
-    _ref: '9caeda3b-f3f0-4067-869e-42147782c455',
-    _type: 'reference'
+    _ref: "c3087460-6eab-4c93-ba48-fddac913d2d7",
+    _type: "reference",
   },
   teamFilter: [
     {
       _key: generateKey(),
-      _ref: 'aa82cc20-a887-4042-b603-e849f1068dfe',
-      _type: 'reference'
+      _ref: "aa82cc20-a887-4042-b603-e849f1068dfe",
+      _type: "reference",
     },
     {
       _key: generateKey(),
-      _ref: '881f900c-e7be-4afb-a7fe-aa4b45fa5607',
-      _type: 'reference'
+      _ref: "881f900c-e7be-4afb-a7fe-aa4b45fa5607",
+      _type: "reference",
     },
     {
       _key: generateKey(),
-      _ref: 'b64fd2c3-e001-4346-ac98-f3d0405340c2',
-      _type: 'reference'
-    }
+      _ref: "b64fd2c3-e001-4346-ac98-f3d0405340c2",
+      _type: "reference",
+    },
   ],
-  fixtures: []
-}
+  fixtures: [],
+};
 
-const siteUrl = 'https://ksfa.org.uk/inter-district/associations/primary/orpington-district-psfa/'
-const axios = require('axios')
-const cheerio = require('cheerio')
+const siteUrl =
+  "https://ksfa.org.uk/inter-district/associations/primary/orpington-district-psfa/";
+const axios = require("axios");
+const cheerio = require("cheerio");
 
 const competitionLookup = {
-  'KSFA Primary Premiership (Bill Carney Trophy)': { competition: 'league', localTeam: 'OBPSFA Boys Blue' },
-  'KSFA Primary Championship': { competition: 'league', localTeam: 'OBPSFA Boys Red' },
-  'Kent Primary Cup & Daniels Trophy': { competition: 'cup', localTeam: 'OBPSFA Boys Blue' },
-  'Kent Championship Cup': { competition: 'cup', localTeam: 'OBPSFA Boys Red' },
-  'Girls Super League': { competition: 'league', localTeam: 'OBPSFA Girls' },
-  'Kent Girls Super Cup': { competition: 'cup', localTeam: 'OBPSFA Girls' },
-  'Under 11 Gills Shield': { competition: 'cup', localTeam: 'OBPSFA Boys Blue' },
-  'Under 11 Girls Cup': { competition: 'cup', localTeam: 'OBPSFA Girls' },
-}
+  "KSFA Primary Premiership (Bill Carney Trophy)": {
+    competition: "league",
+    localTeam: "OBPSFA Boys Blue",
+  },
+  "KSFA Primary Championship": {
+    competition: "league",
+    localTeam: "OBPSFA Boys Red",
+  },
+  "Kent Primary Cup & Daniels Trophy": {
+    competition: "cup",
+    localTeam: "OBPSFA Boys Blue",
+  },
+  "Kent Championship Cup": { competition: "cup", localTeam: "OBPSFA Boys Red" },
+  "Girls Super League": { competition: "league", localTeam: "OBPSFA Girls" },
+  "Kent Girls Super Cup": { competition: "cup", localTeam: "OBPSFA Girls" },
+  "Under 11 Gills Shield": {
+    competition: "cup",
+    localTeam: "OBPSFA Boys Blue",
+  },
+  "Under 11 Girls Cup": { competition: "cup", localTeam: "OBPSFA Girls" },
+};
 
 const getTeamLookup = async () => {
-  const result = await client.fetch('*[_type == "team"]')
+  const result = await client.fetch('*[_type == "team"]');
 
-  let teamLookup = {}
+  let teamLookup = {};
 
-  result.forEach(item => {
-    teamLookup[item.name] = item._id
-  })
+  result.forEach((item) => {
+    teamLookup[item.name] = item._id;
+  });
 
-  return teamLookup
-}
+  return teamLookup;
+};
 
 const fetchData = async () => {
-  const result = await axios.get(siteUrl)
+  const result = await axios.get(siteUrl);
 
-  return cheerio.load(result.data)
-}
+  return cheerio.load(result.data);
+};
 
 const addResults = async () => {
   const $ = await fetchData();
 
-  const teamLookup = await getTeamLookup()
+  const teamLookup = await getTeamLookup();
 
-  $('.fixture-table tbody tr').each((index, row) => {
-    const cell = $(row).find('td')
+  $(".fixture-table tbody tr").each((index, row) => {
+    const cell = $(row).find("td");
 
-    const competitionInfo = competitionLookup[$(cell[3]).text().trim()]
+    const competitionInfo = competitionLookup[$(cell[3]).text().trim()];
 
-    let teamHomeId = teamLookup[$(cell[0]).text().trim().replace(' PSFA', '')]
-    let teamAwayId = teamLookup[$(cell[2]).text().trim().replace(' PSFA', '')]
+    let teamHomeId = teamLookup[$(cell[0]).text().trim().replace(" PSFA", "")];
+    let teamAwayId = teamLookup[$(cell[2]).text().trim().replace(" PSFA", "")];
 
     if (teamHomeId === undefined) {
-      teamHomeId = teamLookup[competitionInfo.localTeam]
+      teamHomeId = teamLookup[competitionInfo.localTeam];
     }
 
     if (teamAwayId === undefined) {
-      teamAwayId = teamLookup[competitionInfo.localTeam]
+      teamAwayId = teamLookup[competitionInfo.localTeam];
     }
 
-    const dateObj = new Date($(cell[4]).text().substr(11).trim())
+    const dateObj = new Date($(cell[4]).text().substr(11).trim());
 
-    const date = dateObj != 'Invalid Date' ? new Date(dateObj.getTime() - (dateObj.getTimezoneOffset() * 60000 )).toISOString().split("T")[0] : undefined
+    const date =
+      dateObj != "Invalid Date"
+        ? new Date(dateObj.getTime() - dateObj.getTimezoneOffset() * 60000)
+            .toISOString()
+            .split("T")[0]
+        : undefined;
 
-    const scores = $(cell[1]).text().trim().split('-')
+    const scores = $(cell[1]).text().trim().split("-");
 
-    const scoreHome = scores.length === 2 ? parseInt(scores[0]) : undefined
-    const scoreAway = scores.length === 2 ? parseInt(scores[1]) : undefined
+    const scoreHome = scores.length === 2 ? parseInt(scores[0]) : undefined;
+    const scoreAway = scores.length === 2 ? parseInt(scores[1]) : undefined;
 
     doc.fixtures.push({
       _key: generateKey(),
-      _type: 'fixture',
+      _type: "fixture",
       competition: competitionInfo.competition,
       date: date,
       scoreHome: scoreHome,
       scoreAway: scoreAway,
       teamHome: {
         _ref: teamHomeId,
-        _type: 'reference'
+        _type: "reference",
       },
       teamAway: {
         _ref: teamAwayId,
-        _type: 'reference'
-      }
-    })
-  })
+        _type: "reference",
+      },
+    });
+  });
 
-  doc.fixtures.sort((a, b) => (!b.date && -1 || new Date(a.date) - new Date(b.date)))
+  doc.fixtures.sort(
+    (a, b) => (!b.date && -1) || new Date(a.date) - new Date(b.date)
+  );
 
-  console.log(doc.fixtures.map(f => f.date))
+  console.log(doc.fixtures.map((f) => f.date));
 
-  client.createOrReplace(doc).then(res => {
-    console.log(`fixtureList was created, document ID is ${res._id}`)
-  })
-}
+  client.createOrReplace(doc).then((res) => {
+    console.log(`fixtureList was created, document ID is ${res._id}`);
+  });
+};
 
-addResults()
+addResults();
 
 /*
 {

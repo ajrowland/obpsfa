@@ -1,6 +1,12 @@
 <template>
   <div :class="cssClass" v-if="image && image.asset">
-    <img
+    <!--<img
+      :srcset="srcset"
+      :src="src"
+      :alt="image.alt || alt"
+      :class="cssClass && `${cssClass}__img`"
+    />-->
+    <g-image
       :src="
         $urlForImage(image, $static.metadata.sanityOptions)
           .height(height)
@@ -46,6 +52,43 @@ query {
 <script>
 export default {
   props: ["image", "width", "height", "cssClass", "alt", "hideCaption"],
+  /*
+  data() {
+    return {
+      widths: this.width.split(","),
+      heights: this.height.split(","),
+    };
+  },
+  computed: {
+    srcset() {
+      if (this.widths.length > 1) {
+        let srcset = "";
+
+        for (let i = 0; i < this.widths.length; i++) {
+          srcset += `${this.$urlForImage(
+            this.image,
+            this.$static.metadata.sanityOptions
+          )
+            .height(this.heights[i])
+            .width(this.widths[i])
+            .auto("format")
+            .dpr(1)
+            .url()} ${this.widths[i]}w,`;
+        }
+
+        return srcset;
+      }
+    },
+    src() {
+      return this.$urlForImage(this.image, this.$static.metadata.sanityOptions)
+        .height(this.heights[this.heights.length - 1])
+        .width(this.widths[this.widths.length - 1])
+        .auto("format")
+        .dpr(1)
+        .url();
+    },
+  },
+  */
 };
 </script>
 

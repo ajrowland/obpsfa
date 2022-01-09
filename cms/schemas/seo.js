@@ -23,13 +23,13 @@ export default {
       title: 'Author',
       type: 'reference',
       to: {type: 'author'}
-    },
-    {
+    },    {
       name: 'authorDisplay',
       title: '(or) Author display',
       description: 'Use for single use authors',
       type: 'string'
     },
+
     {
       name: 'categories',
       title: 'Categories',
