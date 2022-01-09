@@ -67,9 +67,9 @@ export default {
       const { teamHome, teamAway, date, badge, scoreHome, scoreAway } =
         selection;
       return {
-        title: `${teamHome} ${scoreHome || ""} v ${teamAway} ${
-          scoreAway || ""
-        }`,
+        title: `${teamHome} ${
+          scoreHome !== undefined ? scoreHome : ""
+        } v ${teamAway} ${scoreAway !== undefined ? scoreAway : ""}`,
         subtitle: date,
         media: badge,
       };
