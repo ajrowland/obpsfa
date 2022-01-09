@@ -1,4 +1,4 @@
-import MdPeopleOutline from 'react-icons/lib/md/people-outline'
+import { MdPeopleOutline } from "react-icons/md";
 
 export default {
   name: 'team',

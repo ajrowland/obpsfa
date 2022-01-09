@@ -1,4 +1,4 @@
-import MdBurstMode from 'react-icons/lib/md/burst-mode'
+import { MdBurstMode } from "react-icons/md";
 //import IframePreview from "./previews/iframe";
 
 export default {

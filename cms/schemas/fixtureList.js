@@ -1,4 +1,4 @@
-import MdFormatListBulleted from 'react-icons/lib/md/format-list-bulleted'
+import { MdFormatListBulleted } from "react-icons/md";
 
 export default {
   name: 'fixtureList',

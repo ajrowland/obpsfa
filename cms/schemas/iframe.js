@@ -1,4 +1,4 @@
-import MdCrop169 from 'react-icons/lib/md/crop-16-9'
+import { MdCrop169 } from "react-icons/md";
 import IframePreview from './previews/iframe'
 
 export default {

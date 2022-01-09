@@ -67,14 +67,15 @@ const DeployVercel = () => {
         {deploying ? "Deploying..." : "Deploy"}
       </button>
       <ol className={styles.list}>
-        {deployments.map((deployment) => (
-          <li key={deployment.uid}>
-            <p>
-              {new Date(deployment.created).toLocaleString()} (
-              {deployment.state})
-            </p>
-          </li>
-        ))}
+        {deployments &&
+          deployments.map((deployment) => (
+            <li key={deployment.uid}>
+              <p>
+                {new Date(deployment.created).toLocaleString()} (
+                {deployment.state})
+              </p>
+            </li>
+          ))}
       </ol>
     </div>
   );

@@ -1,5 +1,5 @@
 import S from "@sanity/desk-tool/structure-builder";
-import { MdAccessibility, MdHome, MdInsertDriveFile } from "react-icons/lib/md";
+import { MdAccessibility, MdHome, MdInsertDriveFile } from "react-icons/md";
 import EyeIcon from "part:@sanity/base/eye-icon";
 import EditIcon from "part:@sanity/base/edit-icon";
 
