@@ -17,8 +17,7 @@
     "@sanity/production-preview",
     "dashboard-widget-deploy-vercel",
     "@sanity/dashboard",
-    "datatable",
-    "media"
+    "datatable"
   ],
   "env": {
     "development": {
