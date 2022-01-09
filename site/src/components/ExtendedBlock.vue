@@ -29,8 +29,6 @@ import Gallery from "~/components/Gallery";
 export default {
   props: ["blocks"],
   data() {
-    const h = this.$createElement;
-
     return {
       serializers: {
         types: {
