@@ -171,7 +171,8 @@ export default {
 }
 
 .header {
-  background: lighten($colour-blue, 10%);
+  // background: lighten($colour-blue, 10%);
+  background: #ffd500;
   box-shadow: 0px 1px 2px 0px rgba(51, 51, 51, 0.75);
   height: 103px;
   z-index: 2;
@@ -191,7 +192,8 @@ export default {
 
   &__top {
     &-bar {
-      background-color: $colour-red;
+      // background-color: $colour-red;
+      background-color: #005bbb;
       color: #fff;
       text-align: right;
       text-transform: uppercase;
