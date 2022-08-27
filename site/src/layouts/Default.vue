@@ -75,18 +75,14 @@
       <div class="container">
         <ul>
           <li>©{{ new Date().getFullYear() }} OBPSFA</li>
-          <li><a
-          href="/safeguarding-children-policy-and-procedures"
-          >Safeguarding</a
-        ></li>
-        <li><a
-          href="/anti-bullying-policy"
-          >Anti-bullying</a
-        ></li>
-        <li><a
-          href="/codes-of-conduct"
-          >Codes of conduct</a
-        ></li>
+          <li>
+            <a href="/safeguarding-children-policy-and-procedures"
+              >Safeguarding</a
+            >
+          </li>
+          <li><a href="/anti-bullying-policy">Anti-bullying</a></li>
+          <li><a href="/codes-of-conduct">Codes of conduct</a></li>
+          <li><a href="/changing-room-guidance">Changing room guidance</a></li>
         </ul>
       </div>
     </footer>
@@ -383,9 +379,9 @@ export default {
   li {
     padding: 0 0 20px 0;
 
-     @include mq($from: desktop) {
+    @include mq($from: desktop) {
       padding: 0 20px 0 0;
-    }   
+    }
   }
 
   a {
