@@ -4,6 +4,7 @@
 .temp
 node_modules
 dist
+public
 .env
 .env.*
 /site/static/assets/img
