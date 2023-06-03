@@ -54,6 +54,7 @@ module.exports = {
         token: process.env.SANITY_TOKEN,
         overlayDrafts: !isProd,
         watchMode: !isProd,
+        apiVersion: "2021-10-21",
 
         // If the Sanity GraphQL API was deployed using `--tag <name>`,
         // use `graphqlTag` to specify the tag name. Defaults to `default`.
@@ -82,14 +83,14 @@ module.exports = {
     {
       use: "gridsome-plugin-manifest",
       options: {
-          background_color: "#000000",
-          icon_path: "./src/favicon.png",
-          name: "Orpington and Bromley PSFA",
-          short_name: "OBPSFA",
-          theme_color: "#FFFFFF",
-          lang: "en",
+        background_color: "#000000",
+        icon_path: "./src/favicon.png",
+        name: "Orpington and Bromley PSFA",
+        short_name: "OBPSFA",
+        theme_color: "#FFFFFF",
+        lang: "en",
       },
-    }
+    },
   ],
   chainWebpack(config) {
     // Load variables for all vue-files

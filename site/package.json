@@ -2,8 +2,8 @@
   "name": "site",
   "private": true,
   "scripts": {
-    "build": "gridsome build",
-    "develop": "gridsome develop",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider gridsome build",
+    "develop": "NODE_OPTIONS=--openssl-legacy-provider gridsome develop",
     "explore": "gridsome explore"
   },
   "dependencies": {
@@ -11,7 +11,6 @@
     "gridsome": "^0.7.23",
     "gridsome-plugin-gtm": "^0.1.1",
     "sanity-blocks-vue-component": "^0.1.0",
-    "sass-mq": "5.0.1",
     "vue2-touch-events": "^2.3.2"
   },
   "devDependencies": {
@@ -19,8 +18,9 @@
     "gridsome-plugin-pwa": "0.0.18",
     "gridsome-plugin-service-worker": "^0.2.8",
     "gridsome-source-sanity": "^1.2.0",
-    "node-sass": "6.0.1",
+    "sass": "^1.62.1",
     "sass-loader": "10.3.1",
+    "sass-mq": "^6.0.0",
     "style-resources-loader": "^1.5.0"
   }
 }

@@ -1,5 +1,12 @@
 require("dotenv").config();
 
+/**
+ * Import fixtures from the KSFA website.
+ * Run this script with: `node fixtures.js`
+ */
+
+console.log(process.env);
+
 const sanityClient = require("@sanity/client");
 
 const client = sanityClient({
@@ -14,10 +21,10 @@ const generateKey = function () {
 };
 
 let doc = {
-  _id: "fixture-list-2020-2021",
+  _id: "fixture-list-2022-2023",
   _type: "fixtureList",
   season: {
-    _ref: "c3087460-6eab-4c93-ba48-fddac913d2d7",
+    _ref: "a4801154-c7af-429d-94e1-1cf7d890a29b",
     _type: "reference",
   },
   teamFilter: [
