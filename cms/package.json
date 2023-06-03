@@ -7,9 +7,9 @@
   "author": "Andrew Rowland <mail@andrewrowland.com>",
   "license": "UNLICENSED",
   "scripts": {
-    "start": "sanity start",
+    "start": "NODE_OPTIONS=--openssl-legacy-provider sanity start",
     "test": "sanity check",
-    "build": "sanity build public -y"
+    "build": "NODE_OPTIONS=--openssl-legacy-provider sanity build public -y"
   },
   "keywords": [
     "sanity"
