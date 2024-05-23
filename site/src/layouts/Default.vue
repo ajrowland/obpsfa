@@ -6,9 +6,9 @@
           <div class="header__top-links" @click="closeMenu">
             <g-link
               class="header__top-link"
-              to="/covid-checklist"
-              title="COVID match day checklist"
-              >COVID</g-link
+              to="/ground-details"
+              title="Ground details"
+              >Groud details</g-link
             >
             <g-link class="header__top-link" to="/archive" title="Archive"
               >Archive</g-link
