@@ -8,7 +8,7 @@
               class="header__top-link"
               to="/ground-details"
               title="Ground details"
-              >Groud details</g-link
+              >Ground</g-link
             >
             <g-link class="header__top-link" to="/archive" title="Archive"
               >Archive</g-link
