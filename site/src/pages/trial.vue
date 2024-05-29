@@ -13,6 +13,10 @@
   }
 }
 
+input.custom-control-input[type="checkbox"] {
+  z-index: auto !important;
+}
+
 .ml-form-formContent {
   margin-bottom: 100px !important;
 }
