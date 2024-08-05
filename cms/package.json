@@ -1,7 +1,7 @@
 {
   "name": "obpsfa",
   "private": true,
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "OBPSFA content management application",
   "main": "package.json",
   "author": "Andrew Rowland <mail@andrewrowland.com>",
