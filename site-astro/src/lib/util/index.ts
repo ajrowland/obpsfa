@@ -1,0 +1,24 @@
+export function bodyBlockProjection(
+  typeName: string,
+  projection: string
+): string {
+  return `_type == '${typeName}' => ${projection}`;
+}
+
+export function blocksToText(blocks: Array<any>, paragraphOnly = false) {
+  if (!blocks) {
+    return "";
+  }
+  return blocks
+    .map((block) => {
+      if (
+        block._type !== "block" ||
+        (paragraphOnly && block.listItem) ||
+        !block.children
+      ) {
+        return "";
+      }
+      return block.children.map((child: any) => child.text).join("");
+    })
+    .join("\n\n");
+}

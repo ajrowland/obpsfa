@@ -1,0 +1,14 @@
+---
+import Layout from "@layouts/Layout.astro";
+import { getHome } from "@lib/api";
+
+const home = await getHome("site-home");
+---
+
+<Layout title={home.title} description="TODO">
+  <main>
+    {home.title}
+  </main>
+</Layout>
+
+<style></style>

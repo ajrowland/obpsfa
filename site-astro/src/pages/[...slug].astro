@@ -1,0 +1,36 @@
+---
+import Layout from "@layouts/Layout.astro";
+import PortableText from "@components/PortableText.astro";
+import { getPages } from "@lib/api";
+import { Debug } from "astro:components";
+
+export const getStaticPaths = async () => {
+  const pages = await getPages();
+
+  return pages.map((page) => {
+    console.log(page.body);
+    return {
+      params: { slug: page.slug },
+      props: page,
+    };
+  });
+};
+
+const { title, date, seo, body } = Astro.props;
+---
+
+<Layout title={title} description={seo.description}>
+  <h1>{title}</h1>
+
+  {
+    seo.authorDisplay && (
+      <div class="blog__date">
+        {date}, by
+        {seo.authorDisplay}
+      </div>
+    )
+  }
+
+  <PortableText portableText={body} />
+  <Debug {Astro.props} />
+</Layout>

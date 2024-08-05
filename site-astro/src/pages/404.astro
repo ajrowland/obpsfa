@@ -1,0 +1,26 @@
+---
+import Layout from "@layouts/Layout.astro";
+import notFoundImage from "@assets/images/404.jpg";
+---
+
+<Layout title="Page not found" description="Page not found">
+  <h1>Page not found 😢</h1>
+
+  <div class="main-image">
+    <img
+      src={notFoundImage.src}
+      alt="Photo of Chris Kamara"
+      class="main-image__img"
+      width="800"
+      height="350"
+    />
+    <div class="main-image__caption">
+      <div class="main-image__caption-text">Unbelievable Jeff!</div>
+    </div>
+  </div>
+
+  <p>
+    Sorry, it looks like that page doesn't exists. Please select another from
+    the menu.
+  </p>
+</Layout>
