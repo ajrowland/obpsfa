@@ -2,7 +2,7 @@
   "name": "obpsfa",
   "private": true,
   "version": "1.0.0",
-  "description": "",
+  "description": "OBPSFA content management application",
   "main": "package.json",
   "author": "Andrew Rowland <mail@andrewrowland.com>",
   "license": "UNLICENSED",
