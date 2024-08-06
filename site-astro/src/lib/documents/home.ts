@@ -1,3 +1,4 @@
+import { pageProjection } from "./page";
 import {
   assetImageProjection,
   blockProjection,
@@ -13,27 +14,17 @@ import { bodyBlockProjection } from "../util";
 
 export const homeProjection = `{
     title,
-    slug,
-    ${pathProjection()},
-    introduction,
-    header[] {
-      ${bodyBlockProjection("hero", heroProjection)},
-      ${bodyBlockProjection("promo", promoProjection)}
+    date,
+    "slug": slug.current,
+    mainImage,
+    body[],
+    seo {
+      description,
+      image,
+      "author": author->name,
+      authorDisplay
     },
-    body[] {
-      ${bodyBlockProjection("bodyBlock", blockProjection(['"children": blocks'], false))},
-      ${bodyBlockProjection("logos", logosProjection)},
-      ${bodyBlockProjection("programs", programsProjection)},    
-      ${bodyBlockProjection("promo", promoProjection)},
-      ${bodyBlockProjection("services", servicesProjection)},
-      ${bodyBlockProjection("formEmbed", formEmbedProjection)}
-    },
-    images {
-      ${assetImageProjection("main")},
-      ${assetImageProjection("social")}
-    },
-    meta {
-      title,
-      description
-    }
+    isArchived,
+    isHidden,
+    "news": *[_type == "page" && !defined(sortOrder) && isArchived != true && isHidden != true] | order(date desc) ${pageProjection}
   }`;

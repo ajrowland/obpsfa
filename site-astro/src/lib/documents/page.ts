@@ -15,9 +15,7 @@ export const pageProjection = `{
     date,
     "slug": slug.current,
     mainImage,
-    body[] {
-      ${bodyBlockProjection("bodyBlock", blockProjection(['"children": blocks'], false))},
-    },
+    body[],
     seo {
       description,
       image,

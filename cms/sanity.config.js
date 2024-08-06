@@ -23,12 +23,4 @@ export default defineConfig({
   schema: {
     types: schemaTypes,
   },
-  /*
-  parts: [
-    {
-      implements: "part:@sanity/production-preview/resolve-production-url",
-      path: "./resolveProductionUrl.js",
-    },
-  ],
-  */
 });

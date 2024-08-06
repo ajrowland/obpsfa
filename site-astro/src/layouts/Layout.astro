@@ -31,7 +31,7 @@ const { title, description, author } = Astro.props;
       <header class="header">
         <div class="header__top-bar">
           <div class="container">
-            <div class="header__top-links" @click="closeMenu">
+            <div class="header__top-links" data-menu-close>
               <a
                 class="header__top-link"
                 href="/ground-details"
@@ -65,15 +65,13 @@ const { title, description, author } = Astro.props;
         </div>
         <div class="container">
           <nav class="header__nav">
-            <div @click="closeMenu">
+            <div data-menu-close>
               <a href="/" class="header__logo" title="Home">Home</a>
             </div>
 
-            <button class="header__menu-toggle" v-on:click="toggleMenu">
-              Menu
-            </button>
+            <button class="header__menu-toggle" data-menu-toggle>Menu</button>
 
-            <div class="header__nav-links" @click="closeMenu">
+            <div class="header__nav-links" data-menu-close>
               <a class="header__nav-link" href="/">Home</a>
               {
                 siteData?.navigation.map((item) => (
@@ -379,3 +377,16 @@ const { title, description, author } = Astro.props;
     }
   }
 </style>
+<script>
+  document.querySelectorAll("[data-menu-close]")?.forEach((el) =>
+    el.addEventListener("click", () => {
+      document.body.classList.remove("menu-active");
+    }),
+  );
+
+  document
+    .querySelector("[data-menu-toggle]")
+    ?.addEventListener("click", () => {
+      document.body.classList.toggle("menu-active");
+    });
+</script>

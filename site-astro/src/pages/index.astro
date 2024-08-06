@@ -1,14 +1,52 @@
 ---
 import Layout from "@layouts/Layout.astro";
+import PortableText from "@components/PortableText.astro";
+import ExtendedImage from "@components/ExtendedImage.astro";
+import NewsItem from "@components/NewsItem.astro";
 import { getHome } from "@lib/api";
+import { Debug } from "astro:components";
 
 const home = await getHome("site-home");
 ---
 
-<Layout title={home.title} description="TODO">
-  <main>
-    {home.title}
-  </main>
-</Layout>
+<Layout title={home.title} description={home.seo.description}>
+  <h1>{home.title}</h1>
 
-<style></style>
+  {
+    home.seo.authorDisplay && (
+      <div class="blog__date">
+        {home.date}, by
+        {home.seo.authorDisplay}
+      </div>
+    )
+  }
+
+  {
+    home.mainImage && (
+      <ExtendedImage
+        image={home.mainImage}
+        width={800}
+        height={350}
+        cssClass="main-image"
+      />
+    )
+  }
+
+  <PortableText portableText={home.body} />
+
+  {
+    home?.news.length > 0 && (
+      <section class="news">
+        <div class="container">
+          <h2>Latest news</h2>
+
+          <div class="news__items">
+            {home.news.map((item) => (
+              <NewsItem image={item.mainImage} {...item} />
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+</Layout>

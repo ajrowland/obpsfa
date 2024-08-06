@@ -1,6 +1,7 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import PortableText from "@components/PortableText.astro";
+import ExtendedImage from "@components/ExtendedImage.astro";
 import { getPages } from "@lib/api";
 import { Debug } from "astro:components";
 
@@ -8,7 +9,6 @@ export const getStaticPaths = async () => {
   const pages = await getPages();
 
   return pages.map((page) => {
-    console.log(page.body);
     return {
       params: { slug: page.slug },
       props: page,
@@ -16,7 +16,7 @@ export const getStaticPaths = async () => {
   });
 };
 
-const { title, date, seo, body } = Astro.props;
+const { title, date, seo, body, mainImage } = Astro.props;
 ---
 
 <Layout title={title} description={seo.description}>
@@ -28,6 +28,17 @@ const { title, date, seo, body } = Astro.props;
         {date}, by
         {seo.authorDisplay}
       </div>
+    )
+  }
+
+  {
+    mainImage && (
+      <ExtendedImage
+        image={mainImage}
+        width={800}
+        height={350}
+        cssClass="main-image"
+      />
     )
   }
 

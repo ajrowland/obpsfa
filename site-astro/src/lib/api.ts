@@ -1,5 +1,6 @@
 import { homeProjection, pageProjection } from "./documents";
 import { sanityClient } from "sanity:client";
+import type { SanityAsset } from "@sanity/image-url/lib/types/types";
 
 interface NavItem {
   title: string;
@@ -14,12 +15,17 @@ interface Page {
   title: string;
   date: string;
   slug: string;
+  mainImage: SanityAsset;
   isArchived: boolean;
   body: any;
   seo: {
     description: string;
     authorDisplay: string;
   };
+}
+
+interface HomePage extends Page {
+  news: Page[];
 }
 
 let isCached = import.meta.env.PROD;
@@ -45,10 +51,10 @@ export const getSiteData = async (): Promise<SiteData | null> => {
   return siteData;
 };
 
-export const getHome = async (id: string): Promise<Page> => {
+export const getHome = async (id: string): Promise<HomePage> => {
   const query = `*[_type == "home" && _id == "${id}"][0] ${homeProjection}`;
 
-  const page: Page = await sanityClient.fetch(query);
+  const page: HomePage = await sanityClient.fetch(query);
 
   return page;
 };

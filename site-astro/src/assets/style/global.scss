@@ -1,4 +1,5 @@
-@import "sass-mq";
+@forward "sass-mq";
+@use "sass-mq" as *;
 
 $mq-breakpoints: (
   mobile: 320px,
