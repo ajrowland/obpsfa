@@ -9,3 +9,4 @@ export * from "./path";
 export * from "./programs";
 export * from "./promo";
 export * from "./services";
+export * from "./fixtureList";

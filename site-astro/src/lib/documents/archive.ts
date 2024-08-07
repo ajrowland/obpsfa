@@ -1,25 +1,23 @@
+import { pageProjection } from "./page";
 import {
   assetImageProjection,
   blockProjection,
   formEmbedProjection,
   heroProjection,
   logosProjection,
+  pathProjection,
   programsProjection,
   promoProjection,
   servicesProjection,
-  fixtureListProjection,
 } from "../blocks";
 import { bodyBlockProjection } from "../util";
 
-export const pageProjection = `{
+export const archiveProjection = `{
     title,
     date,
     "slug": slug.current,
     mainImage,
-    body[] {
-      ...,
-      ${bodyBlockProjection("fixtureList", fixtureListProjection)}
-    },
+    body[],
     seo {
       description,
       image,
@@ -28,4 +26,5 @@ export const pageProjection = `{
     },
     isArchived,
     isHidden,
+    "news": *[_type == "page" && !defined(sortOrder) && isArchived == true && isHidden != true] | order(date desc) ${pageProjection}
   }`;

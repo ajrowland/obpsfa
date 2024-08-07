@@ -1,4 +1,4 @@
-import { homeProjection, pageProjection } from "./documents";
+import { homeProjection, archiveProjection, pageProjection } from "./documents";
 import { sanityClient } from "sanity:client";
 import type { SanityAsset } from "@sanity/image-url/lib/types/types";
 
@@ -17,9 +17,11 @@ interface Page {
   slug: string;
   mainImage: SanityAsset;
   isArchived: boolean;
-  body: any;
+  body: any; // TODO: Add types
   seo: {
     description: string;
+    image: SanityAsset;
+    author: string;
     authorDisplay: string;
   };
 }
@@ -51,8 +53,16 @@ export const getSiteData = async (): Promise<SiteData | null> => {
   return siteData;
 };
 
-export const getHome = async (id: string): Promise<HomePage> => {
-  const query = `*[_type == "home" && _id == "${id}"][0] ${homeProjection}`;
+export const getHome = async (): Promise<HomePage> => {
+  const query = `*[_type == "home"][0] ${homeProjection}`;
+
+  const page: HomePage = await sanityClient.fetch(query);
+
+  return page;
+};
+
+export const getArchive = async (): Promise<HomePage> => {
+  const query = `*[_type == "archive"][0] ${archiveProjection}`;
 
   const page: HomePage = await sanityClient.fetch(query);
 

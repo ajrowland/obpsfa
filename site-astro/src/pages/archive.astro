@@ -3,9 +3,9 @@ import Layout from "@layouts/Layout.astro";
 import PortableText from "@components/PortableText.astro";
 import ExtendedImage from "@components/ExtendedImage.astro";
 import NewsItem from "@components/NewsItem.astro";
-import { getHome } from "@lib/api";
+import { getArchive } from "@lib/api";
 
-const home = await getHome();
+const home = await getArchive();
 ---
 
 <Layout title={home.title} description={home.seo.description}>
@@ -41,7 +41,7 @@ const home = await getHome();
 
           <div class="news__items">
             {home.news.map((item) => (
-              <NewsItem {...item} />
+              <NewsItem image={item.mainImage} {...item} />
             ))}
           </div>
         </div>

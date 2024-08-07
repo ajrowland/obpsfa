@@ -2,7 +2,9 @@
 import ExtendedImage from "@components/ExtendedImage.astro";
 import { formatDate } from "@lib/util";
 
-const { title, slug, date, image, body, seo } = Astro.props;
+const { title, slug, date, mainImage, body, seo } = Astro.props;
+
+const displayImage = mainImage || seo.image;
 
 const Element = body ? "a" : "div";
 ---
@@ -18,12 +20,12 @@ const Element = body ? "a" : "div";
     {body && <p class="news-item__more">Read more</p>}
   </div>
   <ExtendedImage
-    image={image}
+    image={displayImage}
     width={400}
     height={300}
     cssClass="news-item__image"
     hideCaption={true}
-    alt={image.alt}
+    alt={displayImage?.alt || seo.description}
   />
 </Element>
 
