@@ -14,7 +14,7 @@ const { imgurId, showTitle, minHeight, aspectRatio } = Astro.props.node;
 <div class="gallery">
   <h2 data-title></h2>
   <div class="gallery__main-container">
-    <div style="padding-top: 66%">
+    <div style={`padding-top: ${aspectRatio || 66.66}%`}>
       <div class="gallery__image" data-main-item>Loading...</div>
     </div>
     <div class="gallery__controls">
@@ -220,6 +220,7 @@ const { imgurId, showTitle, minHeight, aspectRatio } = Astro.props.node;
       position: absolute;
       top: 0;
       border: 0;
+      opacity: 0;
 
       @include mq($from: tablet) {
         background: $colour-red;
@@ -229,6 +230,7 @@ const { imgurId, showTitle, minHeight, aspectRatio } = Astro.props.node;
         margin-left: -20px;
         width: auto;
         height: auto;
+        opacity: 1;
       }
     }
 
