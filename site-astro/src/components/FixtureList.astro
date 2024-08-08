@@ -1,6 +1,6 @@
 ---
 import type { SanityAsset } from "@sanity/image-url/lib/types/types";
-import ExtendedImage from "./ExtendedImage.astro";
+import Image from "./Image.astro";
 import { formatDate } from "@lib/util";
 
 interface Team {
@@ -80,7 +80,7 @@ const fixtureList = Object.entries(
               <div class="fixture-list__team">
                 {fixture.teamHome.name}
                 <div class="fixture-list__badge">
-                  <ExtendedImage
+                  <Image
                     image={fixture.teamHome.badge}
                     alt={fixture.teamHome.name}
                     width={30}
@@ -104,7 +104,7 @@ const fixtureList = Object.entries(
               <div class="fixture-list__team">
                 {fixture.teamAway.name}
                 <div class="fixture-list__badge">
-                  <ExtendedImage
+                  <Image
                     image={fixture.teamAway.badge}
                     alt={fixture.teamHome.name}
                     width={30}

@@ -1,7 +1,7 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import PortableText from "@components/PortableText.astro";
-import ExtendedImage from "@components/ExtendedImage.astro";
+import Image from "@components/Image.astro";
 import { getPages } from "@lib/api";
 import { slugify } from "@lib/util";
 
@@ -39,12 +39,7 @@ const { title, date, seo, body, mainImage } = Astro.props;
 
   {
     mainImage && (
-      <ExtendedImage
-        image={mainImage}
-        width={800}
-        height={350}
-        cssClass="main-image"
-      />
+      <Image image={mainImage} width={800} height={350} cssClass="main-image" />
     )
   }
 

@@ -1,4 +1,5 @@
 export const fixtureListProjection = `@-> {
+  _type,
   fixtures[] {
     date,
     competition,

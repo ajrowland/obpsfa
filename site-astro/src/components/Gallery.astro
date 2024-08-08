@@ -62,7 +62,7 @@ const { imgurId, showTitle, minHeight, aspectRatio } = Astro.props.node;
           const items: Item[] = data.data.images;
           let currentItem = 0;
 
-          document.querySelector("[data-thumbnails]").innerHTML = items
+          document.querySelector("[data-thumbnails]")!.innerHTML = items
             .map((item, i: number) => {
               return `<div class="gallery__thumbnail" data-thumbnail="${i}">
           ${
@@ -84,7 +84,7 @@ const { imgurId, showTitle, minHeight, aspectRatio } = Astro.props.node;
             if (currentItem < 0) currentItem = items.length - 1;
             if (currentItem > items.length - 1) currentItem = 0;
 
-            mainItemEl.innerHTML = items[currentItem].type.includes("video")
+            mainItemEl!.innerHTML = items[currentItem].type.includes("video")
               ? `<video muted controls playsinline><source src="${items[currentItem].link}" type="${items[currentItem].type}" /></video>`
               : `<img src="${items[currentItem].link}" alt="${`Gallery image ${currentItem + 1} of ${items.length}`}" />`;
 
@@ -94,21 +94,23 @@ const { imgurId, showTitle, minHeight, aspectRatio } = Astro.props.node;
             thumbnailEls[currentItem].classList.add("active");
           };
 
-          titleEl.innerHTML = data.data.title;
-          if (!this.dataset.showTitle) titleEl.classList.add("hide");
+          titleEl!.innerHTML = data.data.title;
+          if (!this.dataset.showTitle) titleEl!.classList.add("hide");
 
           document
-            .querySelector("[data-prev]")
+            .querySelector("[data-prev]")!
             .addEventListener("click", () => setMainItem(currentItem - 1));
           document
-            .querySelector("[data-next]")
+            .querySelector("[data-next]")!
             .addEventListener("click", () => setMainItem(currentItem + 1));
           document
-            .querySelector("[data-thumbnails]")
+            .querySelector("[data-thumbnails]")!
             .addEventListener("click", (e) =>
               setMainItem(
-                (e.target as HTMLElement).parentNode.getAttribute(
-                  "data-thumbnail",
+                parseInt(
+                  (e.target as HTMLElement)!.parentElement?.dataset[
+                    "thumbnail"
+                  ] || "0",
                 ),
               ),
             );

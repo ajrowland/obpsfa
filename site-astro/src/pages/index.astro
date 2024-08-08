@@ -1,7 +1,7 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import PortableText from "@components/PortableText.astro";
-import ExtendedImage from "@components/ExtendedImage.astro";
+import Image from "@components/Image.astro";
 import NewsItem from "@components/NewsItem.astro";
 import { getHome } from "@lib/api";
 
@@ -22,7 +22,7 @@ const home = await getHome();
 
   {
     home.mainImage && (
-      <ExtendedImage
+      <Image
         image={home.mainImage}
         width={800}
         height={350}
