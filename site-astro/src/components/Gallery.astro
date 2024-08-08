@@ -11,96 +11,119 @@ interface Props {
 const { imgurId, showTitle, minHeight, aspectRatio } = Astro.props.node;
 ---
 
-<div class="gallery">
-  <h2 data-title></h2>
-  <div class="gallery__main-container">
-    <div style={`padding-top: ${aspectRatio || 66.66}%`}>
-      <div class="gallery__image" data-main-item>Loading...</div>
-    </div>
-    <div class="gallery__controls">
-      <button data-prev class="gallery__prev" title="Previous item"
-        ><span class="gallery__label">Previous</span></button
-      >
-      <button data-next class="gallery__next" title="Next item"
-        ><span class="gallery__label">Next</span></button
-      >
-    </div>
-  </div>
-  <div class="gallery__thumbnail-container" data-thumbnails></div>
-</div>
-
-<script
-  define:vars={{
-    imgurId,
-    clientId: import.meta.env.PUBLIC_IMGUR_CLIENT_ID,
-    showTitle,
-  }}
+<astro-gallery
+  data-imgur-id={imgurId}
+  data-show-title={showTitle}
+  data-min-height={minHeight}
+  data-aspect-ratio={aspectRatio}
+  data-client-id={import.meta.env.PUBLIC_IMGUR_CLIENT_ID}
 >
-  const createGallery = async () => {
-    try {
-      const response = await fetch(`https://api.imgur.com/3/album/${imgurId}`, {
-        headers: new Headers({
-          Authorization: `Client-ID ${clientId}`,
-        }),
-      });
+  <div class="gallery">
+    <h2 data-title></h2>
+    <div class="gallery__main-container">
+      <div style={`padding-top: ${aspectRatio || 66.66}%`}>
+        <div class="gallery__image" data-main-item>Loading...</div>
+      </div>
+      <div class="gallery__controls">
+        <button data-prev class="gallery__prev" title="Previous item"
+          ><span class="gallery__label">Previous</span></button
+        >
+        <button data-next class="gallery__next" title="Next item"
+          ><span class="gallery__label">Next</span></button
+        >
+      </div>
+    </div>
+    <div class="gallery__thumbnail-container" data-thumbnails></div>
+  </div>
+</astro-gallery>
 
-      const data = await response.json();
-      const items = data.data.images;
-      let currentItem = 0;
+<script>
+  class AstroGallery extends HTMLElement {
+    constructor() {
+      super();
 
-      document.querySelector("[data-thumbnails]").innerHTML = items
-        .map((item, i) => {
-          return `<div class="gallery__thumbnail" data-thumbnail="${i}">
+      const createGallery = async () => {
+        try {
+          const response = await fetch(
+            `https://api.imgur.com/3/album/${this.dataset.imgurId}`,
+            {
+              headers: new Headers({
+                Authorization: `Client-ID ${this.dataset.clientId}`,
+              }),
+            },
+          );
+
+          interface Item {
+            link: string;
+            type: string;
+          }
+
+          const data = await response.json();
+          const items: Item[] = data.data.images;
+          let currentItem = 0;
+
+          document.querySelector("[data-thumbnails]").innerHTML = items
+            .map((item, i: number) => {
+              return `<div class="gallery__thumbnail" data-thumbnail="${i}">
           ${
             item.type.includes("video")
               ? `<div class="gallery__thumbnail-video">Video</div>`
               : `<img src="${item.link.substr(0, item.link.lastIndexOf(".")) + "s" + item.link.substr(item.link.lastIndexOf("."))}" alt="Gallery thumbnail ${i + 1} of ${items.length}" />`
           }
         </div>`;
-        })
-        .join("");
+            })
+            .join("");
 
-      const titleEl = document.querySelector("[data-title]");
-      const thumbnailEls = document.querySelectorAll("[data-thumbnail]");
-      const mainItemEl = document.querySelector("[data-main-item]");
+          const titleEl = document.querySelector("[data-title]");
+          const thumbnailEls = document.querySelectorAll("[data-thumbnail]");
+          const mainItemEl = document.querySelector("[data-main-item]");
 
-      const setMainItem = (i) => {
-        currentItem = i;
+          const setMainItem = (i: number) => {
+            currentItem = i;
 
-        if (currentItem < 0) currentItem = items.length - 1;
-        if (currentItem > items.length - 1) currentItem = 0;
+            if (currentItem < 0) currentItem = items.length - 1;
+            if (currentItem > items.length - 1) currentItem = 0;
 
-        mainItemEl.innerHTML = items[currentItem].type.includes("video")
-          ? `<video muted controls playsinline><source src="${items[currentItem].link}" type="${items[currentItem].type}" /></video>`
-          : `<img src="${items[currentItem].link}" alt="${`Gallery image ${currentItem + 1} of ${items.length}`}" />`;
+            mainItemEl.innerHTML = items[currentItem].type.includes("video")
+              ? `<video muted controls playsinline><source src="${items[currentItem].link}" type="${items[currentItem].type}" /></video>`
+              : `<img src="${items[currentItem].link}" alt="${`Gallery image ${currentItem + 1} of ${items.length}`}" />`;
 
-        thumbnailEls.forEach((thumbnailEl) =>
-          thumbnailEl.classList.remove("active"),
-        );
-        thumbnailEls[currentItem].classList.add("active");
+            thumbnailEls.forEach((thumbnailEl) =>
+              thumbnailEl.classList.remove("active"),
+            );
+            thumbnailEls[currentItem].classList.add("active");
+          };
+
+          titleEl.innerHTML = data.data.title;
+          if (!this.dataset.showTitle) titleEl.classList.add("hide");
+
+          document
+            .querySelector("[data-prev]")
+            .addEventListener("click", () => setMainItem(currentItem - 1));
+          document
+            .querySelector("[data-next]")
+            .addEventListener("click", () => setMainItem(currentItem + 1));
+          document
+            .querySelector("[data-thumbnails]")
+            .addEventListener("click", (e) =>
+              setMainItem(
+                (e.target as HTMLElement).parentNode.getAttribute(
+                  "data-thumbnail",
+                ),
+              ),
+            );
+
+          setMainItem(0);
+        } catch (err) {
+          console.log(err);
+        }
       };
 
-      titleEl.innerHTML = data.data.title;
-      if (!showTitle) titleEl.classList.add("hide");
-      document
-        .querySelector("[data-prev]")
-        .addEventListener("click", () => setMainItem(currentItem - 1));
-      document
-        .querySelector("[data-next]")
-        .addEventListener("click", () => setMainItem(currentItem + 1));
-      document
-        .querySelector("[data-thumbnails]")
-        .addEventListener("click", (e) =>
-          setMainItem(e.target.parentNode.getAttribute("data-thumbnail")),
-        );
-
-      setMainItem(0);
-    } catch (err) {
-      console.log(err);
+      createGallery();
     }
-  };
+  }
 
-  createGallery();
+  customElements.define("astro-gallery", AstroGallery);
 </script>
 
 <style lang="scss" is:global>
