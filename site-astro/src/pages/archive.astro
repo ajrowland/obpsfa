@@ -4,6 +4,7 @@ import PortableText from "@components/PortableText.astro";
 import ExtendedImage from "@components/ExtendedImage.astro";
 import NewsItem from "@components/NewsItem.astro";
 import { getArchive } from "@lib/api";
+import { slugify } from "@lib/util";
 
 const home = await getArchive();
 ---
@@ -41,7 +42,11 @@ const home = await getArchive();
 
           <div class="news__items">
             {home.news.map((item) => (
-              <NewsItem image={item.mainImage} {...item} />
+              <NewsItem
+                image={item.mainImage}
+                {...item}
+                slug={`archive/${item.date}-${slugify(item.title)}`}
+              />
             ))}
           </div>
         </div>

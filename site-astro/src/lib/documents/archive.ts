@@ -1,23 +1,15 @@
 import { pageProjection } from "./page";
-import {
-  assetImageProjection,
-  blockProjection,
-  formEmbedProjection,
-  heroProjection,
-  logosProjection,
-  pathProjection,
-  programsProjection,
-  promoProjection,
-  servicesProjection,
-} from "../blocks";
-import { bodyBlockProjection } from "../util";
+import { bodyBlockProjection } from "@lib/util";
+import { blockProjection } from "@lib/blocks";
 
 export const archiveProjection = `{
     title,
     date,
     "slug": slug.current,
     mainImage,
-    body[],
+    body[] {
+      ${bodyBlockProjection("block", blockProjection())},
+    },
     seo {
       description,
       image,

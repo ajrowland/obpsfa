@@ -3,14 +3,20 @@ import Layout from "@layouts/Layout.astro";
 import PortableText from "@components/PortableText.astro";
 import ExtendedImage from "@components/ExtendedImage.astro";
 import { getPages } from "@lib/api";
-import { Debug } from "astro:components";
+import { slugify } from "@lib/util";
 
 export const getStaticPaths = async () => {
   const pages = await getPages();
 
   return pages.map((page) => {
     return {
-      params: { slug: page.slug },
+      params: {
+        slug: page.isArchived
+          ? `/archive/${page.date}-${slugify(page.title)}`
+          : page.slug
+            ? page.slug
+            : slugify(page.title),
+      },
       props: page,
     };
   });
@@ -43,5 +49,4 @@ const { title, date, seo, body, mainImage } = Astro.props;
   }
 
   <PortableText portableText={body} />
-  <Debug {Astro.props} />
 </Layout>

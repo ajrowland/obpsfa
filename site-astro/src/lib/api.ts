@@ -72,7 +72,7 @@ export const getArchive = async (): Promise<HomePage> => {
 export const getPages = async (n = 0): Promise<Page[]> => {
   if (pages && isCached) return limit(pages, n);
 
-  const query = `*[_type == "page" && defined(slug)] | order(order) ${pageProjection}`;
+  const query = `*[_type == "page"] | order(order) ${pageProjection}`;
 
   pages = await sanityClient.fetch(query);
 

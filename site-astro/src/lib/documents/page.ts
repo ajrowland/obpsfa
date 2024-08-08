@@ -1,13 +1,8 @@
 import {
-  assetImageProjection,
   blockProjection,
-  formEmbedProjection,
-  heroProjection,
-  logosProjection,
-  programsProjection,
-  promoProjection,
-  servicesProjection,
   fixtureListProjection,
+  tableProjection,
+  galleryProjection,
 } from "../blocks";
 import { bodyBlockProjection } from "../util";
 
@@ -17,8 +12,10 @@ export const pageProjection = `{
     "slug": slug.current,
     mainImage,
     body[] {
-      ...,
-      ${bodyBlockProjection("fixtureList", fixtureListProjection)}
+      ${bodyBlockProjection("block", blockProjection())},
+      ${bodyBlockProjection("fixtureList", fixtureListProjection)},
+      ${bodyBlockProjection("table", tableProjection)},
+      ${bodyBlockProjection("gallery", galleryProjection)},
     },
     seo {
       description,

@@ -1,15 +1,5 @@
 import { pageProjection } from "./page";
-import {
-  assetImageProjection,
-  blockProjection,
-  formEmbedProjection,
-  heroProjection,
-  logosProjection,
-  pathProjection,
-  programsProjection,
-  promoProjection,
-  servicesProjection,
-} from "../blocks";
+import { blockProjection, tableProjection } from "../blocks";
 import { bodyBlockProjection } from "../util";
 
 export const homeProjection = `{
@@ -17,7 +7,10 @@ export const homeProjection = `{
     date,
     "slug": slug.current,
     mainImage,
-    body[],
+    body[] {
+      ${bodyBlockProjection("block", blockProjection())},
+      ${bodyBlockProjection("table", tableProjection)},
+    },
     seo {
       description,
       image,

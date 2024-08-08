@@ -6,7 +6,7 @@ const { title, slug, date, mainImage, body, seo } = Astro.props;
 
 const displayImage = mainImage || seo.image;
 
-const Element = body ? "a" : "div";
+const Element = body?.length > 0 ? "a" : "div";
 ---
 
 <Element href={slug} class="news-item">
