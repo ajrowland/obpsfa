@@ -136,7 +136,7 @@ const fixtureList = Object.entries(
   );
 
   filterEls.forEach((filterEl) => {
-    filterEl.addEventListener("change", (e) => {
+    filterEl.addEventListener("change", () => {
       const checkedFilterEls = filterEls.filter((el) => el.checked);
 
       checkedFilterEls.length === 1

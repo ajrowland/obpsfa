@@ -68,7 +68,7 @@ const { imgurId, showTitle, minHeight, aspectRatio } = Astro.props.node;
           ${
             item.type.includes("video")
               ? `<div class="gallery__thumbnail-video">Video</div>`
-              : `<img src="${item.link.substr(0, item.link.lastIndexOf(".")) + "s" + item.link.substr(item.link.lastIndexOf("."))}" alt="Gallery thumbnail ${i + 1} of ${items.length}" />`
+              : `<img src="${item.link.substring(0, item.link.lastIndexOf(".")) + "s" + item.link.substring(item.link.lastIndexOf("."))}" alt="Gallery thumbnail ${i + 1} of ${items.length}" />`
           }
         </div>`;
             })

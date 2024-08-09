@@ -1,18 +1,22 @@
 ---
 import { getSiteData } from "@lib/api";
-import { createPath } from "@lib/util";
+import { createPath, urlForImage } from "@lib/util";
 import logoWebp from "@assets/images/logo.webp";
-import { Debug } from "astro:components";
 
 interface Props {
   title: string;
   description: string;
   author?: string;
+  image?: any;
 }
 
 const siteData = await getSiteData();
 
-const { title, description, author } = Astro.props;
+const { title, description, author, image } = Astro.props;
+
+const imageUrl = image
+  ? urlForImage(image).width(280).height(150).auto("format").url()
+  : logoWebp.src;
 ---
 
 <!doctype html>
@@ -21,9 +25,23 @@ const { title, description, author } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.png" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="generator" content={Astro.generator} />
     <meta name="author" content={author || "OBPSFA"} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:site" content="odpsfa" />
+    <meta name="twitter:creator" content="odpsfa" />
+    <meta name="twitter:image" content={imageUrl} />
+
+    <meta name="og:type" content="article" />
+    <meta name="og:title" content={title} />
+    <meta name="og:description" content={description} />
+    <meta name="og:url" content={Astro.url} />
+    <meta name="og:image" content={imageUrl} />
+
     <title>{title}</title>
   </head>
   <body>
@@ -42,14 +60,14 @@ const { title, description, author } = Astro.props;
               >
               <a
                 class="header__top-link"
-                :href="`mailto:${$static.metadata.siteEmail}`"
+                :href="`mailto:mail.obpsfa.com`"
                 title="Send us an email"
                 target="blank"
                 rel="noopener noreferer">Email</a
               >
               <a
                 class="header__top-link"
-                :href="`https://twitter.com/${$static.metadata.siteTwitterName}`"
+                :href="https://twitter.com/odpsfa"
                 title="View our Twitter feed"
                 target="blank"
                 rel="noopener noreferer"
@@ -115,7 +133,6 @@ const { title, description, author } = Astro.props;
         </div>
       </footer>
     </div>
-    <Debug {siteData} />
   </body>
 </html>
 <style
