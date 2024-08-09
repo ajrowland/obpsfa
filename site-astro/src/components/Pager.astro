@@ -1,0 +1,62 @@
+---
+const { pageCount, currentPage } = Astro.props;
+---
+
+<nav role="navigation" aria-label="Pagination Navigation" class="pager">
+  {
+    [...Array(pageCount).keys()].map((i) => (
+      <a
+        href={`/archive/${i}`}
+        class:list={{ active: currentPage === i }}
+        title={`Go to page ${i + 1}`}
+      >
+        {i + 1}
+      </a>
+    ))
+  }
+  <!--
+  <a href="/archive" aria-label="Go to previous page. Page 1">‹</a>
+  <a href="/archive" aria-label="Go to page 1">1</a>
+  <a href="/archive/2" class="active--exact active" title="Current page. Page 2"
+    >2</a
+  >
+  <a href="/archive/3" title="Go to page 3">3</a>
+  <a href="/archive/4" title="Go to page 4">4</a>
+  <a href="/archive/5" title="Go to page 5">5</a>
+  <a href="/archive/3" title="Go to next page. Page 3">›</a>
+  <a href="/archive/17" title="Go to last page. Page 17">»</a>
+-->
+</nav>
+
+<style lang="scss">
+  .pager {
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+    margin: $vertical-spacing 0;
+
+    @include mq($from: tablet) {
+      justify-content: flex-end;
+      padding: 0;
+    }
+
+    a {
+      display: inline-block;
+      padding: 15px 20px;
+      background: $colour-red;
+      color: #fff;
+      transition: all 0.25s ease-in-out;
+      margin: 0 1px;
+      text-decoration: none;
+
+      &.active,
+      &:hover {
+        background: #000;
+      }
+
+      @include mq($from: tablet) {
+        padding: 5px 10px;
+      }
+    }
+  }
+</style>

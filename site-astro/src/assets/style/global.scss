@@ -73,6 +73,29 @@ h3 {
   }
 }
 
+.news {
+  background-image: linear-gradient(
+    to bottom right,
+    rgba($colour-red, 0.6),
+    #fff
+  );
+  padding-top: $vertical-spacing;
+  margin: $vertical-spacing * 2 0 $vertical-spacing * -1 0;
+  color: #fff;
+
+  h2 {
+    text-transform: uppercase;
+  }
+
+  @include mq($from: tablet) {
+    padding-bottom: $vertical-spacing;
+
+    h2 {
+      font-size: 2.5rem;
+    }
+  }
+}
+
 blockquote {
   margin-left: 0;
   padding-left: $gutter;

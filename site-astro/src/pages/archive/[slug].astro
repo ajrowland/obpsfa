@@ -1,0 +1,68 @@
+---
+import Layout from "@layouts/Layout.astro";
+import PortableText from "@components/PortableText.astro";
+import Image from "@components/Image.astro";
+import NewsItem from "@components/NewsItem.astro";
+import Pager from "@components/Pager.astro";
+import { getArchive } from "@lib/api";
+import { slugify } from "@lib/util";
+
+export const getStaticPaths = async () => {
+  const archive = await getArchive();
+
+  const itemsPerPage = 5;
+  const pageCount = Math.floor(archive.news.length / itemsPerPage);
+
+  const pages = [...Array(pageCount).keys()].map((i) => {
+    return {
+      params: { slug: i },
+      props: {
+        ...archive,
+        news: archive.news.slice(
+          i * itemsPerPage,
+          i * itemsPerPage + itemsPerPage,
+        ),
+        pageCount,
+        currentPage: i,
+      },
+    };
+  });
+
+  return pages;
+};
+
+const { title, seo, body, mainImage, news, pageCount, currentPage } =
+  Astro.props;
+---
+
+<Layout title={title} description={seo.description}>
+  <h1>{title}</h1>
+
+  {
+    mainImage && (
+      <Image image={mainImage} width={800} height={350} cssClass="main-image" />
+    )
+  }
+
+  <PortableText portableText={body} />
+
+  {
+    news.length > 0 && (
+      <section class="news" slot="bottom">
+        <div class="container">
+          <Pager pageCount={pageCount} currentPage={currentPage} />
+
+          <div class="news__items">
+            {news.map((item) => (
+              <NewsItem
+                image={item.mainImage}
+                {...item}
+                slug={`/archive/${item.date}-${slugify(item.title)}`}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+</Layout>
