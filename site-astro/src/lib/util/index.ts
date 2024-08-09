@@ -1,3 +1,4 @@
+import path from "node:path";
 import { sanityClient } from "sanity:client";
 import imageUrlBuilder from "@sanity/image-url";
 import type { SanityAsset } from "@sanity/image-url/lib/types/types";
@@ -53,4 +54,9 @@ export function slugify(str: string) {
   slug = slug.replace(/[\s-]+/g, "-");
 
   return slug;
+}
+
+export function createPath(...args: string[]) {
+  const slugs = args.filter((slug) => slug);
+  return path.join("/", ...slugs);
 }

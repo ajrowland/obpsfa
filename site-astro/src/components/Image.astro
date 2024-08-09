@@ -14,12 +14,7 @@ interface Props {
 const { image, width, height, cssClass, hideCaption, alt } = Astro.props;
 
 const imageUrl = image?.asset
-  ? urlForImage(image.asset)
-      .height(height)
-      .width(width)
-      .auto("format")
-      .dpr(1)
-      .url()
+  ? urlForImage(image).height(height).width(width).url()
   : "";
 ---
 

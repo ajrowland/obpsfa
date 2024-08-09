@@ -1,6 +1,7 @@
 ---
 import Image from "@components/Image.astro";
 import { formatDate } from "@lib/util";
+import { createPath } from "@lib/util";
 
 const { title, slug, date, mainImage, body, seo } = Astro.props;
 
@@ -9,7 +10,7 @@ const displayImage = mainImage || seo.image;
 const Element = body?.length > 0 ? "a" : "div";
 ---
 
-<Element href={slug} class="news-item">
+<Element href={createPath(slug)} class="news-item">
   <div class="news-item__text">
     <h3 class="news-item__title">{title}</h3>
     <div class="news-item__date">
@@ -29,7 +30,7 @@ const Element = body?.length > 0 ? "a" : "div";
   />
 </Element>
 
-<style lang="scss">
+<style lang="scss" is:global>
   @include mq($from: tablet) {
     a.news-item:hover {
       transform: scale(1.02);

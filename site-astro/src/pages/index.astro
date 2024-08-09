@@ -35,7 +35,7 @@ const home = await getHome();
 
   {
     home?.news.length > 0 && (
-      <section class="news">
+      <section class="news" slot="bottom">
         <div class="container">
           <h2>Latest news</h2>
 
@@ -49,3 +49,28 @@ const home = await getHome();
     )
   }
 </Layout>
+
+<style lang="scss" is:global>
+  .news {
+    background-image: linear-gradient(
+      to bottom right,
+      rgba($colour-red, 0.6),
+      #fff
+    );
+    padding-top: $vertical-spacing;
+    margin: $vertical-spacing * 2 0 $vertical-spacing * -1 0;
+    color: #fff;
+
+    h2 {
+      text-transform: uppercase;
+    }
+
+    @include mq($from: tablet) {
+      padding-bottom: $vertical-spacing;
+
+      h2 {
+        font-size: 2.5rem;
+      }
+    }
+  }
+</style>

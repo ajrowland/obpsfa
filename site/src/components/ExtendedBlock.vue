@@ -63,8 +63,8 @@ export default {
             ) : (
               <a
                 href={href}
-                target="${blank ? 'blank' : false}"
-                rel="${blank ? 'noopener noreferer' : false}"
+                target={blank ? "blank" : false}
+                rel={blank ? "noopener noreferer" : false}
               >
                 {children}
               </a>

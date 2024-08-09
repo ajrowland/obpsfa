@@ -1,7 +1,7 @@
 ---
 import { getSiteData } from "@lib/api";
+import { createPath } from "@lib/util";
 import logoWebp from "@assets/images/logo.webp";
-import logoPng from "@assets/images/logo.png";
 import { Debug } from "astro:components";
 
 interface Props {
@@ -77,7 +77,7 @@ const { title, description, author } = Astro.props;
                 siteData?.navigation.map((item) => (
                   <a
                     class="header__nav-link"
-                    href={item.slug}
+                    href={createPath(item.slug)}
                     title={item.title}
                   >
                     {item.title}
@@ -90,11 +90,11 @@ const { title, description, author } = Astro.props;
       </header>
 
       <main class="main">
-        <slot name="contentTop" />
+        <slot name="top" />
         <div class="container">
           <slot />
         </div>
-        <slot name="contentBottom" />
+        <slot name="bottom" />
       </main>
 
       <footer class="footer">
@@ -122,9 +122,11 @@ const { title, description, author } = Astro.props;
   lang="scss"
   define:vars={{
     logoWebp: `url(${logoWebp.src})`,
-    logoPng: `url(${logoPng.src})`,
   }}
+  is:global
 >
+  @use "sass:math";
+
   .menu-active {
     main,
     footer {
@@ -232,12 +234,6 @@ const { title, description, author } = Astro.props;
 
     &__logo {
       background-image: var(--logoWebp);
-
-      _:-ms-fullscreen,
-      :root & {
-        background-image: var(--logoPng);
-      }
-
       background-color: #fff;
       background-repeat: no-repeat;
       width: 100px;
@@ -247,7 +243,7 @@ const { title, description, author } = Astro.props;
       border: 5px solid #fff;
       border-radius: 110px;
       position: absolute;
-      top: $vertical-spacing / 4.2;
+      top: math.div($vertical-spacing, 4.2);
       z-index: 2;
 
       @include mq($from: tablet) {

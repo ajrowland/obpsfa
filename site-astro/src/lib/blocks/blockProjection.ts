@@ -4,7 +4,21 @@ export const blockProjection = (
 ) => {
   return /* groq */ `{
     ...
-    ${withMarks ? ",markDefs[] { ... }" : ""}
+    ${
+      withMarks
+        ? `,
+    markDefs[] {
+      ...,
+      _type == "link" => {
+        "page": reference-> {
+          "slug": slug.current,
+          date,
+          isArchived
+        }
+      }
+    }`
+        : ""
+    }
     ${additionalBlocks.length > 0 ? `,${additionalBlocks.join(",")}` : ""}
   }`;
 };
