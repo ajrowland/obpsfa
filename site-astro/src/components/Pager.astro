@@ -1,31 +1,86 @@
 ---
 const { pageCount, currentPage } = Astro.props;
+
+const padding = 2;
+const range = padding * 2 + 1;
+let startPage = currentPage - padding < 1 ? 1 : currentPage - padding;
+let endPage =
+  currentPage + padding > pageCount ? pageCount : currentPage + padding;
+
+if (endPage - startPage < range) {
+  if (currentPage < range) {
+    startPage = 1;
+    endPage = range;
+  } else {
+    startPage = endPage - range + 1;
+  }
+}
 ---
 
 <nav role="navigation" aria-label="Pagination Navigation" class="pager">
   {
-    [...Array(pageCount).keys()].map((i) => (
+    currentPage < range ? (
+      <span>«</span>
+    ) : (
+      <a href={`/archive/1`} title={`Go to first page. Page 1`}>
+        «
+      </a>
+    )
+  }
+  {
+    currentPage === 1 ? (
+      <span>‹</span>
+    ) : (
+      <a
+        href={`/archive/${currentPage - 1}`}
+        title={`Go to next page. Page ${pageCount - 1}`}
+      >
+        ‹
+      </a>
+    )
+  }
+  {
+    [
+      ...Array.from(
+        { length: endPage + 1 - startPage },
+        (_, i) => startPage + i,
+      ),
+    ].map((i) => (
       <a
         href={`/archive/${i}`}
         class:list={{ active: currentPage === i }}
-        title={`Go to page ${i + 1}`}
+        title={
+          currentPage === i ? `Current page. Page ${i}` : `Go to page ${i}`
+        }
       >
-        {i + 1}
+        {i}
       </a>
     ))
   }
-  <!--
-  <a href="/archive" aria-label="Go to previous page. Page 1">‹</a>
-  <a href="/archive" aria-label="Go to page 1">1</a>
-  <a href="/archive/2" class="active--exact active" title="Current page. Page 2"
-    >2</a
-  >
-  <a href="/archive/3" title="Go to page 3">3</a>
-  <a href="/archive/4" title="Go to page 4">4</a>
-  <a href="/archive/5" title="Go to page 5">5</a>
-  <a href="/archive/3" title="Go to next page. Page 3">›</a>
-  <a href="/archive/17" title="Go to last page. Page 17">»</a>
--->
+  {
+    currentPage === pageCount ? (
+      <span>›</span>
+    ) : (
+      <a
+        href={`/archive/${currentPage + 1}`}
+        title={`Go to next page. Page ${pageCount + 1}`}
+      >
+        ›
+      </a>
+    )
+  }
+  {
+    currentPage < pageCount - padding ? (
+      <a
+        href={`/archive/${pageCount}`}
+        title={`Go to last page. Page ${pageCount}`}
+      >
+        »
+      </a>
+    ) : (
+      <span>»</span>
+    )
+  }
 </nav>
 
 <style lang="scss">
@@ -40,7 +95,10 @@ const { pageCount, currentPage } = Astro.props;
       padding: 0;
     }
 
-    a {
+    a,
+    span {
+      width: 2ch;
+      text-align: center;
       display: inline-block;
       padding: 15px 20px;
       background: $colour-red;
@@ -56,6 +114,15 @@ const { pageCount, currentPage } = Astro.props;
 
       @include mq($from: tablet) {
         padding: 5px 10px;
+      }
+    }
+
+    span {
+      opacity: 0.3;
+
+      &.active,
+      &:hover {
+        background: $colour-red;
       }
     }
   }

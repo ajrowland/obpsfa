@@ -15,7 +15,7 @@ export const getStaticPaths = async () => {
 
   const pages = [...Array(pageCount).keys()].map((i) => {
     return {
-      params: { slug: i },
+      params: { slug: i + 1 },
       props: {
         ...archive,
         news: archive.news.slice(
@@ -23,7 +23,7 @@ export const getStaticPaths = async () => {
           i * itemsPerPage + itemsPerPage,
         ),
         pageCount,
-        currentPage: i,
+        currentPage: i + 1,
       },
     };
   });
@@ -61,6 +61,8 @@ const { title, seo, body, mainImage, news, pageCount, currentPage } =
               />
             ))}
           </div>
+
+          <Pager pageCount={pageCount} currentPage={currentPage} />
         </div>
       </section>
     )
