@@ -24,3 +24,64 @@ import notFoundImage from "@assets/images/404.jpg";
     the menu.
   </p>
 </Layout>
+
+<style lang="scss" is:global>
+  .main-image {
+    position: relative;
+    overflow: hidden;
+    margin: $vertical-spacing $gutter * -1;
+    font-size: 0.8rem;
+
+    @include mq($from: tablet) {
+      margin: $vertical-spacing 0;
+      font-size: 1rem;
+    }
+
+    img {
+      display: block;
+      height: auto;
+    }
+
+    &__caption {
+      background: $colour-red;
+      padding: 5px $gutter;
+      display: inline-block;
+      max-width: 70%;
+
+      @include mq($from: tablet) {
+        position: absolute;
+        top: 60%;
+        right: -50px;
+        padding-right: 50px;
+        padding-left: $gutter * 2;
+        max-width: 35%;
+        transform: skew(-30deg);
+      }
+
+      &-text {
+        padding: 5px 0;
+        color: #fff;
+        line-height: 1.5;
+
+        @include mq($from: tablet) {
+          padding: 10px 20px 10px 0;
+          display: inline-block;
+          text-transform: uppercase;
+          line-height: 2rem;
+          font-weight: bold;
+          transform: skew(30deg);
+        }
+      }
+    }
+
+    &__attribution {
+      padding: 5px $gutter;
+      text-align: left;
+
+      @include mq($from: tablet) {
+        padding: 5px 0;
+        font-size: 0.8rem;
+      }
+    }
+  }
+</style>
