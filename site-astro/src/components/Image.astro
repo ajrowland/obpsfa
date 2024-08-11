@@ -14,7 +14,7 @@ interface Props {
 const { image, width, height, cssClass, hideCaption, alt } = Astro.props;
 
 const imageUrl = image?.asset
-  ? urlForImage(image).height(height).width(width).url()
+  ? urlForImage(image).height(height).width(width).auto("format").url()
   : "";
 ---
 
@@ -27,7 +27,6 @@ const imageUrl = image?.asset
         class={cssClass && `${cssClass}__img`}
         width={width}
         height={height}
-        loading="lazy"
       />
       {!hideCaption && image.caption && (
         <div class={cssClass && `${cssClass}__caption`}>
