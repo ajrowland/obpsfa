@@ -87,11 +87,11 @@ if (endPage - startPage < range) {
   .pager {
     display: flex;
     justify-content: center;
-    padding: 2rem;
-    margin: $vertical-spacing 0;
+    padding: $vertical-spacing 0;
 
     @include mq($from: tablet) {
       justify-content: flex-end;
+      margin: $vertical-spacing 0;
       padding: 0;
     }
 
@@ -100,7 +100,7 @@ if (endPage - startPage < range) {
       width: 2ch;
       text-align: center;
       display: inline-block;
-      padding: 15px 20px;
+      padding: 5px 10px;
       background: $colour-red;
       color: #fff;
       transition: all 0.25s ease-in-out;
@@ -110,10 +110,6 @@ if (endPage - startPage < range) {
       &.active,
       &:hover {
         background: #000;
-      }
-
-      @include mq($from: tablet) {
-        padding: 5px 10px;
       }
     }
 
