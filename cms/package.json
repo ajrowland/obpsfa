@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "sanity dev",
     "test": "sanity check",
-    "build": "sanity telemetry disable && sanity build public",
+    "build": "sanity build public",
     "preview": "sanity preview public"
   },
   "keywords": [

@@ -4,10 +4,6 @@
 .temp
 node_modules
 dist
-public
 .env
 .env.*
-/site/static/assets/img
-/site/static/assets/js
-/site/static/manifest.json
-/site/static/service-worker.js
+cms/public
