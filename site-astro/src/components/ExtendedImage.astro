@@ -1,0 +1,13 @@
+---
+import Image from "@components/Image.astro";
+
+const { node } = Astro.props;
+
+const cssClass =
+  node.position === "left" || node.position === "right"
+    ? `article-image article-image--${node.position}`
+    : "main-image";
+const width = node.position === "left" || node.position === "right" ? 350 : 800;
+---
+
+<Image image={node} cssClass={cssClass} width={width} height={350} />

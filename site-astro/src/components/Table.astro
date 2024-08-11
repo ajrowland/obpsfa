@@ -1,0 +1,30 @@
+---
+const { rows }: { rows: Array<{ cells: string[] }> } = Astro.props.node;
+---
+
+<table class="table">
+  {
+    rows.map((row) => (
+      <tr>
+        {row.cells.map((cell) => (
+          <td>{cell}</td>
+        ))}
+      </tr>
+    ))
+  }
+</table>
+
+<style lang="scss">
+  .table {
+    width: 100%;
+    table-layout: fixed;
+
+    td {
+      display: block;
+
+      @include mq($from: tablet) {
+        display: table-cell;
+      }
+    }
+  }
+</style>

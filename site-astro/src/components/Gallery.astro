@@ -1,0 +1,289 @@
+---
+interface Props {
+  node: {
+    imgurId: string;
+    showTitle: boolean;
+    minHeight: number;
+    aspectRatio: number;
+  };
+}
+
+const { imgurId, showTitle, minHeight, aspectRatio } = Astro.props.node;
+---
+
+<astro-gallery
+  data-imgur-id={imgurId}
+  data-show-title={showTitle}
+  data-min-height={minHeight}
+  data-aspect-ratio={aspectRatio}
+  data-client-id={import.meta.env.PUBLIC_IMGUR_CLIENT_ID}
+>
+  <div class="gallery">
+    <h2 data-title></h2>
+    <div class="gallery__main-container">
+      <div style={`padding-top: ${aspectRatio || 66.66}%`}>
+        <div class="gallery__image" data-main-item>Loading...</div>
+      </div>
+      <div class="gallery__controls">
+        <button data-prev class="gallery__prev" title="Previous item"
+          ><span class="gallery__label">Previous</span></button
+        >
+        <button data-next class="gallery__next" title="Next item"
+          ><span class="gallery__label">Next</span></button
+        >
+      </div>
+    </div>
+    <div class="gallery__thumbnail-container" data-thumbnails></div>
+  </div>
+</astro-gallery>
+
+<script>
+  class AstroGallery extends HTMLElement {
+    constructor() {
+      super();
+
+      const createGallery = async () => {
+        try {
+          const response = await fetch(
+            `https://api.imgur.com/3/album/${this.dataset.imgurId}`,
+            {
+              headers: new Headers({
+                Authorization: `Client-ID ${this.dataset.clientId}`,
+              }),
+            },
+          );
+
+          interface Item {
+            link: string;
+            type: string;
+          }
+
+          const data = await response.json();
+          const items: Item[] = data.data.images;
+          let currentItem = 0;
+
+          document.querySelector("[data-thumbnails]")!.innerHTML = items
+            .map((item, i: number) => {
+              return `<div class="gallery__thumbnail" data-thumbnail="${i}">
+          ${
+            item.type.includes("video")
+              ? `<div class="gallery__thumbnail-video">Video</div>`
+              : `<img src="${item.link.substring(0, item.link.lastIndexOf(".")) + "s" + item.link.substring(item.link.lastIndexOf("."))}" alt="Gallery thumbnail ${i + 1} of ${items.length}" />`
+          }
+        </div>`;
+            })
+            .join("");
+
+          const titleEl = document.querySelector("[data-title]");
+          const thumbnailEls = document.querySelectorAll("[data-thumbnail]");
+          const mainItemEl = document.querySelector("[data-main-item]");
+
+          const setMainItem = (i: number) => {
+            currentItem = i;
+
+            if (currentItem < 0) currentItem = items.length - 1;
+            if (currentItem > items.length - 1) currentItem = 0;
+
+            mainItemEl!.innerHTML = items[currentItem].type.includes("video")
+              ? `<video muted controls playsinline><source src="${items[currentItem].link}" type="${items[currentItem].type}" /></video>`
+              : `<img src="${items[currentItem].link}" alt="${`Gallery image ${currentItem + 1} of ${items.length}`}" />`;
+
+            thumbnailEls.forEach((thumbnailEl) =>
+              thumbnailEl.classList.remove("active"),
+            );
+            thumbnailEls[currentItem].classList.add("active");
+          };
+
+          titleEl!.innerHTML = data.data.title;
+          if (!this.dataset.showTitle) titleEl!.classList.add("hide");
+
+          document
+            .querySelector("[data-prev]")!
+            .addEventListener("click", () => setMainItem(currentItem - 1));
+          document
+            .querySelector("[data-next]")!
+            .addEventListener("click", () => setMainItem(currentItem + 1));
+          document
+            .querySelector("[data-thumbnails]")!
+            .addEventListener("click", (e) =>
+              setMainItem(
+                parseInt(
+                  (e.target as HTMLElement)!.parentElement?.dataset[
+                    "thumbnail"
+                  ] || "0",
+                ),
+              ),
+            );
+
+          setMainItem(0);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+
+      createGallery();
+    }
+  }
+
+  customElements.define("astro-gallery", AstroGallery);
+</script>
+
+<style lang="scss" is:global>
+  .gallery {
+    margin: $vertical-spacing 0;
+
+    .hide {
+      display: none;
+    }
+
+    &__main-container {
+      position: relative;
+      overflow: hidden;
+    }
+
+    &__image-container {
+      position: relative;
+      height: 0;
+      overflow: hidden;
+    }
+
+    &__thumbnail-container {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 1px -1px;
+    }
+
+    &__thumbnail {
+      width: calc(20% - 2px);
+      margin: 1px;
+      cursor: pointer;
+      opacity: 0.4;
+      display: flex;
+      flex-direction: column;
+
+      &.active {
+        opacity: 1;
+      }
+
+      @include mq($from: tablet) {
+        width: calc(10% - 2px);
+      }
+
+      img {
+        display: inline-block;
+      }
+
+      &-video {
+        background: $colour-red;
+        display: flex;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+      }
+    }
+
+    &__image {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      transition: all 0.2s ease-in-out;
+
+      video,
+      img {
+        width: 100%;
+      }
+
+      img {
+        pointer-events: none;
+      }
+
+      &.fullscreen {
+        position: fixed;
+        left: 0;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        z-index: 5;
+
+        video,
+        img {
+          object-fit: contain;
+        }
+      }
+    }
+
+    .fade-enter-active,
+    .fade-leave-active {
+      transition: all 0.8s ease;
+      overflow: hidden;
+      visibility: visible;
+      opacity: 1;
+      position: absolute;
+    }
+    .fade-enter,
+    .fade-leave-to {
+      opacity: 0;
+      visibility: hidden;
+      top: 0;
+    }
+
+    &__controls {
+      @include mq($from: tablet) {
+        position: absolute;
+        display: flex;
+        width: 100%;
+        top: 50%;
+        justify-content: space-between;
+      }
+    }
+
+    &__prev,
+    &__next {
+      width: 20%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      border: 0;
+      opacity: 0;
+
+      @include mq($from: tablet) {
+        background: $colour-red;
+        cursor: pointer;
+        transform: skew(-30deg);
+        padding: 0 30px;
+        margin-left: -20px;
+        width: auto;
+        height: auto;
+        opacity: 1;
+      }
+    }
+
+    &__next {
+      left: auto;
+      right: 0;
+
+      @include mq($from: tablet) {
+        margin-left: 0;
+        margin-right: -20px;
+      }
+    }
+
+    &__label {
+      display: none;
+
+      @include mq($from: tablet) {
+        color: #fff;
+        font-size: 0.8rem;
+        font-weight: bold;
+        transform: skew(30deg);
+        display: block;
+        padding: 10px;
+        display: inline-block;
+        text-transform: uppercase;
+        line-height: 2rem;
+        font-weight: bold;
+      }
+    }
+  }
+</style>

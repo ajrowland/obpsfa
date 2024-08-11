@@ -1,0 +1,129 @@
+---
+const { pageCount, currentPage } = Astro.props;
+
+const padding = 2;
+const range = padding * 2 + 1;
+let startPage = currentPage - padding < 1 ? 1 : currentPage - padding;
+let endPage =
+  currentPage + padding > pageCount ? pageCount : currentPage + padding;
+
+if (endPage - startPage < range) {
+  if (currentPage < range) {
+    startPage = 1;
+    endPage = range;
+  } else {
+    startPage = endPage - range + 1;
+  }
+}
+---
+
+<nav role="navigation" aria-label="Pagination Navigation" class="pager">
+  {
+    currentPage < range ? (
+      <span>«</span>
+    ) : (
+      <a href={`/archive/1`} title={`Go to first page. Page 1`}>
+        «
+      </a>
+    )
+  }
+  {
+    currentPage === 1 ? (
+      <span>‹</span>
+    ) : (
+      <a
+        href={`/archive/${currentPage - 1}`}
+        title={`Go to next page. Page ${pageCount - 1}`}
+      >
+        ‹
+      </a>
+    )
+  }
+  {
+    [
+      ...Array.from(
+        { length: endPage + 1 - startPage },
+        (_, i) => startPage + i,
+      ),
+    ].map((i) => (
+      <a
+        href={`/archive/${i}`}
+        class:list={{ active: currentPage === i }}
+        title={
+          currentPage === i ? `Current page. Page ${i}` : `Go to page ${i}`
+        }
+      >
+        {i}
+      </a>
+    ))
+  }
+  {
+    currentPage === pageCount ? (
+      <span>›</span>
+    ) : (
+      <a
+        href={`/archive/${currentPage + 1}`}
+        title={`Go to next page. Page ${pageCount + 1}`}
+      >
+        ›
+      </a>
+    )
+  }
+  {
+    currentPage < pageCount - padding ? (
+      <a
+        href={`/archive/${pageCount}`}
+        title={`Go to last page. Page ${pageCount}`}
+      >
+        »
+      </a>
+    ) : (
+      <span>»</span>
+    )
+  }
+</nav>
+
+<style lang="scss">
+  .pager {
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+    margin: $vertical-spacing 0;
+
+    @include mq($from: tablet) {
+      justify-content: flex-end;
+      padding: 0;
+    }
+
+    a,
+    span {
+      width: 2ch;
+      text-align: center;
+      display: inline-block;
+      padding: 15px 20px;
+      background: $colour-red;
+      color: #fff;
+      transition: all 0.25s ease-in-out;
+      margin: 0 1px;
+      text-decoration: none;
+
+      &.active,
+      &:hover {
+        background: #000;
+      }
+
+      @include mq($from: tablet) {
+        padding: 5px 10px;
+      }
+    }
+
+    span {
+      opacity: 0.3;
+
+      &.active,
+      &:hover {
+        background: $colour-red;
+      }
+    }
+  }
+</style>

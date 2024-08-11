@@ -1,0 +1,24 @@
+---
+import { PortableText as PortableTextInternal } from "astro-portabletext";
+import FixtureList from "./FixtureList.astro";
+import Table from "./Table.astro";
+import Gallery from "./Gallery.astro";
+import ExtendedImage from "./ExtendedImage.astro";
+import Link from "./Link.astro";
+
+const components = {
+  type: {
+    fixtureList: FixtureList,
+    table: Table,
+    gallery: Gallery,
+    extendedImage: ExtendedImage,
+  },
+  mark: {
+    link: Link,
+  },
+};
+
+const { portableText } = Astro.props;
+---
+
+<PortableTextInternal value={portableText} components={components} />

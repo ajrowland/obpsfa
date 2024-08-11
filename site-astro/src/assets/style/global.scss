@@ -1,0 +1,186 @@
+@forward "sass-mq";
+@use "sass-mq" as *;
+@use "sass:math";
+
+$mq-breakpoints: (
+  mobile: 320px,
+  tablet: 740px,
+  desktop: 980px,
+  wide: 1300px,
+);
+
+$colour-red: #b60e17;
+$colour-blue: #79c2ed;
+$colour-grey: #333;
+
+$gutter: 20px;
+
+$vertical-spacing: 2rem;
+
+body {
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+}
+
+body,
+button {
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+
+  @include mq($from: desktop) {
+    font-size: 18px;
+  }
+}
+
+h1,
+h3 {
+  z-index: 1;
+
+  @include mq($from: tablet) {
+    position: relative;
+    display: inline-block;
+    background: $colour-grey;
+    color: #fff;
+    padding: math.div($gutter, 2) $gutter;
+
+    &:before,
+    &:after {
+      background: $colour-grey;
+      transform: skew(-30deg);
+      width: 100px;
+      position: absolute;
+      top: 0;
+      left: $gutter * -1.5;
+      height: 100%;
+      z-index: -1;
+    }
+
+    &:after {
+      content: " ";
+      left: auto;
+      right: -$gutter;
+    }
+  }
+
+  @include mq($from: wide) {
+    padding: math.div($gutter, 2) $gutter math.div($gutter, 2) 0;
+
+    &:before {
+      content: " ";
+    }
+  }
+}
+
+.news {
+  background-image: linear-gradient(
+    to bottom right,
+    rgba($colour-red, 0.6),
+    #fff
+  );
+  padding-top: $vertical-spacing;
+  margin: $vertical-spacing * 2 0 $vertical-spacing * -1 0;
+  color: #fff;
+
+  h2 {
+    text-transform: uppercase;
+  }
+
+  @include mq($from: tablet) {
+    padding-bottom: $vertical-spacing;
+
+    h2 {
+      font-size: 2.5rem;
+    }
+  }
+}
+
+blockquote {
+  margin-left: 0;
+  padding-left: $gutter;
+  border-left: $gutter solid #999;
+  font-style: italic;
+}
+
+iframe,
+img {
+  width: 100%;
+}
+
+figure {
+  margin: 0;
+}
+
+label {
+  position: relative;
+  display: inline-block;
+  padding: 0 0 0 2em;
+  height: 22px;
+  cursor: pointer;
+}
+
+label::before,
+label::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 22px;
+  height: 22px;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  z-index: -1;
+}
+
+input[type="checkbox"] + label::before,
+input[type="radio"] + label::before {
+  content: " ";
+  border: 2px solid #fff;
+  border-radius: 2px;
+}
+
+input[type="checkbox"] + label::after,
+input[type="radio"] + label::after {
+  content: " ";
+  background: #fff;
+  content: " ";
+  top: 5px;
+  left: 5px;
+  width: 12px;
+  height: 12px;
+  border: 2px solid #fff;
+  border-radius: 2px;
+}
+
+input[type="checkbox"] + label::after,
+input[type="radio"] + label::after {
+  transform: scale(0);
+}
+
+input[type="checkbox"]:checked + label::after,
+input[type="radio"]:checked + label::after {
+  transform: scale(1);
+}
+
+label::before,
+label::after {
+  transition: 0.25s all ease;
+}
+
+.sr-only {
+  border: 0 !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  clip-path: inset(50%) !important;
+  height: 1px !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  position: absolute !important;
+  width: 1px !important;
+  white-space: nowrap !important;
+}

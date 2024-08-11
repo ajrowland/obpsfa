@@ -1,0 +1,333 @@
+---
+import type { SanityAsset } from "@sanity/image-url/lib/types/types";
+import Image from "./Image.astro";
+import { formatDate } from "@lib/util";
+
+interface Team {
+  _id: string;
+  name: string;
+  accentColor: string;
+  badge: SanityAsset;
+}
+
+interface Fixture {
+  date: string;
+  teamHome: Team;
+  teamAway: Team;
+  scoreHome: number;
+  scoreAway: number;
+  competition: string;
+}
+
+interface FixtureList {
+  [key: string]: Fixture[];
+}
+
+interface Filter {
+  _id: string;
+  name: string;
+}
+
+const { teamFilter, fixtures }: { teamFilter: Filter[]; fixtures: Fixture[] } =
+  Astro.props.node;
+
+const fixtureList = Object.entries(
+  fixtures.reduce((prev: FixtureList, fixture: Fixture) => {
+    if (!prev[fixture.date]) {
+      prev[fixture.date] = [];
+    }
+
+    prev[fixture.date].push(fixture);
+
+    return prev;
+  }, {}),
+).sort((a, b) => a[0].localeCompare(b[0]));
+---
+
+<div class="fixture-list">
+  <fieldset class="fixture-list__filter">
+    <legend class="fixture-list__filter-legend">Filter fixtures:</legend>
+    {
+      teamFilter?.map((filter) => (
+        <div class="fixture-list__filter-item">
+          <span class="fixture-list__filter-item">
+            <input
+              data-filter
+              type="checkbox"
+              id={filter._id}
+              value={filter._id}
+              checked="true"
+              disabled={teamFilter.length === 1}
+            />
+            <label for={filter._id}>{filter.name}</label>
+          </span>
+        </div>
+      ))
+    }
+  </fieldset>
+
+  <ul class="fixture-list__fixtures">
+    {
+      fixtureList?.map((fixtureDate) => (
+        <li class="fixture-list__fixture-date">
+          <time class="fixture-list__date">{formatDate(fixtureDate[0])}</time>
+          {fixtureDate[1].map((fixture) => (
+            <div
+              class="fixture-list__fixture show"
+              style={`background-color: ${fixture.teamHome?.accentColor || fixture.teamAway?.accentColor}`}
+              data-ids={`${fixture.teamHome._id},${fixture.teamAway._id}`}
+            >
+              <div class="fixture-list__team">
+                {fixture.teamHome.name}
+                <div class="fixture-list__badge">
+                  <Image
+                    image={fixture.teamHome.badge}
+                    alt={fixture.teamHome.name}
+                    width={30}
+                    height={30}
+                    cssClass="badge-image"
+                  />
+                </div>
+                <div class="fixture-list__score">
+                  <strong>
+                    {fixture.scoreHome !== null ? fixture.scoreHome : "-"}
+                  </strong>
+                </div>
+                {fixture.competition && (
+                  <div
+                    class={`fixture-list__competition fixture-list__competition-${fixture.competition}`}
+                  >
+                    <span class="sr-only">{fixture.competition}</span>
+                  </div>
+                )}
+              </div>
+              <div class="fixture-list__team">
+                {fixture.teamAway.name}
+                <div class="fixture-list__badge">
+                  <Image
+                    image={fixture.teamAway.badge}
+                    alt={fixture.teamHome.name}
+                    width={30}
+                    height={30}
+                    cssClass="badge-image"
+                  />
+                </div>
+                <div class="fixture-list__score">
+                  <strong>
+                    {fixture.scoreAway !== null ? fixture.scoreAway : "-"}
+                  </strong>
+                </div>
+              </div>
+            </div>
+          ))}
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<script>
+  const filterEls: HTMLInputElement[] = Array.from(
+    document.querySelectorAll("[data-filter]"),
+  );
+
+  const fixtureEls: HTMLElement[] = Array.from(
+    document.querySelectorAll("[data-ids]"),
+  );
+
+  filterEls.forEach((filterEl) => {
+    filterEl.addEventListener("change", () => {
+      const checkedFilterEls = filterEls.filter((el) => el.checked);
+
+      checkedFilterEls.length === 1
+        ? (checkedFilterEls[0].disabled = true)
+        : checkedFilterEls.forEach((filterEl) => (filterEl.disabled = false));
+
+      fixtureEls.forEach((fixtureEl) => {
+        if (!fixtureEl.dataset["ids"]?.includes(filterEl.id)) {
+          fixtureEl.classList.toggle("show");
+        }
+      });
+    });
+  });
+</script>
+
+<style lang="scss">
+  .fixture-list {
+    &__filter {
+      background: #333;
+      border: 0;
+      color: #fff;
+      padding: 10px;
+      margin-bottom: $vertical-spacing;
+
+      @include mq($from: tablet) {
+        padding: 20px;
+      }
+
+      &-legend {
+        float: left;
+        font-weight: bold;
+        text-transform: uppercase;
+        width: 100%;
+        margin-bottom: 10px;
+
+        @include mq($from: tablet) {
+          width: auto;
+          margin-bottom: 0;
+        }
+      }
+
+      &-item {
+        padding: 5px 0;
+        display: block;
+
+        @include mq($from: tablet) {
+          padding: 10px;
+          display: inline;
+        }
+      }
+    }
+
+    &__fixtures {
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
+    }
+
+    &__fixture-date {
+      margin-bottom: 2px;
+      position: relative;
+      display: none;
+
+      &:nth-child(even) .fixture-list__teams {
+        background: lighten($colour-red, 58%);
+      }
+
+      &:nth-child(odd) .fixture-list__teams {
+        background: lighten($colour-blue, 25%);
+      }
+
+      &:has(.show) {
+        display: block;
+      }
+    }
+
+    &__fixture {
+      padding: 5px 10px;
+      display: none;
+
+      &.show {
+        display: block;
+      }
+
+      @include mq($from: tablet) {
+        padding: 5px $gutter;
+
+        &.show {
+          display: flex;
+        }
+      }
+    }
+
+    &__team {
+      text-transform: uppercase;
+      font-weight: bold;
+      display: flex;
+      flex: 1 1 0;
+      align-items: center;
+      justify-content: space-between;
+      margin: 1px 0;
+
+      @include mq($from: tablet) {
+        justify-content: flex-end;
+        margin: 0;
+
+        &:last-child {
+          flex-direction: row-reverse;
+        }
+      }
+    }
+
+    &__date {
+      display: block;
+      font-size: 0.8rem;
+      text-align: center;
+      margin: 10px 0 4px 0;
+
+      &:has(+ &__date) {
+        display: none;
+      }
+    }
+
+    &__score {
+      font-size: 20px;
+      font-weight: bold;
+      padding: 5px 10px;
+      color: #fff;
+      margin: 5px 0 2px 0;
+      background: $colour-red;
+
+      @include mq($from: tablet) {
+        padding: 10px 25px;
+        transform: skew(-30deg);
+        margin: 0 2px;
+      }
+
+      strong {
+        display: inline-block;
+        width: 20px;
+        text-align: center;
+
+        @include mq($from: tablet) {
+          transform: skew(30deg);
+          font-size: 1.5rem;
+          line-height: 1;
+        }
+      }
+    }
+
+    &__badge {
+      width: 30px;
+      height: 30px;
+      border: 1px solid #ccc;
+      background: #eee;
+      border-radius: 30px;
+      margin: 10px 20px;
+      display: none;
+
+      @include mq($from: tablet) {
+        display: inline-block;
+      }
+    }
+
+    &__competition {
+      position: absolute;
+      right: 60px;
+
+      @include mq($from: tablet) {
+        right: $gutter;
+      }
+
+      &:after {
+        display: block;
+      }
+
+      &-cup:after {
+        content: "\1F3C6";
+      }
+
+      &-league:after {
+        content: "\1F3C5";
+      }
+
+      &-friendly:after {
+        content: "\1F91D";
+      }
+    }
+  }
+
+  .badge-image__img {
+    border-radius: 15px;
+  }
+</style>

@@ -1,0 +1,52 @@
+---
+import Layout from "@layouts/Layout.astro";
+import PortableText from "@components/PortableText.astro";
+import Image from "@components/Image.astro";
+import { getPages } from "@lib/api";
+import { slugify } from "@lib/util";
+
+export const getStaticPaths = async () => {
+  const pages = await getPages();
+
+  return pages.map((page) => {
+    return {
+      params: {
+        slug: page.isArchived
+          ? `/archive/${page.date}-${slugify(page.title)}`
+          : page.slug
+            ? page.slug
+            : slugify(page.title),
+      },
+      props: page,
+    };
+  });
+};
+
+const { title, date, seo, body, mainImage } = Astro.props;
+---
+
+<Layout
+  title={title}
+  description={seo.description}
+  author={seo.authorDisplay}
+  image={seo.image || mainImage}
+>
+  <h1>{title}</h1>
+
+  {
+    seo.authorDisplay && (
+      <div class="blog__date">
+        {date}, by
+        {seo.authorDisplay}
+      </div>
+    )
+  }
+
+  {
+    mainImage && (
+      <Image image={mainImage} width={800} height={350} cssClass="main-image" />
+    )
+  }
+
+  <PortableText portableText={body} />
+</Layout>

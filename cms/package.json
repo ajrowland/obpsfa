@@ -1,39 +1,35 @@
 {
   "name": "obpsfa",
   "private": true,
-  "version": "1.0.0",
-  "description": "",
+  "version": "2.0.0",
+  "description": "OBPSFA content management application",
   "main": "package.json",
   "author": "Andrew Rowland <mail@andrewrowland.com>",
   "license": "UNLICENSED",
   "scripts": {
-    "start": "NODE_OPTIONS=--openssl-legacy-provider sanity start",
+    "dev": "sanity dev",
     "test": "sanity check",
-    "build": "NODE_OPTIONS=--openssl-legacy-provider sanity build public -y"
+    "build": "sanity telemetry disable && sanity build public",
+    "preview": "sanity preview public"
   },
   "keywords": [
     "sanity"
   ],
   "dependencies": {
-    "@sanity/base": "^2.23.3",
-    "@sanity/color-input": "^2.23.3",
-    "@sanity/components": "^2.14.0",
-    "@sanity/core": "^2.23.2",
-    "@sanity/dashboard": "^2.23.3",
-    "@sanity/default-layout": "^2.23.3",
-    "@sanity/default-login": "^2.23.2",
-    "@sanity/desk-tool": "^2.23.4",
-    "@sanity/production-preview": "^2.15.0",
-    "@sanity/vision": "^2.23.3",
-    "node-fetch": "2.6.6",
+    "@sanity/color-input": "^3.1.1",
+    "@sanity/dashboard": "^4.0.0",
+    "@sanity/table": "^1.1.2",
+    "@sanity/ui": "^2.8.8",
+    "@sanity/vision": "^3.52.4",
+    "node-fetch": "3.2.2",
     "prop-types": "^15.8.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-icons": "^4.3.1",
-    "sanity-plugin-datatable": "^1.1.0",
-    "styled-components": "^5.3.3"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-icons": "^5.2.1",
+    "sanity": "^3.52.4",
+    "styled-components": "^6.1.12"
   },
   "devDependencies": {
-    "@sanity/cli": "^2.23.3"
+    "@sanity/cli": "^3.52.4"
   }
 }

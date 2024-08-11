@@ -1,0 +1,16 @@
+---
+import { createPath } from "@lib/util";
+
+const { children, markDef } = Astro.props.node;
+const { blank, page, href } = markDef;
+
+const path = page
+  ? page.isArchived
+    ? createPath("archive", `${page.date}-${page.slug}`)
+    : createPath(page.slug)
+  : href;
+---
+
+<a href={path} target={blank && "_blank"} rel={blank && "noopener noreferer"}
+  >{children[0].text}</a
+>
