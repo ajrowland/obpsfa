@@ -3,7 +3,7 @@ import Layout from "@layouts/Layout.astro";
 import PortableText from "@components/PortableText.astro";
 import Image from "@components/Image.astro";
 import { getPages } from "@lib/api";
-import { slugify } from "@lib/util";
+import { slugify, formatDate } from "@lib/util";
 
 export const getStaticPaths = async () => {
   const pages = await getPages();
@@ -22,23 +22,34 @@ export const getStaticPaths = async () => {
   });
 };
 
-const { title, date, seo, body, mainImage } = Astro.props;
+const { title, date, seo, body, mainImage, isArchived } = Astro.props;
+const author = seo.authorDisplay || seo.author;
 ---
 
 <Layout
   title={title}
   description={seo.description}
-  author={seo.authorDisplay}
+  author={author}
   image={seo.image || mainImage}
 >
   <h1>{title}</h1>
 
   {
-    seo.authorDisplay && (
+    author && (
       <div class="blog__date">
-        {date}, by
-        {seo.authorDisplay}
+        {formatDate(date)}, by
+        {author}
       </div>
+    )
+  }
+
+  {
+    isArchived && (
+      <p>
+        <a href="/archive/1" title="Back to archive">
+          ⟵ Back to archive
+        </a>
+      </p>
     )
   }
 
@@ -49,4 +60,14 @@ const { title, date, seo, body, mainImage } = Astro.props;
   }
 
   <PortableText portableText={body} />
+
+  {
+    isArchived && (
+      <p>
+        <a href="/archive/1" title="Back to archive">
+          ⟵ Back to archive
+        </a>
+      </p>
+    )
+  }
 </Layout>
