@@ -16,12 +16,24 @@ const { image, width, height, cssClass, hideCaption, alt } = Astro.props;
 const imageUrl = image?.asset
   ? urlForImage(image).height(height).width(width).auto("format").url()
   : "";
+
+const widthSmall = width / 2;
+const heightSmall = height / 2;
+const imageSmallUrl = image?.asset
+  ? urlForImage(image)
+      .height(heightSmall)
+      .width(widthSmall)
+      .auto("format")
+      .url()
+  : "";
 ---
 
 {
   imageUrl && (
     <div class={cssClass}>
       <img
+        srcset={`${imageSmallUrl} ${widthSmall}w, ${imageUrl} ${width}w`}
+        sizes={`(max-width: 480px) ${widthSmall}w, ${width}w`}
         src={imageUrl}
         alt={image.alt || alt}
         class={cssClass && `${cssClass}__img`}
