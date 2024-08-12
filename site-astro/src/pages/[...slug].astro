@@ -35,7 +35,7 @@ const author = seo.authorDisplay || seo.author;
   <h1>{title}</h1>
 
   {
-    author && (
+    isArchived && author && (
       <div class="blog__date">
         {formatDate(date)}, by
         {author}
@@ -46,7 +46,7 @@ const author = seo.authorDisplay || seo.author;
   {
     isArchived && (
       <p>
-        <a href="/archive/1" title="Back to archive">
+        <a href="/archive/1#articles" title="Back to archive">
           ⟵ Back to archive
         </a>
       </p>
@@ -64,7 +64,7 @@ const author = seo.authorDisplay || seo.author;
   {
     isArchived && (
       <p>
-        <a href="/archive/1" title="Back to archive">
+        <a href="/archive/1#articles" title="Back to archive">
           ⟵ Back to archive
         </a>
       </p>

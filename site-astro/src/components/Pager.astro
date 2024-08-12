@@ -22,7 +22,7 @@ if (endPage - startPage < range) {
     currentPage < range ? (
       <span>«</span>
     ) : (
-      <a href={`/archive/1`} title={`Go to first page. Page 1`}>
+      <a href={`/archive/1#articles`} title={`Go to first page. Page 1`}>
         «
       </a>
     )
@@ -32,7 +32,7 @@ if (endPage - startPage < range) {
       <span>‹</span>
     ) : (
       <a
-        href={`/archive/${currentPage - 1}`}
+        href={`/archive/${currentPage - 1}#articles`}
         title={`Go to next page. Page ${pageCount - 1}`}
       >
         ‹
@@ -47,7 +47,7 @@ if (endPage - startPage < range) {
       ),
     ].map((i) => (
       <a
-        href={`/archive/${i}`}
+        href={`/archive/${i}#articles`}
         class:list={{ active: currentPage === i }}
         title={
           currentPage === i ? `Current page. Page ${i}` : `Go to page ${i}`
@@ -62,7 +62,7 @@ if (endPage - startPage < range) {
       <span>›</span>
     ) : (
       <a
-        href={`/archive/${currentPage + 1}`}
+        href={`/archive/${currentPage + 1}#articles`}
         title={`Go to next page. Page ${pageCount + 1}`}
       >
         ›
@@ -72,7 +72,7 @@ if (endPage - startPage < range) {
   {
     currentPage < pageCount - padding ? (
       <a
-        href={`/archive/${pageCount}`}
+        href={`/archive/${pageCount}#articles`}
         title={`Go to last page. Page ${pageCount}`}
       >
         »
