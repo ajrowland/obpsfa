@@ -10,16 +10,6 @@ const { PUBLIC_SANITY_PROJECT_ID, PUBLIC_SANITY_DATASET } = loadEnv(
 
 // https://astro.build/config
 export default defineConfig({
-  vite: {
-    css: {
-      preprocessorOptions: {
-        scss: {
-          additionalData:
-            '@forward "./src/assets/style/global.scss"; @use "./src/assets/style/global.scss" as *;',
-        },
-      },
-    },
-  },
   integrations: [
     sanity({
       projectId: PUBLIC_SANITY_PROJECT_ID,

@@ -83,15 +83,15 @@ if (endPage - startPage < range) {
   }
 </nav>
 
-<style lang="scss">
+<style>
   .pager {
     display: flex;
     justify-content: center;
-    padding: $vertical-spacing 0;
+    padding: var(--vertical-spacing) 0;
 
-    @include mq($from: tablet) {
+    @media >tablet {
       justify-content: flex-end;
-      margin: $vertical-spacing 0;
+      margin: var(--vertical-spacing) 0;
       padding: 0;
     }
 
@@ -101,7 +101,7 @@ if (endPage - startPage < range) {
       text-align: center;
       display: inline-block;
       padding: 5px 10px;
-      background: $colour-red;
+      background: var(--colour-red);
       color: #fff;
       transition: all 0.25s ease-in-out;
       margin: 0 1px;
@@ -118,7 +118,7 @@ if (endPage - startPage < range) {
 
       &.active,
       &:hover {
-        background: $colour-red;
+        background: var(--colour-red);
       }
     }
   }

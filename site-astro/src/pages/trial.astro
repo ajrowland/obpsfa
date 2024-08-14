@@ -30,9 +30,9 @@ import Layout from "@layouts/Layout.astro";
   ml("account", "960053");
 </script>
 
-<style lang="scss" is:global>
+<style>
   .trial-form {
-    @include mq($from: tablet) {
+    @media >tablet {
       width: 70%;
     }
   }

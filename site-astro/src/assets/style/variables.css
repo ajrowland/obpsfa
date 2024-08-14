@@ -1,0 +1,17 @@
+@breakpoints {
+  mobile: 320px;
+  tablet: 740px;
+  desktop: 980px;
+  wide: 1300px;
+}
+
+:root {
+  --colour-red: #b60e17;
+  --colour-red-rgb: 182, 14, 23;
+  --colour-blue: #79c2ed;
+  --colour-blue-rgb: 121, 194, 237;
+  --colour-grey: #333;
+  --colour-grey-rgb: 51, 51, 51;
+  --gutter: 20px;
+  --vertical-spacing: 2rem;
+}

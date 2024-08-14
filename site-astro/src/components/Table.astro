@@ -14,7 +14,7 @@ const { rows }: { rows: Array<{ cells: string[] }> } = Astro.props.node;
   }
 </table>
 
-<style lang="scss">
+<style>
   .table {
     width: 100%;
     table-layout: fixed;
@@ -22,7 +22,7 @@ const { rows }: { rows: Array<{ cells: string[] }> } = Astro.props.node;
     td {
       display: block;
 
-      @include mq($from: tablet) {
+      @media >tablet {
         display: table-cell;
       }
     }

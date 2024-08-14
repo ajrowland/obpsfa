@@ -128,9 +128,9 @@ const { imgurId, showTitle, minHeight, aspectRatio } = Astro.props.node;
   customElements.define("astro-gallery", AstroGallery);
 </script>
 
-<style lang="scss" is:global>
+<style is:global>
   .gallery {
-    margin: $vertical-spacing 0;
+    margin: var(--vertical-spacing) 0;
 
     .hide {
       display: none;
@@ -165,7 +165,7 @@ const { imgurId, showTitle, minHeight, aspectRatio } = Astro.props.node;
         opacity: 1;
       }
 
-      @include mq($from: tablet) {
+      @media >tablet {
         width: calc(10% - 2px);
       }
 
@@ -174,7 +174,7 @@ const { imgurId, showTitle, minHeight, aspectRatio } = Astro.props.node;
       }
 
       &-video {
-        background: $colour-red;
+        background: var(--colour-red);
         display: flex;
         height: 100%;
         align-items: center;
@@ -229,7 +229,7 @@ const { imgurId, showTitle, minHeight, aspectRatio } = Astro.props.node;
     }
 
     &__controls {
-      @include mq($from: tablet) {
+      @media >tablet {
         position: absolute;
         display: flex;
         width: 100%;
@@ -247,8 +247,8 @@ const { imgurId, showTitle, minHeight, aspectRatio } = Astro.props.node;
       border: 0;
       opacity: 0;
 
-      @include mq($from: tablet) {
-        background: $colour-red;
+      @media >tablet {
+        background: var(--colour-red);
         cursor: pointer;
         transform: skew(-30deg);
         padding: 0 30px;
@@ -263,7 +263,7 @@ const { imgurId, showTitle, minHeight, aspectRatio } = Astro.props.node;
       left: auto;
       right: 0;
 
-      @include mq($from: tablet) {
+      @media >tablet {
         margin-left: 0;
         margin-right: -20px;
       }
@@ -272,7 +272,7 @@ const { imgurId, showTitle, minHeight, aspectRatio } = Astro.props.node;
     &__label {
       display: none;
 
-      @include mq($from: tablet) {
+      @media >tablet {
         color: #fff;
         font-size: 0.8rem;
         font-weight: bold;

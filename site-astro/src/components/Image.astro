@@ -56,15 +56,15 @@ const imageSmallUrl = image?.asset
   )
 }
 
-<style lang="scss" is:global>
+<style>
   .article-image {
     &--left,
     &--right {
-      margin-bottom: $vertical-spacing;
+      margin-bottom: var(--vertical-spacing);
     }
 
     &--left {
-      @include mq($from: tablet) {
+      @media >tablet {
         float: left;
         margin-right: 20px;
         width: 45%;
@@ -72,7 +72,7 @@ const imageSmallUrl = image?.asset
     }
 
     &--right {
-      @include mq($from: tablet) {
+      @media >tablet {
         float: right;
         margin-left: 20px;
         width: 45%;
@@ -83,11 +83,11 @@ const imageSmallUrl = image?.asset
   .main-image {
     position: relative;
     overflow: hidden;
-    margin: $vertical-spacing $gutter * -1;
+    margin: var(--vertical-spacing) calc(var(--gutter) * -1);
     font-size: 0.8rem;
 
-    @include mq($from: tablet) {
-      margin: $vertical-spacing 0;
+    @media {
+      margin: var(--vertical-spacing) 0;
       font-size: 1rem;
     }
 
@@ -97,17 +97,17 @@ const imageSmallUrl = image?.asset
     }
 
     &__caption {
-      background: $colour-red;
-      padding: 5px $gutter;
+      background: var(--colour-red);
+      padding: 5px var(--gutter);
       display: inline-block;
       max-width: 70%;
 
-      @include mq($from: tablet) {
+      @media >tablet {
         position: absolute;
         top: 60%;
         right: -50px;
         padding-right: 50px;
-        padding-left: $gutter * 2;
+        padding-left: calc(var(--gutter * 2));
         max-width: 35%;
         transform: skew(-30deg);
       }
@@ -117,7 +117,7 @@ const imageSmallUrl = image?.asset
         color: #fff;
         line-height: 1.5;
 
-        @include mq($from: tablet) {
+        @media >tablet {
           padding: 10px 20px 10px 0;
           display: inline-block;
           text-transform: uppercase;
@@ -129,10 +129,10 @@ const imageSmallUrl = image?.asset
     }
 
     &__attribution {
-      padding: 5px $gutter;
+      padding: 5px var(--gutter);
       text-align: left;
 
-      @include mq($from: tablet) {
+      @media >tablet {
         padding: 5px 0;
         font-size: 0.8rem;
       }

@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "obpsfa-site",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -15,11 +15,13 @@
     "@sanity/astro": "^3.1.4",
     "astro": "^4.13.3",
     "astro-portabletext": "^0.10.0",
-    "sass": "^1.77.8",
-    "sass-mq": "^6.0.0",
     "typescript": "^5.5.4"
   },
   "devDependencies": {
+    "@csstools/postcss-global-data": "^3.0.0",
+    "cssnano": "^7.0.5",
+    "postcss-compact-mq": "^0.2.1",
+    "postcss-nested": "^6.2.0",
     "prettier": "^3.3.3",
     "prettier-plugin-astro": "^0.14.1"
   }
