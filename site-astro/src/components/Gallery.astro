@@ -165,7 +165,7 @@ const { imgurId, showTitle, minHeight, aspectRatio } = Astro.props.node;
         opacity: 1;
       }
 
-      @media >tablet {
+      @media tabletq {
         width: calc(10% - 2px);
       }
 
@@ -229,7 +229,7 @@ const { imgurId, showTitle, minHeight, aspectRatio } = Astro.props.node;
     }
 
     &__controls {
-      @media >tablet {
+      @media tabletq {
         position: absolute;
         display: flex;
         width: 100%;
@@ -247,7 +247,7 @@ const { imgurId, showTitle, minHeight, aspectRatio } = Astro.props.node;
       border: 0;
       opacity: 0;
 
-      @media >tablet {
+      @media tabletq {
         background: var(--colour-red);
         cursor: pointer;
         transform: skew(-30deg);
@@ -263,7 +263,7 @@ const { imgurId, showTitle, minHeight, aspectRatio } = Astro.props.node;
       left: auto;
       right: 0;
 
-      @media >tablet {
+      @media tabletq {
         margin-left: 0;
         margin-right: -20px;
       }
@@ -272,7 +272,7 @@ const { imgurId, showTitle, minHeight, aspectRatio } = Astro.props.node;
     &__label {
       display: none;
 
-      @media >tablet {
+      @media tabletq {
         color: #fff;
         font-size: 0.8rem;
         font-weight: bold;

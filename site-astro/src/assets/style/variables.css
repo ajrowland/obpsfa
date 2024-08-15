@@ -5,6 +5,13 @@
   wide: 1300px;
 }
 
+@media-queries {
+  mobileq: >=mobile;
+  tabletq: >=tablet;
+  desktopq: >=desktop;
+  wideq: >=wide;
+}
+
 :root {
   --colour-red: #b60e17;
   --colour-red-rgb: 182, 14, 23;
