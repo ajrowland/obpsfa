@@ -84,12 +84,13 @@ const imageUrl = image
         </div>
         <div class="container">
           <nav class="header__nav">
-            <div data-menu-close>
-              <a href="/" class="header__logo" title="Home">Home</a>
+            <div class="header__bottom-bar">
+              <div data-menu-close>
+                <a href="/" class="header__logo" title="Home">Home</a>
+              </div>
+
+              <button class="header__menu-toggle" data-menu-toggle>Menu</button>
             </div>
-
-            <button class="header__menu-toggle" data-menu-toggle>Menu</button>
-
             <div class="header__nav-links" data-menu-close>
               <a class="header__nav-link" href="/">Home</a>
               {
@@ -98,6 +99,7 @@ const imageUrl = image
                     class="header__nav-link"
                     href={createPath(item.slug)}
                     title={item.title}
+                    class:list={{ active: item.slug === Astro.params.slug }}
                   >
                     {item.title}
                   </a>
@@ -161,22 +163,31 @@ const imageUrl = image
   }
 
   .header {
-    background: rgba(var(--colour-blue-rgb), 0.7);
-    box-shadow: 0px 1px 2px 0px rgba(var(--colour-grey-rgb), 0.75);
-    height: 103px;
+    background: #fff;
+    border-bottom: 2px solid rgba(var(--colour-grey-rgb), 0.4);
     z-index: 2;
     position: sticky;
     top: 0;
     margin-bottom: 10px;
 
-    @media tablet {
-      height: 150px;
+    .menu-active & {
+      border-bottom-width: 0;
     }
 
     @media desktop {
       position: static;
       margin: var(--vertical-spacing) 0;
       height: auto;
+      border-bottom-width: 2px !important;
+      background: rgba(var(--colour-blue-rgb), 0.7);
+    }
+
+    .header__nav {
+      @media desktop {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
     }
 
     &__top {
@@ -219,26 +230,22 @@ const imageUrl = image
       }
     }
 
-    &__nav-links {
-      padding: calc(var(--vertical-spacing) * 3) 0;
-      text-align: right;
-      display: none;
-
-      .menu-active & {
-        display: block;
-      }
-
-      @media tablet {
-        padding: calc(var(--vertical-spacing) * 4) 0;
-      }
+    &__bottom-bar {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(var(--colour-blue-rgb), 0.7);
+      margin: 0 calc(var(--vertical-spacing) * -1);
+      padding: 0 var(--vertical-spacing);
 
       @media desktop {
-        display: block;
-        padding: calc(var(--vertical-spacing) * 1.5) 0;
+        background: none;
       }
     }
 
     &__logo {
+      display: block;
       background-image: var(--logoWebp);
       background-color: #fff;
       background-repeat: no-repeat;
@@ -248,8 +255,8 @@ const imageUrl = image
       text-indent: -9999px;
       border: 5px solid #fff;
       border-radius: 110px;
-      position: absolute;
-      top: calc(var(--vertical-spacing) / 4.2);
+      margin: calc(var(--vertical-spacing) * -1) 0
+        calc(var(--vertical-spacing) * -0.5) 0;
       z-index: 2;
 
       @media tablet {
@@ -264,19 +271,18 @@ const imageUrl = image
         height: 204px;
         border-radius: 120px;
         border-width: 8px;
-        margin-left: var(--gutter) * -1;
+        margin: calc(var(--vertical-spacing) * -2.5) 0
+          calc(var(--vertical-spacing) * -1) calc(var(--gutter) * -1);
       }
     }
 
     &__menu-toggle {
-      position: absolute;
       right: 10px;
       text-transform: uppercase;
       background: var(--colour-blue);
       border: none;
       font-weight: bold;
       padding: 10px;
-      margin: 10px;
       font-size: 1rem;
 
       &:after {
@@ -290,12 +296,27 @@ const imageUrl = image
         content: "\2715";
       }
 
-      @media tablet {
-        margin: 34px 10px;
+      @media desktop {
+        display: none;
+      }
+    }
+
+    &__nav-links {
+      text-align: right;
+      display: none;
+      background: #fff;
+      margin: 0 calc(var(--vertical-spacing) * -1);
+      padding: var(--vertical-spacing);
+      border-top: 2px solid rgba(var(--colour-grey-rgb), 0.4);
+
+      .menu-active & {
+        display: block;
       }
 
       @media desktop {
-        display: none;
+        display: block;
+        background: transparent;
+        border: 0;
       }
     }
 
@@ -309,7 +330,7 @@ const imageUrl = image
       display: block;
       transition: border-color 0.2s ease-in-out;
 
-      &.active--exact.active,
+      &.active,
       &:hover {
         border-color: var(--colour-grey);
       }
