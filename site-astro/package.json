@@ -1,7 +1,11 @@
 {
   "name": "obpsfa-site",
   "type": "module",
-  "version": "0.0.1",
+  "version": "2.0.0",
+  "description": "OBPSFA web application",
+  "main": "package.json",
+  "author": "Andrew Rowland <mail@andrewrowland.com>",
+  "license": "UNLICENSED",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -13,7 +17,7 @@
     "@astrojs/check": "^0.9.2",
     "@portabletext/types": "^2.0.13",
     "@sanity/astro": "^3.1.4",
-    "astro": "^4.13.3",
+    "astro": "^4.14.1",
     "astro-portabletext": "^0.10.0",
     "typescript": "^5.5.4"
   },
