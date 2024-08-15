@@ -240,8 +240,8 @@ const imageUrl = image
       justify-content: space-between;
       align-items: center;
       background: rgba(var(--colour-blue-rgb), 0.7);
-      margin: 0 calc(var(--vertical-spacing) * -1);
-      padding: 0 var(--vertical-spacing);
+      margin: 0 calc(var(--gutter) * -1);
+      padding: 0 var(--gutter);
 
       @media desktop {
         background: none;
@@ -288,6 +288,7 @@ const imageUrl = image
       font-weight: bold;
       padding: 10px;
       font-size: 1rem;
+      color: var(--colour-grey);
 
       &:after {
         content: "\2630";
@@ -309,8 +310,8 @@ const imageUrl = image
       text-align: right;
       display: none;
       background: #fff;
-      margin: 0 calc(var(--vertical-spacing) * -1);
-      padding: var(--vertical-spacing);
+      margin: 0 calc(var(--gutter) * -1);
+      padding: var(--gutter);
       border-top: 2px solid rgba(var(--colour-grey-rgb), 0.4);
 
       .menu-active & {
