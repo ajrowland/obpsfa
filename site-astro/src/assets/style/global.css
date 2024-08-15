@@ -12,7 +12,7 @@ button {
     "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
 
-  @media desktopq {
+  @media desktop {
     font-size: 18px;
   }
 }
@@ -28,7 +28,7 @@ h1,
 h3 {
   z-index: 1;
 
-  @media tabletq {
+  @media tablet {
     position: relative;
     display: inline-block;
     background: var(--colour-grey);
@@ -54,7 +54,7 @@ h3 {
     }
   }
 
-  @media wideq {
+  @media wide {
     padding: calc(var(--gutter * 2)) var(--gutter) calc(var(--gutter) / 2) 0;
 
     &:before {
@@ -95,7 +95,7 @@ h3 {
     text-transform: uppercase;
   }
 
-  @media tabletq {
+  @media tablet {
     padding-bottom: var(--vertical-spacing);
 
     h2 {

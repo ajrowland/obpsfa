@@ -1,15 +1,15 @@
 @breakpoints {
-  mobile: 320px;
-  tablet: 740px;
-  desktop: 980px;
-  wide: 1300px;
+  mobilebp: 320px;
+  tabletbp: 740px;
+  desktopbp: 980px;
+  widebp: 1300px;
 }
 
 @media-queries {
-  mobileq: >=mobile;
-  tabletq: >=tablet;
-  desktopq: >=desktop;
-  wideq: >=wide;
+  mobile: >=mobilebp;
+  tablet: >=tabletbp;
+  desktop: >=desktopbp;
+  wide: >=widebp;
 }
 
 :root {
