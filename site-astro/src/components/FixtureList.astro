@@ -144,7 +144,7 @@ const fixtureList = Object.entries(
         : checkedFilterEls.forEach((filterEl) => (filterEl.disabled = false));
 
       fixtureEls.forEach((fixtureEl) => {
-        if (!fixtureEl.dataset["ids"]?.includes(filterEl.id)) {
+        if (fixtureEl.dataset["ids"]?.includes(filterEl.id)) {
           fixtureEl.classList.toggle("show");
         }
       });
