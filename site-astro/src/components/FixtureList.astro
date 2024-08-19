@@ -200,14 +200,6 @@ const fixtureList = Object.entries(
       position: relative;
       display: none;
 
-      &:nth-child(even) .fixture-list__teams {
-        background: lighten($colour-red, 58%);
-      }
-
-      &:nth-child(odd) .fixture-list__teams {
-        background: lighten($colour-blue, 25%);
-      }
-
       &:has(.show) {
         display: block;
       }
@@ -219,6 +211,14 @@ const fixtureList = Object.entries(
 
       &.show {
         display: block;
+      }
+
+      &:nth-child(even) {
+        background: rgba(var(--colour-red-rgb), 0.25);
+      }
+
+      &:nth-child(odd) {
+        background: rgba(var(--colour-blue-rgb), 0.25);
       }
 
       @media tablet {
