@@ -5,15 +5,14 @@ require("dotenv").config();
  * Run this script with: `node fixtures.js`
  */
 
-console.log(process.env);
-
-const sanityClient = require("@sanity/client");
+const sanityClient = require("@sanity/client").createClient;
 
 const client = sanityClient({
   projectId: process.env.PROJECT_ID,
   dataset: process.env.DATASET,
   token: process.env.TOKEN,
   useCdn: false,
+  apiVersion: "2022-03-07",
 });
 
 const generateKey = function () {
@@ -21,10 +20,10 @@ const generateKey = function () {
 };
 
 let doc = {
-  _id: "fixture-list-2022-2023",
+  _id: "fixture-list-2024-2025",
   _type: "fixtureList",
   season: {
-    _ref: "a4801154-c7af-429d-94e1-1cf7d890a29b",
+    _ref: "bb5606b7-e267-4de1-b227-f22602af408e",
     _type: "reference",
   },
   teamFilter: [
@@ -33,11 +32,13 @@ let doc = {
       _ref: "aa82cc20-a887-4042-b603-e849f1068dfe",
       _type: "reference",
     },
+    /*
     {
       _key: generateKey(),
       _ref: "881f900c-e7be-4afb-a7fe-aa4b45fa5607",
       _type: "reference",
     },
+    */
     {
       _key: generateKey(),
       _ref: "b64fd2c3-e001-4346-ac98-f3d0405340c2",
@@ -66,7 +67,10 @@ const competitionLookup = {
     localTeam: "OBPSFA Boys Blue",
   },
   "Kent Championship Cup": { competition: "cup", localTeam: "OBPSFA Boys Red" },
-  "Girls Super League": { competition: "league", localTeam: "OBPSFA Girls" },
+  "KSFA Girls Super League": {
+    competition: "league",
+    localTeam: "OBPSFA Girls",
+  },
   "Kent Girls Super Cup": { competition: "cup", localTeam: "OBPSFA Girls" },
   "Under 11 Gills Shield": {
     competition: "cup",
