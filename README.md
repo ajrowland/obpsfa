@@ -4,16 +4,10 @@
 
 Run the Sanity Studio with:
 
-`npm run dev`
-
-## Site
-
-Run the Gridsome site:
-
-`gridsome develop`
+`bun run dev`
 
 ## Site (Astro)
 
 Run the Astro site:
 
-`npm run dev`
+`bun run dev`
