@@ -20,10 +20,10 @@ const generateKey = function () {
 };
 
 let doc = {
-  _id: "fixture-list-2024-2025",
+  _id: "fixture-list-2025-2026",
   _type: "fixtureList",
   season: {
-    _ref: "bb5606b7-e267-4de1-b227-f22602af408e",
+    _ref: "7d7afa0e-fd17-4071-a1f9-701c1aa99ba4",
     _type: "reference",
   },
   teamFilter: [
@@ -56,17 +56,21 @@ const cheerio = require("cheerio");
 const competitionLookup = {
   "KSFA Primary Premiership (Bill Carney Trophy)": {
     competition: "league",
-    localTeam: "OBPSFA Boys Blue",
+    localTeam: "OBPSFA Boys",
   },
+  /*
   "KSFA Primary Championship": {
     competition: "league",
     localTeam: "OBPSFA Boys Red",
   },
+  */
   "Kent Primary Cup & Daniels Trophy": {
     competition: "cup",
-    localTeam: "OBPSFA Boys Blue",
+    localTeam: "OBPSFA Boys",
   },
+  /*
   "Kent Championship Cup": { competition: "cup", localTeam: "OBPSFA Boys Red" },
+  */
   "KSFA Girls Super League": {
     competition: "league",
     localTeam: "OBPSFA Girls",
@@ -74,7 +78,7 @@ const competitionLookup = {
   "Kent Girls Super Cup": { competition: "cup", localTeam: "OBPSFA Girls" },
   "Under 11 Gills Shield": {
     competition: "cup",
-    localTeam: "OBPSFA Boys Blue",
+    localTeam: "OBPSFA Boys",
   },
   "Under 11 Girls Cup": { competition: "cup", localTeam: "OBPSFA Girls" },
 };
@@ -102,13 +106,25 @@ const addResults = async () => {
 
   const teamLookup = await getTeamLookup();
 
-  $(".fixture-table tbody tr").each((index, row) => {
+  $(".fixture-table tbody tr").each((_index, row) => {
     const cell = $(row).find("td");
 
     const competitionInfo = competitionLookup[$(cell[3]).text().trim()];
 
-    let teamHomeId = teamLookup[$(cell[0]).text().trim().replace(" PSFA", "")];
-    let teamAwayId = teamLookup[$(cell[2]).text().trim().replace(" PSFA", "")];
+    let teamHomeId =
+      teamLookup[
+        $(cell[0])
+          .text()
+          .trim()
+          .replace(/\s*(\([^)]*\)\s*)?PSFA/, "")
+      ];
+    let teamAwayId =
+      teamLookup[
+        $(cell[2])
+          .text()
+          .trim()
+          .replace(/\s*(\([^)]*\)\s*)?PSFA/, "")
+      ];
 
     if (teamHomeId === undefined) {
       teamHomeId = teamLookup[competitionInfo.localTeam];
@@ -153,8 +169,6 @@ const addResults = async () => {
   doc.fixtures.sort(
     (a, b) => (!b.date && -1) || new Date(a.date) - new Date(b.date)
   );
-
-  console.log(doc.fixtures.map((f) => f.date));
 
   client.createOrReplace(doc).then((res) => {
     console.log(`fixtureList was created, document ID is ${res._id}`);
