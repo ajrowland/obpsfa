@@ -56,7 +56,7 @@ h3 {
   }
 
   @media (--wide) {
-    padding: calc(var(--gutter * 2)) var(--gutter) calc(var(--gutter) / 2) 0;
+    padding: calc(var(--gutter) * 2) var(--gutter) calc(var(--gutter) / 2) 0;
 
     &:before {
       content: " ";
