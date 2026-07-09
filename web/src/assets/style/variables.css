@@ -1,16 +1,14 @@
 @breakpoints {
-  mobilebp: 320px;
-  tabletbp: 740px;
-  desktopbp: 980px;
-  widebp: 1300px;
+  --mobilebp: 320px;
+  --tabletbp: 740px;
+  --desktopbp: 980px;
+  --widebp: 1300px;
 }
 
-@media-queries {
-  mobile: >=mobilebp;
-  tablet: >=tabletbp;
-  desktop: >=desktopbp;
-  wide: >=widebp;
-}
+@custom-media --mobile (min-width: 320px);
+@custom-media --tablet (min-width: 740px);
+@custom-media --desktop (min-width: 980px);
+@custom-media --wide (min-width: 1300px);
 
 :root {
   --colour-red: #b60e17;

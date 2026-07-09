@@ -4,7 +4,7 @@ module.exports = {
       files: ["./src/assets/style/variables.css"],
     }),
     require("postcss-nested"),
-    require("postcss-compact-mq"),
+    require("postcss-custom-media"),
     require("cssnano"),
   ],
 };

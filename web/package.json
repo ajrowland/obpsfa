@@ -14,20 +14,21 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.4",
-    "@portabletext/types": "^2.0.13",
-    "@sanity/astro": "^3.1.9",
-    "astro": "5.7.3",
-    "astro-portabletext": "^0.10.1",
-    "caniuse-lite": "^1.0.30001714",
-    "typescript": "^5.7.2"
+    "@astrojs/check": "^0.9.9",
+    "@portabletext/types": "^4.0.2",
+    "@sanity/astro": "^3.4.2",
+    "astro": "7.0.7",
+    "astro-portabletext": "^0.13.0",
+    "baseline-browser-mapping": "^2.10.42",
+    "caniuse-lite": "^1.0.30001803",
+    "typescript": "^7.0.2"
   },
   "devDependencies": {
-    "@csstools/postcss-global-data": "^3.0.0",
-    "cssnano": "^7.0.6",
-    "postcss-compact-mq": "^0.2.1",
+    "@csstools/postcss-global-data": "^4.0.0",
+    "cssnano": "^8.0.2",
+    "postcss-custom-media": "^12.0.1",
     "postcss-nested": "^7.0.2",
-    "prettier": "^3.4.2",
+    "prettier": "^3.9.5",
     "prettier-plugin-astro": "^0.14.1"
   }
 }
