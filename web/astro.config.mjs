@@ -10,6 +10,7 @@ const { PUBLIC_SANITY_PROJECT_ID, PUBLIC_SANITY_DATASET } = loadEnv(
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://www.obpsfa.com',
   integrations: [
     sanity({
       projectId: PUBLIC_SANITY_PROJECT_ID,

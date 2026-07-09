@@ -14,7 +14,7 @@ const Element = body?.length > 0 ? "a" : "div";
   <div class="news-item__text">
     <h3 class="news-item__title">{title}</h3>
     <div class="news-item__date">
-      <time>{formatDate(date)}</time>
+      <time>{formatDate(date)}</time>{" "}
       by {seo.authorDisplay || seo.author}
     </div>
     <p>{seo.description}</p>

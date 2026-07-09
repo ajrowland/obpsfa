@@ -18,6 +18,8 @@ const { title, description, author, image } = Astro.props;
 const imageUrl = image
   ? urlForImage(image).width(280).height(150).auto("format").url()
   : logoWebp.src;
+
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!doctype html>
@@ -29,6 +31,7 @@ const imageUrl = image
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="generator" content={Astro.generator} />
     <meta name="author" content={author || "OBPSFA"} />
+    <link rel="canonical" href={canonicalUrl.href} />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:description" content={description} />
@@ -40,7 +43,7 @@ const imageUrl = image
     <meta name="og:type" content="article" />
     <meta name="og:title" content={title} />
     <meta name="og:description" content={description} />
-    <meta name="og:url" content={Astro.url} />
+    <meta name="og:url" content={canonicalUrl.href} />
     <meta name="og:image" content={imageUrl} />
 
     <title>{title}</title>

@@ -11,24 +11,20 @@ export const getStaticPaths = async () => {
   const archive = await getArchive();
 
   const itemsPerPage = 5;
-  const pageCount = Math.floor(archive.news.length / itemsPerPage);
+  const pageCount = Math.ceil(archive.news.length / itemsPerPage);
 
-  const pages = [...Array(pageCount).keys()].map((i) => {
-    return {
-      params: { slug: i + 1 },
-      props: {
-        ...archive,
-        news: archive.news.slice(
-          i * itemsPerPage,
-          i * itemsPerPage + itemsPerPage,
-        ),
-        pageCount,
-        currentPage: i + 1,
-      },
-    };
-  });
-
-  return pages;
+  return Array.from({ length: pageCount }, (_, i) => ({
+    params: { slug: String(i + 1) },
+    props: {
+      ...archive,
+      news: archive.news.slice(
+        i * itemsPerPage,
+        i * itemsPerPage + itemsPerPage,
+      ),
+      pageCount,
+      currentPage: i + 1,
+    },
+  }));
 };
 
 const { title, seo, body, mainImage, news, pageCount, currentPage } =
