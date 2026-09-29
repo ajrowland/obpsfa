@@ -128,8 +128,6 @@ const addResults = async () => {
 
   const teamLookup = await getTeamLookup();
 
-  console.log(teamLookup);
-
   $(".fixture-table tbody tr").each((_index, row) => {
     const cell = $(row).find("td");
 
@@ -137,16 +135,8 @@ const addResults = async () => {
 
     if (!competitionInfo) return;
 
-    console.log($(cell[3]).text().trim());
-
     let teamHomeId = teamLookup[cleanTeamName($(cell[0]).text().trim())];
     let teamAwayId = teamLookup[cleanTeamName($(cell[2]).text().trim())];
-
-    console.log(
-      $(cell[0]).text().trim(),
-      teamHomeId,
-      competitionInfo?.localTeam,
-    );
 
     if (teamHomeId === undefined) {
       teamHomeId = teamLookup[competitionInfo.localTeam];
