@@ -1,5 +1,6 @@
 import { MdHome, MdInsertDriveFile } from "react-icons/md";
-import { EyeOpenIcon, EditIcon } from "@sanity/icons";
+import { EditIcon } from "@sanity/icons/Edit";
+import { EyeOpenIcon } from "@sanity/icons/EyeOpen";
 
 // Web preview
 import IframePreview from "./previews/iframe";
@@ -60,7 +61,7 @@ export const structure = (S, context) =>
         S.documentList()
           //.schemaType('page')
           .title("Page")
-          .filter('_type == "home" || _type == "archive"')
+          .filter('_type == "home" || _type == "archive"'),
       ),
 
       // Page list that are not archived
@@ -71,7 +72,7 @@ export const structure = (S, context) =>
           S.documentList()
             .schemaType("page")
             .title("Page")
-            .filter('_type == "page" && (!isArchived || !defined(isArchived))')
+            .filter('_type == "page" && (!isArchived || !defined(isArchived))'),
         ),
 
       // Page list that are archived by category
@@ -86,14 +87,14 @@ export const structure = (S, context) =>
                 .schemaType("page")
                 .title("Page")
                 .filter(
-                  '_type == "page" && (isArchived == true && $catId in seo.categories[]._ref)'
+                  '_type == "page" && (isArchived == true && $catId in seo.categories[]._ref)',
                 )
-                .params({ catId })
-            )
+                .params({ catId }),
+            ),
         ),
 
       // List out the rest of the document types, but filter out the home type
       ...S.documentTypeListItems().filter(
-        (listItem) => !["home", "archive", "page"].includes(listItem.getId())
+        (listItem) => !["home", "archive", "page"].includes(listItem.getId()),
       ),
     ]);
