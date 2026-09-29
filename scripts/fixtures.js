@@ -146,7 +146,7 @@ const addResults = async () => {
       teamAwayId = teamLookup[competitionInfo.localTeam];
     }
 
-    const dateObj = new Date($(cell[4]).text().substr(11).trim());
+    const dateObj = new Date($(cell[4]).text().substring(11).trim());
 
     const date =
       dateObj != "Invalid Date"
