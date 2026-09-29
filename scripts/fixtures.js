@@ -12,18 +12,20 @@ const client = sanityClient({
   dataset: process.env.DATASET,
   token: process.env.TOKEN,
   useCdn: false,
-  apiVersion: "2022-03-07",
+  apiVersion: "2026-09-29",
 });
 
+const crypto = require("node:crypto");
+
 const generateKey = function () {
-  return Math.random().toString(36).substring(10);
+  return crypto.randomUUID();
 };
 
 let doc = {
-  _id: "fixture-list-2025-2026",
+  _id: "fixture-list-2026-2027",
   _type: "fixtureList",
   season: {
-    _ref: "7d7afa0e-fd17-4071-a1f9-701c1aa99ba4",
+    _ref: "ea310ecd-adc1-4392-9b0a-73f240507426",
     _type: "reference",
   },
   teamFilter: [
@@ -81,6 +83,12 @@ const competitionLookup = {
     localTeam: "OBPSFA Boys",
   },
   "Under 11 Girls Cup": { competition: "cup", localTeam: "OBPSFA Girls" },
+  /*
+  "Under 11 Girls Development League": {
+    competition: "league",
+    localTeam: "OBPSFA Girls",
+  },
+  */
 };
 
 const getTeamLookup = async () => {
@@ -95,6 +103,20 @@ const getTeamLookup = async () => {
   return teamLookup;
 };
 
+const cleanTeamName = (name) => {
+  const parenStart = name.indexOf("(");
+  const parenEnd = name.indexOf(")", parenStart);
+  const withoutParens =
+    parenStart === -1 || parenEnd === -1
+      ? name
+      : name.slice(0, parenStart) + name.slice(parenEnd + 1);
+
+  const psfaIndex = withoutParens.indexOf("PSFA");
+  return (
+    psfaIndex === -1 ? withoutParens : withoutParens.slice(0, psfaIndex)
+  ).trim();
+};
+
 const fetchData = async () => {
   const result = await axios.get(siteUrl);
 
@@ -106,25 +128,25 @@ const addResults = async () => {
 
   const teamLookup = await getTeamLookup();
 
+  console.log(teamLookup);
+
   $(".fixture-table tbody tr").each((_index, row) => {
     const cell = $(row).find("td");
 
     const competitionInfo = competitionLookup[$(cell[3]).text().trim()];
 
-    let teamHomeId =
-      teamLookup[
-        $(cell[0])
-          .text()
-          .trim()
-          .replace(/\s*(\([^)]*\)\s*)?PSFA/, "")
-      ];
-    let teamAwayId =
-      teamLookup[
-        $(cell[2])
-          .text()
-          .trim()
-          .replace(/\s*(\([^)]*\)\s*)?PSFA/, "")
-      ];
+    if (!competitionInfo) return;
+
+    console.log($(cell[3]).text().trim());
+
+    let teamHomeId = teamLookup[cleanTeamName($(cell[0]).text().trim())];
+    let teamAwayId = teamLookup[cleanTeamName($(cell[2]).text().trim())];
+
+    console.log(
+      $(cell[0]).text().trim(),
+      teamHomeId,
+      competitionInfo?.localTeam,
+    );
 
     if (teamHomeId === undefined) {
       teamHomeId = teamLookup[competitionInfo.localTeam];
@@ -145,8 +167,10 @@ const addResults = async () => {
 
     const scores = $(cell[1]).text().trim().split("-");
 
-    const scoreHome = scores.length === 2 ? parseInt(scores[0]) : undefined;
-    const scoreAway = scores.length === 2 ? parseInt(scores[1]) : undefined;
+    const scoreHome =
+      scores.length === 2 ? Number.parseInt(scores[0]) : undefined;
+    const scoreAway =
+      scores.length === 2 ? Number.parseInt(scores[1]) : undefined;
 
     doc.fixtures.push({
       _key: generateKey(),
@@ -167,7 +191,7 @@ const addResults = async () => {
   });
 
   doc.fixtures.sort(
-    (a, b) => (!b.date && -1) || new Date(a.date) - new Date(b.date)
+    (a, b) => (!b.date && -1) || new Date(a.date) - new Date(b.date),
   );
 
   client.createOrReplace(doc).then((res) => {
