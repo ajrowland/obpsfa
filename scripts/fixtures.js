@@ -2,7 +2,7 @@ require("dotenv").config();
 
 /**
  * Import fixtures from the KSFA website.
- * Run this script with: `node fixtures.js`
+ * Run this script with: `bun fixtures.js`
  */
 
 const sanityClient = require("@sanity/client").createClient;
