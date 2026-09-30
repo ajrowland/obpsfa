@@ -1,7 +1,10 @@
+import { MdCalendarMonth } from "react-icons/md";
+
 export default {
   name: "season",
   title: "Season",
   type: "document",
+  icon: MdCalendarMonth,
   fields: [
     {
       name: "date",
