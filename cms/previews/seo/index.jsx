@@ -1,4 +1,4 @@
-import React from "react";
+import PropTypes from "prop-types";
 import GoogleSearchResult from "./GoogleSearchResult";
 import TwitterCard from "./TwitterCard";
 import FacebookShare from "./FacebookShare";
@@ -15,5 +15,12 @@ function SeoPreviews(props) {
     </>
   );
 }
+
+SeoPreviews.propTypes = {
+  document: PropTypes.shape({
+    displayed: PropTypes.object,
+  }).isRequired,
+  options: PropTypes.object,
+};
 
 export default SeoPreviews;

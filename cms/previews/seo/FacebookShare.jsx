@@ -1,13 +1,13 @@
-import React from "react";
-import imageUrlBuilder from "@sanity/image-url";
+import PropTypes from "prop-types";
+import { createImageUrlBuilder } from "@sanity/image-url";
 import { useClient } from "sanity";
 import { toPlainText } from "./frontendUtils";
 import { Facebook } from "./styles";
 
 function FacebookShare(props) {
-  const client = useClient();
+  const client = useClient({ apiVersion: "2026-09-30" });
 
-  const builder = imageUrlBuilder(client);
+  const builder = createImageUrlBuilder(client);
 
   const urlFor = (source) => {
     return builder.image(source);
@@ -27,10 +27,13 @@ function FacebookShare(props) {
       <h3>Facebook share</h3>
       <div className="facebookWrapper">
         <div className="facebookImageContainer">
-          <img
-            className="facebookCardImage"
-            src={urlFor(openGraphImage).width(500).url()}
-          />
+          {openGraphImage && (
+            <img
+              className="facebookCardImage"
+              src={urlFor(openGraphImage).width(500).url()}
+              alt=""
+            />
+          )}
         </div>
         <div className="facebookCardContent">
           <div className="facebookCardUrl">{websiteUrlWithoutProtocol}</div>
@@ -45,5 +48,9 @@ function FacebookShare(props) {
     </Facebook>
   );
 }
+
+FacebookShare.propTypes = {
+  document: PropTypes.object.isRequired,
+};
 
 export default FacebookShare;

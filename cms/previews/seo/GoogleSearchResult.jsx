@@ -1,4 +1,4 @@
-import React from "react";
+import PropTypes from "prop-types";
 import { assemblePageUrl, toPlainText } from "./frontendUtils";
 import Truncate from "./Truncate";
 import { Google } from "./styles";
@@ -12,7 +12,7 @@ function GoogleSearchResult(props) {
     <Google>
       <h3>Google search result preview</h3>
       <div className="googleWrapper">
-        <Truncate maxWidth="500" className="title">
+        <Truncate maxWidth={500} className="title">
           {title}
         </Truncate>
         <div className="url">{url}</div>
@@ -25,5 +25,10 @@ function GoogleSearchResult(props) {
     </Google>
   );
 }
+
+GoogleSearchResult.propTypes = {
+  document: PropTypes.object.isRequired,
+  options: PropTypes.object.isRequired,
+};
 
 export default GoogleSearchResult;

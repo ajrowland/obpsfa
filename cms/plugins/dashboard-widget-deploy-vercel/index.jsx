@@ -1,5 +1,5 @@
 import { DashboardWidgetContainer } from "@sanity/dashboard";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 
 // https://overreacted.io/making-setinterval-declarative-with-react-hooks/
 function useInterval(callback, delay) {
@@ -14,7 +14,7 @@ function useInterval(callback, delay) {
       savedCallback.current();
     }
     if (delay !== null) {
-      let id = setInterval(tick, delay);
+      const id = setInterval(tick, delay);
       return () => clearInterval(id);
     }
   }, [delay]);
@@ -23,7 +23,7 @@ const DeployVercel = () => {
   const [deploying, setDeploying] = useState(false);
   const [jobId, setJobId] = useState(null);
   const [deployments, setDeployments] = useState([]);
-  const updateList = () => {
+  const updateList = useCallback(() => {
     // https://vercel.com/docs/api?query=api#endpoints/deployments/list-deployments
     fetch("https://api.vercel.com/v5/now/deployments?limit=5", {
       headers: {
@@ -31,11 +31,12 @@ const DeployVercel = () => {
       },
     })
       .then((res) => res.json())
-      .then((json) => setDeployments(json.deployments));
-  };
+      .then((json) => setDeployments(json.deployments))
+      .catch((error) => console.error("Failed to fetch deployments", error));
+  }, []);
   useEffect(() => {
     updateList();
-  }, []); // update the list initially
+  }, [updateList]); // update the list initially
   useInterval(() => {
     if (!jobId) {
       return;
@@ -50,7 +51,8 @@ const DeployVercel = () => {
       .then((json) => {
         setJobId(json.job.id);
         updateList();
-      });
+      })
+      .catch((error) => console.error("Failed to trigger deploy", error));
   };
   return (
     <DashboardWidgetContainer
@@ -62,15 +64,14 @@ const DeployVercel = () => {
       }
     >
       <ol>
-        {deployments &&
-          deployments.map((deployment) => (
-            <li key={deployment.uid}>
-              <p>
-                {new Date(deployment.created).toLocaleString()} (
-                {deployment.state})
-              </p>
-            </li>
-          ))}
+        {deployments?.map((deployment) => (
+          <li key={deployment.uid}>
+            <p>
+              {new Date(deployment.created).toLocaleString()} (
+              {deployment.state})
+            </p>
+          </li>
+        ))}
       </ol>
     </DashboardWidgetContainer>
   );

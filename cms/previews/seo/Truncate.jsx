@@ -1,11 +1,31 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ReactDOM from "react-dom";
 
 const ellipsis = "\u00A0…";
 
+function isWhitespace(char) {
+  return char === " " || char === "\t" || char === "\n" || char === "\r";
+}
+
 function truncateWord(str) {
-  return str.replace(/\s+\S+$/, "");
+  if (str.length === 0 || isWhitespace(str[str.length - 1])) {
+    return str;
+  }
+
+  let end = str.length;
+  while (end > 0 && !isWhitespace(str[end - 1])) {
+    end -= 1;
+  }
+
+  if (end === 0) {
+    return str;
+  }
+
+  while (end > 0 && isWhitespace(str[end - 1])) {
+    end -= 1;
+  }
+
+  return str.slice(0, end);
 }
 
 export default class Truncate extends React.Component {
@@ -24,17 +44,7 @@ export default class Truncate extends React.Component {
     truncatedChildren: this.props.children,
   };
 
-  componentWillReceiveProps(nextProps) {
-    if (
-      this.props.children !== nextProps.children ||
-      this.props.maxWidth !== nextProps.maxWidth ||
-      this.props.maxChars !== nextProps.maxChars
-    ) {
-      this.setState({
-        truncatedChildren: nextProps.children,
-      });
-    }
-  }
+  nodeRef = React.createRef();
 
   componentDidMount() {
     this.truncate();
@@ -61,7 +71,7 @@ export default class Truncate extends React.Component {
   }
 
   truncateWidth() {
-    const node = ReactDOM.findDOMNode(this);
+    const node = this.nodeRef.current;
 
     if (node.scrollWidth > this.props.maxWidth) {
       let children = this.props.children;
@@ -101,6 +111,10 @@ export default class Truncate extends React.Component {
     const { maxWidth, maxChars, children, ...otherProps } = this.props;
     const { truncatedChildren } = this.state;
 
-    return <div {...otherProps}>{truncatedChildren}</div>;
+    return (
+      <div ref={this.nodeRef} {...otherProps}>
+        {truncatedChildren}
+      </div>
+    );
   }
 }
