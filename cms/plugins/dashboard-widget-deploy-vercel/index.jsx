@@ -24,12 +24,10 @@ const DeployVercel = () => {
   const [jobId, setJobId] = useState(null);
   const [deployments, setDeployments] = useState([]);
   const updateList = useCallback(() => {
-    // https://vercel.com/docs/api?query=api#endpoints/deployments/list-deployments
-    fetch("https://api.vercel.com/v5/now/deployments?limit=5", {
-      headers: {
-        Authorization: `Bearer ${process.env.SANITY_STUDIO_VERCEL_TOKEN}`,
-      },
-    })
+    // Proxied through /api/deployments (see cms/api/deployments.js) so the
+    // Vercel API token stays server-side instead of being bundled into the
+    // Studio's client-side JavaScript.
+    fetch("/api/deployments")
       .then((res) => res.json())
       .then((json) => setDeployments(json.deployments))
       .catch((error) => console.error("Failed to fetch deployments", error));
