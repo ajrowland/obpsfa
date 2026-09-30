@@ -1,7 +1,7 @@
 import path from "node:path";
 import { sanityClient } from "sanity:client";
-import imageUrlBuilder from "@sanity/image-url";
-import type { SanityAsset } from "@sanity/image-url/lib/types/types";
+import { createImageUrlBuilder } from "@sanity/image-url";
+import type { SanityAsset } from "@sanity/image-url";
 
 export function bodyBlockProjection(
   typeName: string,
@@ -28,7 +28,7 @@ export function blocksToText(blocks: Array<any>, paragraphOnly = false) {
     .join("\n\n");
 }
 
-export const imageBuilder = imageUrlBuilder(sanityClient);
+export const imageBuilder = createImageUrlBuilder(sanityClient);
 
 export function urlForImage(source: SanityAsset) {
   return imageBuilder.image(source);
@@ -42,7 +42,7 @@ export function slugify(str: string) {
   if (!str) return "";
 
   // make lower case and trim
-  var slug = str.toLowerCase().trim();
+  let slug = str.toLowerCase().trim();
 
   // remove accents from charaters
   slug = slug.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -57,6 +57,6 @@ export function slugify(str: string) {
 }
 
 export function createPath(...args: string[]) {
-  const slugs = args.filter((slug) => slug);
+  const slugs = args.filter(Boolean);
   return path.join("/", ...slugs);
 }

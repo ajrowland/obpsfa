@@ -184,12 +184,12 @@ const addResults = async () => {
     (a, b) => (!b.date && -1) || new Date(a.date) - new Date(b.date),
   );
 
-  client.createOrReplace(doc).then((res) => {
+  await client.createOrReplace(doc).then((res) => {
     console.log(`fixtureList was created, document ID is ${res._id}`);
   });
 };
 
-addResults();
+await addResults();
 
 /*
 {

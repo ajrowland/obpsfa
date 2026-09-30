@@ -1,5 +1,5 @@
 ---
-import type { SanityAsset } from "@sanity/image-url/lib/types/types";
+import type { SanityAsset } from "@sanity/image-url";
 import Image from "./Image.astro";
 import { formatDate } from "@lib/util";
 
@@ -47,82 +47,78 @@ const fixtureList = Object.entries(
 <div class="fixture-list">
   <fieldset class="fixture-list__filter">
     <legend class="fixture-list__filter-legend">Filter fixtures:</legend>
-    {
-      teamFilter?.map((filter) => (
-        <div class="fixture-list__filter-item">
-          <span class="fixture-list__filter-item">
-            <input
-              data-filter
-              type="checkbox"
-              id={filter._id}
-              value={filter._id}
-              checked="true"
-              disabled={teamFilter.length === 1}
-            />
-            <label for={filter._id}>{filter.name}</label>
-          </span>
-        </div>
-      ))
-    }
+    {teamFilter?.map((filter) => (
+      <div class="fixture-list__filter-item">
+        <span class="fixture-list__filter-item">
+          <input
+            data-filter
+            type="checkbox"
+            id={filter._id}
+            value={filter._id}
+            checked="true"
+            disabled={teamFilter.length === 1}
+          />
+          <label for={filter._id}>{filter.name}</label>
+        </span>
+      </div>
+    ))}
   </fieldset>
 
   <ul class="fixture-list__fixtures">
-    {
-      fixtureList?.map((fixtureDate) => (
-        <li class="fixture-list__fixture-date">
-          <time class="fixture-list__date">{formatDate(fixtureDate[0])}</time>
-          {fixtureDate[1].map((fixture) => (
-            <div
-              class="fixture-list__fixture show"
-              style={`background-color: ${fixture.teamHome?.accentColor || fixture.teamAway?.accentColor}`}
-              data-ids={`${fixture.teamHome._id},${fixture.teamAway._id}`}
-            >
-              <div class="fixture-list__team">
-                {fixture.teamHome.name}
-                <div class="fixture-list__badge">
-                  <Image
-                    image={fixture.teamHome.badge}
-                    alt={fixture.teamHome.name}
-                    width={30}
-                    height={30}
-                    cssClass="badge-image"
-                  />
-                </div>
-                <div class="fixture-list__score">
-                  <strong>
-                    {fixture.scoreHome !== null ? fixture.scoreHome : "-"}
-                  </strong>
-                </div>
-                {fixture.competition && (
-                  <div
-                    class={`fixture-list__competition fixture-list__competition-${fixture.competition}`}
-                  >
-                    <span class="sr-only">{fixture.competition}</span>
-                  </div>
-                )}
+    {fixtureList?.map((fixtureDate) => (
+      <li class="fixture-list__fixture-date">
+        <time class="fixture-list__date">{formatDate(fixtureDate[0])}</time>
+        {fixtureDate[1].map((fixture) => (
+          <div
+            class="fixture-list__fixture show"
+            style={`background-color: ${fixture.teamHome?.accentColor || fixture.teamAway?.accentColor}`}
+            data-ids={`${fixture.teamHome._id},${fixture.teamAway._id}`}
+          >
+            <div class="fixture-list__team">
+              {fixture.teamHome.name}
+              <div class="fixture-list__badge">
+                <Image
+                  image={fixture.teamHome.badge}
+                  alt={fixture.teamHome.name}
+                  width={30}
+                  height={30}
+                  cssClass="badge-image"
+                />
               </div>
-              <div class="fixture-list__team">
-                {fixture.teamAway.name}
-                <div class="fixture-list__badge">
-                  <Image
-                    image={fixture.teamAway.badge}
-                    alt={fixture.teamHome.name}
-                    width={30}
-                    height={30}
-                    cssClass="badge-image"
-                  />
+              <div class="fixture-list__score">
+                <strong>
+                  {fixture.scoreHome !== null ? fixture.scoreHome : "-"}
+                </strong>
+              </div>
+              {fixture.competition && (
+                <div
+                  class={`fixture-list__competition fixture-list__competition-${fixture.competition}`}
+                >
+                  <span class="sr-only">{fixture.competition}</span>
                 </div>
-                <div class="fixture-list__score">
-                  <strong>
-                    {fixture.scoreAway !== null ? fixture.scoreAway : "-"}
-                  </strong>
-                </div>
+              )}
+            </div>
+            <div class="fixture-list__team">
+              {fixture.teamAway.name}
+              <div class="fixture-list__badge">
+                <Image
+                  image={fixture.teamAway.badge}
+                  alt={fixture.teamHome.name}
+                  width={30}
+                  height={30}
+                  cssClass="badge-image"
+                />
+              </div>
+              <div class="fixture-list__score">
+                <strong>
+                  {fixture.scoreAway !== null ? fixture.scoreAway : "-"}
+                </strong>
               </div>
             </div>
-          ))}
-        </li>
-      ))
-    }
+          </div>
+        ))}
+      </li>
+    ))}
   </ul>
 </div>
 

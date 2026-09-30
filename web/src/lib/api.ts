@@ -1,6 +1,6 @@
 import { homeProjection, archiveProjection, pageProjection } from "./documents";
 import { sanityClient } from "sanity:client";
-import type { SanityAsset } from "@sanity/image-url/lib/types/types";
+import type { SanityAsset } from "@sanity/image-url";
 
 interface NavItem {
   title: string;
@@ -82,7 +82,7 @@ export const getPages = async (n = 0): Promise<Page[]> => {
 export const getPage = async (path: string): Promise<Page> => {
   const pathQuery = path
     .split("/")
-    .filter((p) => p)
+    .filter(Boolean)
     .reverse()
     .map((segment, i) => `${"parent->".repeat(i)}slug.current == "${segment}"`)
     .join(" && ");

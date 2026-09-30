@@ -1,6 +1,6 @@
 ---
 import { urlForImage } from "@lib/util";
-import type { SanityAsset } from "@sanity/image-url/lib/types/types";
+import type { SanityAsset } from "@sanity/image-url";
 
 interface Props {
   image: SanityAsset;
@@ -28,33 +28,31 @@ const imageSmallUrl = image?.asset
   : "";
 ---
 
-{
-  imageUrl && (
-    <div class={cssClass}>
-      <img
-        srcset={`${imageSmallUrl} ${widthSmall}w, ${imageUrl} ${width}w`}
-        sizes={`(max-width: 480px) ${widthSmall}w, ${width}w`}
-        src={imageUrl}
-        alt={image.alt || alt}
-        class={cssClass && `${cssClass}__img`}
-        width={width}
-        height={height}
-      />
-      {!hideCaption && image.caption && (
-        <div class={cssClass && `${cssClass}__caption`}>
-          <div class={cssClass && `${cssClass}__caption-text`}>
-            {image.caption}
-          </div>
+{imageUrl && (
+  <div class={cssClass}>
+    <img
+      srcset={`${imageSmallUrl} ${widthSmall}w, ${imageUrl} ${width}w`}
+      sizes={`(max-width: 480px) ${widthSmall}w, ${width}w`}
+      src={imageUrl}
+      alt={image.alt || alt}
+      class={cssClass && `${cssClass}__img`}
+      width={width}
+      height={height}
+    />
+    {!hideCaption && image.caption && (
+      <div class={cssClass && `${cssClass}__caption`}>
+        <div class={cssClass && `${cssClass}__caption-text`}>
+          {image.caption}
         </div>
-      )}
-      {image.attribution && (
-        <div class={cssClass && `${cssClass}__attribution`}>
-          ©{image.attribution}
-        </div>
-      )}
-    </div>
-  )
-}
+      </div>
+    )}
+    {image.attribution && (
+      <div class={cssClass && `${cssClass}__attribution`}>
+        ©{image.attribution}
+      </div>
+    )}
+  </div>
+)}
 
 <style>
   .article-image {

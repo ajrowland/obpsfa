@@ -1,5 +1,5 @@
 export const blockProjection = (
-  additionalBlocks: String[] = [],
+  additionalBlocks: string[] = [],
   withMarks = true,
 ) => {
   return /* groq */ `{
